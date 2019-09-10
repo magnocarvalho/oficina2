@@ -1,5 +1,9 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+// import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 //Angular Material Components
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatCheckboxModule } from "@angular/material";
@@ -34,10 +38,11 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 
 @NgModule({
-  declarations: [],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     MatCheckboxModule,
     MatCheckboxModule,
     MatButtonModule,
@@ -71,6 +76,6 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     MatPaginatorModule
   ],
   providers: [],
-  bootstrap: []
+  bootstrap: [AppComponent]
 })
-export class MaterialModule {}
+export class AppModule {}
