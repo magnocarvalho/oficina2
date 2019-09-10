@@ -1,2 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/purple-green.css";
+
+body,
+html {
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+body {
+  line-height: 1;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+.login {
+  height: 100%;
+  max-height: max-content;
+  overflow: auto;
+}
+.formbase {
+  width: 100%;
+}
+.centraliza {
+  display: flex;
+  align-self: center;
+  align-items: center;
+}
