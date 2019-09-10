@@ -36,7 +36,7 @@ foi estimado o tal de 7 sprints para realização do projeto, descritos no item 
 * [EXPRESS.JS](https://expressjs.com/pt-br/) - Framework
 * [VISUAL STUDIO CODE](https://code.visualstudio.com) - IDE
 * [FIREBASE](https://firebase.google.com/?hl=pt-br) - Mobile and web application development platform
-* [MONGODB](https://www.mongodb.comm) - Database
+* [MONGODB](https://www.mongodb.com) - Database
 * [TRELLO](https://trello.com) - Web-based list-making application 
 
 
