@@ -1,4 +1,6 @@
-# Projeto de Oficina de Integração 2 - PLATAFORMA DE VEICULAÇÃO PUBLICITÁRIA POR GEOLOCALIZAÇÃO
+# Projeto de Oficina de Integração 2 - 
+
+# PLATAFORMA DE VEICULAÇÃO PUBLICITÁRIA POR GEOLOCALIZAÇÃO
 
 Desenvolver uma aplicação WEB que deste a interface de acesso até a aplicação do lado servidor, escrita em linguagem Typescript para ser modelo para futuros estudos no desenvolvimento de software utilizando as tecnologias citadas nesta proposta em conjunto. Utilizando como escopo do software a ser desenvolvido, uma proposta de produto que surgiu durante uma competição de empreendedorismo, o Startup Weekend 2016 , realizada em Londrina, estado do Paraná.
 
