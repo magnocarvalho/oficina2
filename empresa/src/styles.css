@@ -27,3 +27,7 @@ body {
   align-self: center;
   align-items: center;
 }
+.text-center {
+  text-align: center;
+  align-self: center;
+}
