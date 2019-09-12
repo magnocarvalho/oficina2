@@ -1,9 +1,13 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<ngx-loading-bar></ngx-loading-bar>
 <mat-toolbar color="primary">
   <span>Oficina 2</span>
   <span class="example-spacer"></span>
-  <button mat-raised-button [routerlink]="login">
+  <button mat-raised-button  (click)="linkRota('login')" >
     <mat-icon>account_circle</mat-icon> Login
+  </button>
+  <button mat-raised-button (click)="linkRota('register')">
+    <mat-icon>person_add</mat-icon> Register
   </button>
 </mat-toolbar>
 <div id="rotas">

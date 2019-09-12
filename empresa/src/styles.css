@@ -31,3 +31,34 @@ body {
   text-align: center;
   align-self: center;
 }
+.card-login {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 500px;
+  align-self: center;
+}
+.centraliza {
+  padding-top: 60px;
+}
+.login-button {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  padding-top: 20px;
+}
+.ou-login {
+  padding-top: 10px;
+  align-self: center;
+  margin: 0 auto;
+}
+.login-button .button-login {
+  align-self: center;
+  margin: 0 auto;
+  width: 50%;
+}
+.facebook {
+  background-color: blue;
+}
+.googleaccount {
+  background-color: palevioletred;
+}
