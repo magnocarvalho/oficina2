@@ -50,6 +50,12 @@ import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
 import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
 // for Core import:
 import { LoadingBarModule } from "@ngx-loading-bar/core";
+// firebase
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { environment } from "src/environments/environment";
 
 @NgModule({
   declarations: [
@@ -62,6 +68,10 @@ import { LoadingBarModule } from "@ngx-loading-bar/core";
     LandingPageComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // firestore
+    AngularFireAuthModule, // auth
+    AngularFireStorageModule, // storage
     BrowserModule,
     CommonModule,
     FormsModule,

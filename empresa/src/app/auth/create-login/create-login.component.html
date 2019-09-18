@@ -8,7 +8,7 @@
                         <input matInput placeholder="Insira seu email" type="text" required formControlName="name">
                         <mat-error *ngIf="form.get('name').hasError('required')">
                             Nome é
-                            <strong>exigido</strong>
+                            <strong>obrigatorio</strong>
                         </mat-error>
                         <mat-icon matSuffix>person</mat-icon>
                     </mat-form-field>
@@ -20,7 +20,7 @@
                         </mat-error>
                         <mat-error *ngIf="form.get('email').hasError('required')">
                             Email é
-                            <strong>exigido</strong>
+                            <strong>obrigatorio</strong>
                         </mat-error>
                         <mat-icon matSuffix>email</mat-icon>
                     </mat-form-field>
@@ -30,7 +30,7 @@
                         <mat-icon matSuffix>vpn_key</mat-icon>
                         <mat-error *ngIf="form.get('pass').hasError('required')">
                             Senha é
-                            <strong>exigido</strong>
+                            <strong>obrigatorio</strong>
                         </mat-error>
                         <mat-error *ngIf="form.get('pass').hasError('minlength')">
                             Senha menor que 6 caracteres
@@ -38,7 +38,7 @@
                     </mat-form-field>
                     <div class="login-button">
                         <button mat-raised-button color="primary" class="button-login" fxFlexAlign="center">
-                            Login
+                            Registrar
                         </button>
                     </div>
                     <div class="login-button">
