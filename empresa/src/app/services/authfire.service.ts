@@ -9,8 +9,8 @@ import { User } from "../model/user";
   providedIn: "root"
 })
 export class AuthfireService {
-  user: Observable<firebase.User>;
-  userData: User = {
+  public user: Observable<firebase.User>;
+  public userData: User = {
     uid: "",
     email: "",
     displayName: "",
@@ -32,7 +32,7 @@ export class AuthfireService {
         photoURL: user.photoURL,
         emailVerified: user.emailVerified
       };
-      console.log(this.userData);
+      console.log(this.userData.email);
     });
   }
 

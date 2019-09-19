@@ -1,1 +1,23 @@
-<p>infos-empresa works!</p>
+<div class="login">
+    <div class="centraliza">
+        <mat-card class="card-login">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image" [attr.background-image]="photoURL"></div>
+                <mat-card-title *ngIf="displayName">{{displayName}}</mat-card-title>
+                <mat-card-subtitle *ngIf="email">{{email}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <span *ngIf="!emailVerified">
+                    <h4 *ngIf="email">Verifique seu usario no email {{email}}</h4>
+                </span>
+                <span *ngIf="emailVerified">
+                    verificado
+                </span>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>Ok</button>
+            </mat-card-actions>
+
+        </mat-card>
+    </div>
+</div>
