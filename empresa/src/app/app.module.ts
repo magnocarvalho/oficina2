@@ -56,6 +56,7 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from "src/environments/environment";
+import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { environment } from "src/environments/environment";
     CreateLoginComponent,
     ProdutoComponent,
     NotFoundPageComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    InfosEmpresaComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

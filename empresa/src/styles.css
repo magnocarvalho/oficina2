@@ -45,19 +45,29 @@ body {
   align-self: center;
   align-items: center;
   padding-top: 20px;
+  
 }
 .ou-login {
   padding-top: 10px;
   align-self: center;
   margin: 0 auto;
 }
+.button-login{
+  font-weight: 500;
+  height: auto;
+  line-height: normal;
+  max-width: 220px;
+  min-height: 40px;
+  padding: 8px 16px;
+  text-align: center;
+  width: 100%;
+}
 .login-button .button-login {
   align-self: center;
   margin: 0 auto;
-  width: 50%;
 }
 .facebook {
-  background-color: blue;
+  background-color: #3b5998;
 }
 .googleaccount {
   background-color: palevioletred;

@@ -2,16 +2,19 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import * as firebase from "firebase/app";
 import { ImgUploadService } from "./img-upload.service";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthfireService {
+  user: Observable<firebase.User>;
   constructor(
     public afAuth: AngularFireAuth,
     public imgUpload: ImgUploadService
   ) {
-    console.log(afAuth.auth.currentUser);
+    afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    this.user = afAuth.authState;
   }
 
   doUserDados() {
@@ -47,7 +50,7 @@ export class AuthfireService {
                 .then(img => {
                   this.doUpdateUser(value.name, img.downloadURL)
                     .then(useUpdate => {
-                      resolve(useUpdate);
+                      resolve(this.afAuth.auth.currentUser);
                     })
                     .catch(updateErro => {
                       console.log("Erro Update perfil do usuario", updateErro);

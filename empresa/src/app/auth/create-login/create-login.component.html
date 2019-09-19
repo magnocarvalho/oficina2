@@ -49,21 +49,26 @@
                         </mat-error>
                     </mat-form-field>
                     <div class="login-button">
-                        <button mat-raised-button color="primary" class="button-login" fxFlexAlign="center" (click)="registrar()">
-                            Registrar
+                        <button mat-raised-button color="primary" class="button-login" fxFlexAdivgn="center" (cdivck)="registrar()">
+                            Registrar com email
                         </button>
-                    </div>
-                    <div class="login-button">
-                        <p class="ou-login text-center">ou</p>
-                    </div>
-                    <div class="login-button">
-                        <button class="button-login facebook" mat-raised-button>Facebook</button>
-                    </div>
-                    <div class="login-button">
-                        <button class="button-login googleaccount" mat-raised-button>Google</button>
                     </div>
                 </div>
             </form>
+
+            <div fxLayout="column" fxLayoutAlign="center stretch">
+                <div class="login-button">
+                    <p class="ou-login">ou</p>
+                </div>
+                <div class="login-button">
+                    <button class="button-login facebook" mat-raised-button>Login com Facebook</button>
+                </div>
+                <div class="login-button">
+                    <button class="button-login googleaccount" mat-raised-button>Login com Google</button>
+                </div>
+            </div>
+
+
         </mat-card>
     </div>
 </div>

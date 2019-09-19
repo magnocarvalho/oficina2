@@ -4,6 +4,7 @@ import { LoginComponent } from "./auth/login/login.component";
 import { NotFoundPageComponent } from "./auth/not-found-page/not-found-page.component";
 import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { CreateLoginComponent } from "./auth/create-login/create-login.component";
+import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
   },
   { path: "register", component: CreateLoginComponent },
   { path: "index", component: LandingPageComponent },
+  { path: "form-empresa", component: InfosEmpresaComponent},
   { path: "", redirectTo: "/index", pathMatch: "full" },
   { path: "**", component: NotFoundPageComponent }
 ];
