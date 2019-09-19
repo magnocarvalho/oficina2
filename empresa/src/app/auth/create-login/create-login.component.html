@@ -49,8 +49,8 @@
                         </mat-error>
                     </mat-form-field>
                     <div class="login-button">
-                        <button mat-raised-button color="primary" class="button-login" fxFlexAdivgn="center" (cdivck)="registrar()">
-                            Registrar com email
+                        <button mat-raised-button color="primary" class="button-login" fxFlexAdivgn="center" (click)="registrar()">
+                            <mat-icon>save</mat-icon> Registrar com email
                         </button>
                     </div>
                 </div>
@@ -61,14 +61,12 @@
                     <p class="ou-login">ou</p>
                 </div>
                 <div class="login-button">
-                    <button class="button-login facebook" mat-raised-button>Login com Facebook</button>
+                    <button class="button-login facebook" mat-raised-button (click)="loginFacebook()">Login com Facebook</button>
                 </div>
                 <div class="login-button">
                     <button class="button-login googleaccount" mat-raised-button>Login com Google</button>
                 </div>
             </div>
-
-
         </mat-card>
     </div>
 </div>

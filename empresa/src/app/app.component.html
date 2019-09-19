@@ -3,12 +3,20 @@
 <mat-toolbar color="primary">
   <span>Oficina 2</span>
   <span class="example-spacer"></span>
-  <button mat-raised-button  (click)="linkRota('login')" >
+  <button mat-raised-button (click)="linkRota('login')">
     <mat-icon>account_circle</mat-icon> Login
   </button>
   <button mat-raised-button (click)="linkRota('register')">
     <mat-icon>person_add</mat-icon> Register
   </button>
+  <span *ngIf="user">
+    <img [src]="user.photoURL" class="img-button-header" alt="">
+    <button mat-raised-button>
+      {{user.displayName}}</button>
+    <button mat-raised-button>
+      <mat-icon>close</mat-icon> Logout
+    </button>
+  </span>
 </mat-toolbar>
 <div id="rotas">
   <router-outlet></router-outlet>

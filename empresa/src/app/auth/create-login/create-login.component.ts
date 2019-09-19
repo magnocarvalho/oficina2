@@ -39,26 +39,36 @@ export class CreateLoginComponent implements OnInit {
   }
 
   readThis(inputValue: any): void {
-    var file: File = inputValue.files[0];
-    // this.form.get("foto").setValue(file);
-    this.arquivoImg = file;
-    var myReader: FileReader = new FileReader();
+    try {
+      var file: File = inputValue.files[0];
+      // this.form.get("foto").setValue(file);
+      this.arquivoImg = file;
+      var myReader: FileReader = new FileReader();
 
-    myReader.onload = e => {
-      this.imagemPerfil = myReader.result;
-    };
-    myReader.readAsDataURL(file);
+      myReader.onload = e => {
+        this.imagemPerfil = myReader.result;
+      };
+      myReader.readAsDataURL(file);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  loginFacebook(){
+    this.auth.doFacebookLogin().then(res => {
+      this.rota.navigate(["form-empresa"])
+    }).catch(erro => {
+      this.snackBar.open(erro.message, "erro", {
+        duration: 3000
+      });
+    })
   }
 
   registrar() {
-    // console.log(this.form.value);
     if (!this.arquivoImg) {
-      console.error("Erro no arquivo");
-      this.snackBar.open(
-        "Necessario fazer upload da imagem para perfil da empresa",
-        "ok",
-        { duration: 6000 }
-      );
+      this.snackBar.open("Carregamento da imagem obrigatorio", "ok", {
+        duration: 4000
+      });
       return;
     }
     if (this.form.valid) {

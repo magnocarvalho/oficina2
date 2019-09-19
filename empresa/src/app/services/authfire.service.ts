@@ -3,18 +3,37 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import * as firebase from "firebase/app";
 import { ImgUploadService } from "./img-upload.service";
 import { Observable } from "rxjs";
+import { User } from "../model/user";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthfireService {
   user: Observable<firebase.User>;
+  userData: User = {
+    uid: "",
+    email: "",
+    displayName: "",
+    photoURL: "",
+    emailVerified: undefined
+  };
+
   constructor(
     public afAuth: AngularFireAuth,
     public imgUpload: ImgUploadService
   ) {
     afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
     this.user = afAuth.authState;
+    this.user.subscribe(user => {
+      this.userData = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified
+      };
+      console.log(this.userData);
+    });
   }
 
   doUserDados() {
@@ -48,7 +67,8 @@ export class AuthfireService {
               this.imgUpload
                 .uploadPerfilImagem(arquivoImg, res.user.uid)
                 .then(img => {
-                  this.doUpdateUser(value.name, img.downloadURL)
+                  console.log(img);
+                  this.doUpdateUser(value.name, img.caminhoImagem)
                     .then(useUpdate => {
                       resolve(this.afAuth.auth.currentUser);
                     })
