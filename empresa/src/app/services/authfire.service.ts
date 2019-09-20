@@ -25,14 +25,22 @@ export class AuthfireService {
     afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
     this.user = afAuth.authState;
     this.user.subscribe(user => {
-      this.userData = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        emailVerified: user.emailVerified
-      };
-      console.log(this.userData.email);
+      try {
+        if (user) {
+          this.userData = {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            emailVerified: user.emailVerified
+          };
+          console.log("Email logado : ", this.userData.email);
+        } else {
+          console.log("Nenhum usuario logado");
+        }
+      } catch (error) {
+        this.afAuth.auth.signOut();
+      }
     });
   }
 
@@ -67,7 +75,7 @@ export class AuthfireService {
               this.imgUpload
                 .uploadPerfilImagem(arquivoImg, res.user.uid)
                 .then(img => {
-                  console.log(img);
+                  // console.log(img);
                   this.doUpdateUser(value.name, img.caminhoImagem)
                     .then(useUpdate => {
                       resolve(this.afAuth.auth.currentUser);

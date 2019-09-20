@@ -10,26 +10,30 @@ import { AuthfireService } from "./services/authfire.service";
 })
 export class AppComponent {
   title = "empresa";
-  user: User = {
-    uid: "",
-    email: "",
-    displayName: "",
-    photoURL: "",
-    emailVerified: undefined
-  };
+
+  uid: any = "";
+  email: any = "";
+  displayName: any = "";
+  photoURL: any = "";
+  emailVerified: boolean = false;
   constructor(private rota: Router, public auth: AuthfireService) {
     auth.user.subscribe(user => {
-      this.user = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        emailVerified: user.emailVerified
-      };
+      if (user) {
+        this.uid = user.uid;
+        this.email = user.email;
+        this.displayName = user.displayName;
+        this.photoURL = user.photoURL;
+        this.emailVerified = user.emailVerified;
+      }
     });
   }
 
   linkRota(tmp) {
     this.rota.navigate([tmp]);
+  }
+
+  onLoginOut() {
+    this.auth.doLogout();
+    this.linkRota('index');
   }
 }

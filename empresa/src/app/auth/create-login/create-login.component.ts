@@ -16,7 +16,7 @@ import { MatSnackBar } from "@angular/material";
 })
 export class CreateLoginComponent implements OnInit {
   form: FormGroup;
-  imagemPerfil: any = "/assets/addfoto.png";
+  imagemPerfil: any = "/assets/add.png";
   arquivoImg: any;
   constructor(
     private formBuilder: FormBuilder,
@@ -75,7 +75,7 @@ export class CreateLoginComponent implements OnInit {
       this.auth
         .doRegister(this.form.value, this.arquivoImg)
         .then(res => {
-          console.log("registro", res);
+          // console.log("registro", res);
           this.rota.navigate(["form-empresa"]);
         })
         .catch(erro => {

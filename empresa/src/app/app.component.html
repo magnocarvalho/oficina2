@@ -3,7 +3,7 @@
 <mat-toolbar color="primary">
   <span>Oficina 2</span>
   <span class="example-spacer"></span>
-  <span *ngIf="!user.emailVerified">
+  <span *ngIf="!uid">
     <button class="margin-r30" mat-raised-button (click)="linkRota('login')">
       <mat-icon>account_circle</mat-icon> Login
     </button>
@@ -11,10 +11,13 @@
       <mat-icon>person_add</mat-icon> Register
     </button>
   </span>
-  <span *ngIf="user.emailVerified">
-    <img [src]="user.photoURL" class="img-button-header margin-r30" [alt]="user.displayName">
+  <span *ngIf="uid">
+    <button mat-raised-button (click)="onLoginOut()">Sair</button>
+  </span>
+  <span *ngIf="emailVerified">
+    <img [src]="photoURL" class="img-button-header margin-r30" [alt]="displayName">
     <button mat-raised-button>
-      {{user.displayName}}</button>
+      {{displayName}}</button>
     <button mat-raised-button>
       <mat-icon>close</mat-icon> Logout
     </button>

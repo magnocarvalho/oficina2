@@ -31,6 +31,7 @@ export class ImgUploadService {
       this.imagem.task.then(up => {
         fileRef.getDownloadURL().subscribe(
           url => {
+            console.log(url);
             this.imagem.complete = true;
             this.imagem.caminhoImagem = url;
             resolve(this.imagem);

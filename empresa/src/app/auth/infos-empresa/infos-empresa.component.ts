@@ -12,16 +12,18 @@ import { Observable } from "rxjs";
 export class InfosEmpresaComponent implements OnInit {
   displayName: any = null;
   email: any = null;
-  emailVerified: any = null;
+  emailVerified: boolean = false;
   photoURL: any = null;
   uid: any = null;
   constructor(private rota: Router, public auth: AuthfireService) {
     this.auth.user.subscribe(user => {
-      this.displayName = user.displayName;
-      this.email = user.email;
-      this.emailVerified = user.emailVerified;
-      this.photoURL = user.photoURL;
-      this.uid = user.uid;
+      if (user) {
+        this.displayName = user.displayName;
+        this.email = user.email;
+        this.emailVerified = user.emailVerified;
+        this.photoURL = user.photoURL;
+        this.uid = user.uid;
+      }
     });
   }
 

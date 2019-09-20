@@ -9,15 +9,14 @@
                             <figure class="personal-figure">
                                 <img src="{{imagemPerfil}}" class="personal-avatar" alt="avatar">
                                 <figcaption class="personal-figcaption">
-                                    <img
-                                        src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                                    <img src="/assets/camera-white.png">
                                 </figcaption>
                             </figure>
                         </label>
                     </div>
                     <mat-form-field class="formbase" appearance="outline">
                         <mat-label>Empresa</mat-label>
-                        <input matInput placeholder="Insira o nome da empresa" type="text" required formControlName="name">
+                        <input autocomplete="name" matInput placeholder="Insira o nome da empresa" type="text" required formControlName="name">
                         <mat-error *ngIf="form.get('name').hasError('required')">
                             Nome é
                             <strong>obrigatorio</strong>
@@ -26,7 +25,7 @@
                     </mat-form-field>
                     <mat-form-field class="formbase" appearance="outline">
                         <mat-label>Email</mat-label>
-                        <input matInput placeholder="Insira seu email" type="email" required formControlName="email">
+                        <input autocomplete="email" matInput placeholder="Insira seu email" type="email" required formControlName="email">
                         <mat-error *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
                             Entre com um email valido
                         </mat-error>
@@ -50,7 +49,7 @@
                     </mat-form-field>
                     <div class="login-button">
                         <button mat-raised-button color="primary" class="button-login" fxFlexAdivgn="center" (click)="registrar()">
-                            <mat-icon>save</mat-icon> Registrar com email
+                            <mat-icon>person_add</mat-icon> Registrar com email
                         </button>
                     </div>
                 </div>
@@ -61,10 +60,10 @@
                     <p class="ou-login">ou</p>
                 </div>
                 <div class="login-button">
-                    <button class="button-login facebook" mat-raised-button (click)="loginFacebook()">Login com Facebook</button>
+                    <button class="button-login facebook" color="basic" mat-raised-button (click)="loginFacebook()">Login com Facebook</button>
                 </div>
                 <div class="login-button">
-                    <button class="button-login googleaccount" mat-raised-button>Login com Google</button>
+                    <button class="button-login googleaccount" color="warn" mat-raised-button>Login com Google</button>
                 </div>
             </div>
         </mat-card>
