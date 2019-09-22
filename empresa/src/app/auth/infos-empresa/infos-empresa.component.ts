@@ -27,9 +27,17 @@ export class InfosEmpresaComponent implements OnInit {
     });
   }
 
+
+
   ngOnInit() {
     this.carregarDados();
   }
 
-  async carregarDados() {}
+  reEnviarEmail() {
+    this.auth.doCheckEmail().then(res => {
+      alert('Email reenviado para ' + this.email)
+    })
+  }
+
+  async carregarDados() { }
 }

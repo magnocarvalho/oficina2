@@ -17,18 +17,18 @@
                     </mat-form-field>
                     <mat-form-field class="formbase" appearance="outline">
                         <mat-label>Senha</mat-label>
-                        <input matInput type="password" placeholder="Digite sua senha" required formControlName="pass">
+                        <input matInput type="password" placeholder="Digite sua senha" required formControlName="password">
                         <mat-icon matSuffix>vpn_key</mat-icon>
-                        <mat-error *ngIf="form.get('pass').hasError('required')">
+                        <mat-error *ngIf="form.get('password').hasError('required')">
                             Senha é
                             <strong>exigido</strong>
                         </mat-error>
-                        <mat-error *ngIf="form.get('pass').hasError('minlength')">
+                        <mat-error *ngIf="form.get('password').hasError('minlength')">
                             Senha menor que 6 caracteres
                         </mat-error>
                     </mat-form-field>
                     <div class="login-button">
-                        <button mat-raised-button color="primary" class="button-login" fxFlexAlign="center">
+                        <button mat-raised-button color="primary" class="button-login" fxFlexAlign="center" (click)="goLogin()">
                             Login
                         </button>
                     </div>

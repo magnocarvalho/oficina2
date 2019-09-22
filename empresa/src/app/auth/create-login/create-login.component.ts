@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ChangeDetectorRef, isDevMode } from "@angular/core";
 import {
   Validators,
   FormGroup,
@@ -8,6 +8,8 @@ import {
 import { AuthfireService } from "src/app/services/authfire.service";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
+import { ReCaptchaV3Service, InvisibleReCaptchaComponent } from 'ngx-captcha';
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-create-login",
@@ -18,19 +20,31 @@ export class CreateLoginComponent implements OnInit {
   form: FormGroup;
   imagemPerfil: any = "/assets/add.png";
   arquivoImg: any;
+  public sitekey: any = environment.reCAPTCHA;
+  public captchaIsLoaded = false;
+  public captchaSuccess = false;
+  public captchaResponse?: string;
+  public captchaIsReady = false;
+  public badge = 'inline';
+  public type = 'image';
+  public theme = 'light';
+  public recaptcha: any = null;
+  @ViewChild('captchaElem', { static: false }) captchaElem: InvisibleReCaptchaComponent;
   constructor(
     private formBuilder: FormBuilder,
     public auth: AuthfireService,
     public rota: Router,
-    public snackBar: MatSnackBar
-  ) {}
+    public snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       name: ["", [Validators.required, Validators.minLength(2)]],
       email: ["", [Validators.required, Validators.email]],
       pass: ["", [Validators.required, Validators.minLength(6)]],
-      foto: [null, [Validators.required]]
+      foto: [null, [Validators.required]],
+      recaptchaFRM: ['', [Validators.required]]
     });
   }
 
@@ -54,7 +68,7 @@ export class CreateLoginComponent implements OnInit {
     }
   }
 
-  loginFacebook(){
+  loginFacebook() {
     this.auth.doFacebookLogin().then(res => {
       this.rota.navigate(["form-empresa"])
     }).catch(erro => {
@@ -65,6 +79,11 @@ export class CreateLoginComponent implements OnInit {
   }
 
   registrar() {
+    // this.reCaptchaV3Service.execute(this.reCAPTCHA, 'homepage', (token) => {
+    //   console.log('This is your token: ', token);
+    // }, {
+    //   useGlobalDomain: false // optional
+    // });
     if (!this.arquivoImg) {
       this.snackBar.open("Carregamento da imagem obrigatorio", "ok", {
         duration: 4000
@@ -88,5 +107,35 @@ export class CreateLoginComponent implements OnInit {
         duration: 3000
       });
     }
+  }
+  execute(): void {
+    this.captchaElem.execute();
+  }
+
+  handleReset(): void {
+    this.captchaSuccess = false;
+    this.captchaResponse = undefined;
+    this.cdr.detectChanges();
+  }
+
+  handleSuccess(captchaResponse: string): void {
+    this.captchaSuccess = true;
+    this.captchaResponse = captchaResponse;
+    this.cdr.detectChanges();
+  }
+  handleError() {
+    this.captchaSuccess = false;
+  }
+  handleExpire() {
+    this.captchaSuccess = false;
+  }
+  handleLoad(): void {
+    this.captchaIsLoaded = true;
+    this.cdr.detectChanges();
+  }
+
+  handleReady(): void {
+    this.captchaIsReady = true;
+    this.cdr.detectChanges();
   }
 }

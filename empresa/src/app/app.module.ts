@@ -1,10 +1,13 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgxCaptchaModule } from 'ngx-captcha';
 import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { RouterModule } from "@angular/router";
+//flexlayout Module
+import { FlexLayoutModule } from '@angular/flex-layout';
 // Angular Material Components
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatCheckboxModule } from "@angular/material";
@@ -37,13 +40,6 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
-// conmponents
-import { LoginComponent } from "./auth/login/login.component";
-import { LogoutComponent } from "./auth/logout/logout.component";
-import { CreateLoginComponent } from "./auth/create-login/create-login.component";
-import { ProdutoComponent } from "./form/produto/produto.component";
-import { NotFoundPageComponent } from "./auth/not-found-page/not-found-page.component";
-import { LandingPageComponent } from "./landing-page/landing-page.component";
 // for HttpClient import:
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
 // for Router import:
@@ -56,6 +52,13 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from "src/environments/environment";
+// conmponents
+import { LoginComponent } from "./auth/login/login.component";
+import { LogoutComponent } from "./auth/logout/logout.component";
+import { CreateLoginComponent } from "./auth/create-login/create-login.component";
+import { ProdutoComponent } from "./form/produto/produto.component";
+import { NotFoundPageComponent } from "./auth/not-found-page/not-found-page.component";
+import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
 
 @NgModule({
@@ -80,6 +83,8 @@ import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.compon
     ReactiveFormsModule,
     RouterModule,
     AppRoutingModule,
+    FlexLayoutModule,
+    NgxCaptchaModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
     MatCheckboxModule,
@@ -119,4 +124,4 @@ import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.compon
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

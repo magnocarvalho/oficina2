@@ -11,9 +11,6 @@
             <mat-card-content>
                 <span *ngIf="!emailVerified">
                     <h5 *ngIf="email">Para continuar o cadastro verifique seu usuario no email e recarregue a pagina</h5>
-                    <h5 fxLayout="column" fxLayoutAlign="start center">
-                        <a mat-raised-button color="primary" href="/form-empresa">Recarregar a pagina</a>
-                    </h5>
                 </span>
                 <span *ngIf="emailVerified">
                     verificado
@@ -22,7 +19,17 @@
             <mat-divider>
             </mat-divider>
             <mat-card-actions>
-                <button mat-button>Ok</button>
+                <div class="larg-100" *ngIf="!emailVerified" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="span-1">
+                        <a mat-raised-button color="primary" href="/form-empresa">Recarregar a pagina</a>
+                    </span>
+                    <span class="span-1" class="marg-10">
+                        <p>ou</p>
+                    </span>
+                    <span class="span-1">
+                        <button mat-raised-button (click)="reEnviarEmail()" color="warn">Reenviar Email</button>
+                    </span>
+                </div>
             </mat-card-actions>
         </mat-card>
     </div>
