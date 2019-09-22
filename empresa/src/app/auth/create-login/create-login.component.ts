@@ -44,7 +44,7 @@ export class CreateLoginComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       pass: ["", [Validators.required, Validators.minLength(6)]],
       foto: [null, [Validators.required]],
-      recaptchaFRM: ['', [Validators.required]]
+      recaptchaFRM: ['']
     });
   }
 

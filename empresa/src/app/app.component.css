@@ -6,11 +6,12 @@
   overflow: auto;
   min-height: 600px;
   height: auto;
+  margin-top: 63px;
 }
 .img-button-header {
   width: 30px;
   height: 30px;
 }
-.margin-r30{
+.margin-r30 {
   margin-right: 30px;
 }

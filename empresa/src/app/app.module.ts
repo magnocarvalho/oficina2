@@ -65,6 +65,7 @@ import { NotFoundPageComponent } from "./auth/not-found-page/not-found-page.comp
 import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
 import { AgmCoreModule } from '@agm/core';
+import { LocationService } from './services/location.service';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { AgmCoreModule } from '@agm/core';
     AngularFireStorageModule, // storage
     AgmCoreModule.forRoot({
       apiKey: environment.googlemaps,
-      libraries: ['places']
+      language: 'pt-BR',
+      libraries: ['places', 'geometry']
     }),
     MatGoogleMapsAutocompleteModule.forRoot(),
     BrowserModule,
@@ -134,7 +136,7 @@ import { AgmCoreModule } from '@agm/core';
     LoadingBarModule,
 
   ],
-  providers: [],
+  providers: [LocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { User } from "src/app/model/user";
 import { Router } from "@angular/router";
+import { MapsAPILoader, GoogleMapsAPIWrapper } from '@agm/core';
 import { AuthfireService } from "src/app/services/authfire.service";
-import { Observable } from "rxjs";
+import { Observable, from, of } from "rxjs";
 import { Location, Appearance } from '@angular-material-extensions/google-maps-autocomplete';
-import { } from "googlemaps";
-import PlaceResult = google.maps.places.PlaceResult;
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { tap, map, } from 'rxjs/operators';
+import { LocationService } from 'src/app/services/location.service';
+declare var google: any
 
 @Component({
   selector: "app-infos-empresa",
@@ -18,14 +21,18 @@ export class InfosEmpresaComponent implements OnInit {
   emailVerified: boolean = false;
   photoURL: any = null;
   uid: any = null;
+  private geocoder: any;
   //variaveis maps
   public appearance = Appearance;
   public zoom: number;
   public latitude: number;
   public longitude: number;
-  public selectedAddress: PlaceResult;
+  public selectedAddress: google.maps.places.PlaceResult;
 
-  constructor(private rota: Router, public auth: AuthfireService) {
+  form: FormGroup;
+
+  constructor(private rota: Router, public auth: AuthfireService, private formBuilder: FormBuilder, private mapLoader: MapsAPILoader, private reverso: LocationService) {
+
     this.auth.user.subscribe(user => {
       if (user) {
         this.displayName = user.displayName;
@@ -35,12 +42,25 @@ export class InfosEmpresaComponent implements OnInit {
         this.uid = user.uid;
       }
     });
+    this.form = this.formBuilder.group({
+      rua: ["", [Validators.required, Validators.minLength(2)]],
+      numero: ["", [Validators.required, Validators.minLength(2)]],
+      bairro: ["", [Validators.required, Validators.minLength(2)]],
+      cidade: ["", [Validators.required, Validators.minLength(2)]],
+      estado: ["", [Validators.required, Validators.minLength(2)]],
+      pais: ["", [Validators.required, Validators.minLength(2)]],
+      cep: ["", [Validators.required, Validators.minLength(2)]],
+      complemento: [""],
+      googlePlace: ["", [Validators.required]]
+    });
+    this.geocoder = new google.maps.Geocoder();
   }
 
 
 
   ngOnInit() {
     this.carregarDados();
+    this.setCurrentPosition();
   }
 
   reEnviarEmail() {
@@ -56,18 +76,54 @@ export class InfosEmpresaComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
-        this.zoom = 12;
+        this.zoom = 17;
+        this.reverso.getReverseGeocode(this.latitude, this.longitude).subscribe(location => {
+          // console.log(location.results[0])
+          this.form.get('googlePlace').setValue(location.results[0].formatted_address);
+          this.onAutocompleteSelected(location.results[0])
+        })
       });
     }
   }
 
-  onAutocompleteSelected(result: PlaceResult) {
-    console.log('onAutocompleteSelected: ', result);
+  onAutocompleteSelected(result: google.maps.places.PlaceResult) {
+
+    const filterResponse = result.address_components.reduce((current, next) => {
+      const mapKeys = {
+        street_number: 'address_number',
+        route: 'address',
+        sublocality_level_1: 'neighborhood',
+        administrative_area_level_2: 'city',
+        administrative_area_level_1: 'state',
+        country: 'country',
+        postal_code: 'zipcode'
+      }
+
+      const [validKey] = next.types.filter(key => Object.keys(mapKeys).includes(key))
+
+      if (!validKey) return current
+
+      return {
+        ...current,
+        [mapKeys[validKey]]: next.long_name
+      }
+    }, {})
+
+    this.form.get('rua').setValue(filterResponse['address']);
+    this.form.get('pais').setValue(filterResponse['country']);
+    this.form.get('numero').setValue(filterResponse['address_number']);
+    this.form.get('bairro').setValue(filterResponse['neighborhood']);
+    this.form.get('cep').setValue(filterResponse['zipcode']);
+    this.form.get('estado').setValue(filterResponse['state']);
+    this.form.get('cidade').setValue(filterResponse['city']);
+
   }
 
   onLocationSelected(location: Location) {
-    console.log('onLocationSelected: ', location);
+
     this.latitude = location.latitude;
     this.longitude = location.longitude;
   }
+
+
 }
