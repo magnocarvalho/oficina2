@@ -6,6 +6,7 @@ import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { RouterModule } from "@angular/router";
+import { HttpClientModule } from '@angular/common/http';
 //flexlayout Module
 import { FlexLayoutModule } from '@angular/flex-layout';
 // Angular Material Components
@@ -52,6 +53,9 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from "src/environments/environment";
+// 
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+
 // conmponents
 import { LoginComponent } from "./auth/login/login.component";
 import { LogoutComponent } from "./auth/logout/logout.component";
@@ -60,6 +64,8 @@ import { ProdutoComponent } from "./form/produto/produto.component";
 import { NotFoundPageComponent } from "./auth/not-found-page/not-found-page.component";
 import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
+import { AgmCoreModule } from '@agm/core';
+
 
 @NgModule({
   declarations: [
@@ -77,7 +83,13 @@ import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.compon
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
+    AgmCoreModule.forRoot({
+      apiKey: environment.googlemaps,
+      libraries: ['places']
+    }),
+    MatGoogleMapsAutocompleteModule.forRoot(),
     BrowserModule,
+    HttpClientModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -119,7 +131,8 @@ import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.compon
     MatPaginatorModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
-    LoadingBarModule
+    LoadingBarModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

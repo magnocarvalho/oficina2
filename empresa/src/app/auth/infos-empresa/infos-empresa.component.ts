@@ -1,8 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { User } from "src/app/model/user";
 import { Router } from "@angular/router";
 import { AuthfireService } from "src/app/services/authfire.service";
 import { Observable } from "rxjs";
+import { Location, Appearance } from '@angular-material-extensions/google-maps-autocomplete';
+import { } from "googlemaps";
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: "app-infos-empresa",
@@ -15,6 +18,13 @@ export class InfosEmpresaComponent implements OnInit {
   emailVerified: boolean = false;
   photoURL: any = null;
   uid: any = null;
+  //variaveis maps
+  public appearance = Appearance;
+  public zoom: number;
+  public latitude: number;
+  public longitude: number;
+  public selectedAddress: PlaceResult;
+
   constructor(private rota: Router, public auth: AuthfireService) {
     this.auth.user.subscribe(user => {
       if (user) {
@@ -40,4 +50,24 @@ export class InfosEmpresaComponent implements OnInit {
   }
 
   async carregarDados() { }
+
+  private setCurrentPosition() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
+  }
+
+  onAutocompleteSelected(result: PlaceResult) {
+    console.log('onAutocompleteSelected: ', result);
+  }
+
+  onLocationSelected(location: Location) {
+    console.log('onLocationSelected: ', location);
+    this.latitude = location.latitude;
+    this.longitude = location.longitude;
+  }
 }

@@ -13,7 +13,16 @@
                     <h5 *ngIf="email">Para continuar o cadastro verifique seu usuario no email e recarregue a pagina</h5>
                 </span>
                 <span *ngIf="emailVerified">
-                    verificado
+                    <mat-form-field>
+                        <mat-label>Endereço do estabelecimanto</mat-label>
+                        <input matInput matGoogleMapsAutocomplete [country]="br" (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                            (onLocationSelected)="onLocationSelected($event)">
+                    </mat-form-field>
+                    <div fxFlex>
+                        <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                            <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                        </agm-map>
+                    </div>
                 </span>
             </mat-card-content>
             <mat-divider>
