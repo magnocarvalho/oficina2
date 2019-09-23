@@ -8,6 +8,8 @@ import { Location, Appearance } from '@angular-material-extensions/google-maps-a
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { tap, map, } from 'rxjs/operators';
 import { LocationService } from 'src/app/services/location.service';
+import { MatSnackBar } from '@angular/material';
+import { ApiService } from 'src/app/services/api.service';
 declare var google: any
 
 @Component({
@@ -30,8 +32,8 @@ export class InfosEmpresaComponent implements OnInit {
   public selectedAddress: google.maps.places.PlaceResult;
 
   form: FormGroup;
-
-  constructor(private rota: Router, public auth: AuthfireService, private formBuilder: FormBuilder, private mapLoader: MapsAPILoader, private reverso: LocationService) {
+  mascaraCnpj = "00.000.000/0000-00"
+  constructor(private rota: Router, public api: ApiService, public snackBar: MatSnackBar, public auth: AuthfireService, private formBuilder: FormBuilder, private mapLoader: MapsAPILoader, private reverso: LocationService) {
 
     this.auth.user.subscribe(user => {
       if (user) {
@@ -43,13 +45,14 @@ export class InfosEmpresaComponent implements OnInit {
       }
     });
     this.form = this.formBuilder.group({
-      rua: ["", [Validators.required, Validators.minLength(2)]],
-      numero: ["", [Validators.required, Validators.minLength(2)]],
-      bairro: ["", [Validators.required, Validators.minLength(2)]],
-      cidade: ["", [Validators.required, Validators.minLength(2)]],
-      estado: ["", [Validators.required, Validators.minLength(2)]],
-      pais: ["", [Validators.required, Validators.minLength(2)]],
-      cep: ["", [Validators.required, Validators.minLength(2)]],
+      rua: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      numero: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      bairro: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      cidade: [{ value: "", disabled: true }, , [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      estado: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      pais: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      cep: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      cnpj: ["", [Validators.required, Validators.maxLength(22)]],
       complemento: [""],
       googlePlace: ["", [Validators.required]]
     });
@@ -76,14 +79,21 @@ export class InfosEmpresaComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
-        this.zoom = 17;
-        this.reverso.getReverseGeocode(this.latitude, this.longitude).subscribe(location => {
-          // console.log(location.results[0])
-          this.form.get('googlePlace').setValue(location.results[0].formatted_address);
-          this.onAutocompleteSelected(location.results[0])
-        })
+        this.zoom = 16;
+        this.reverseGeo(this.latitude, this.longitude);
       });
     }
+  }
+  /**
+   * reverse
+   */
+  public reverseGeo(lat, lng) {
+    this.reverso.getReverseGeocode(lat, lng).subscribe(location => {
+      this.latitude = lat;
+      this.longitude = lng;
+      this.form.get('googlePlace').setValue(location.results[0].formatted_address);
+      this.onAutocompleteSelected(location.results[0])
+    })
   }
 
   onAutocompleteSelected(result: google.maps.places.PlaceResult) {
@@ -125,5 +135,33 @@ export class InfosEmpresaComponent implements OnInit {
     this.longitude = location.longitude;
   }
 
+  async salvarDados() {
+    if (this.form.valid) {
+      // console.log(this.form.value)
+      var uid = await this.auth.userData.uid;
+      if (uid) {
+        var obj = this.form.value
+        obj.uid = uid;
+        obj.cep = this.form.get('cep').value
+        obj.cidade = this.form.get('cidade').value
+        obj.pais = this.form.get('pais').value
+        obj.estado = this.form.get('estado').value
+        obj.location = { coordinates: [this.latitude, this.longitude], type: 'Point' }
+        console.log(obj)
+        this.api.createUser(obj).subscribe(res => {
+          console.log('Usuario Criado', res)
+          this.rota.navigate(['index'])
+        })
+      }
+    } else {
+      this.form.markAllAsTouched()
+      console.error(this.form.value)
+    }
+  }
+
+  clickEventNow(event) {
+    this.reverseGeo(event.coords.lat, event.coords.lng);
+    // console.log(event.coords)
+  }
 
 }

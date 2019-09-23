@@ -30,6 +30,7 @@
     "@ngx-loading-bar/router": "^4.2.0",
     "firebase": "^6.6.1",
     "ngx-captcha": "^7.0.0",
+    "ngx-mask": "^8.0.6",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

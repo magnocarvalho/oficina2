@@ -55,6 +55,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from "src/environments/environment";
 // 
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 // conmponents
 import { LoginComponent } from "./auth/login/login.component";
@@ -67,6 +68,7 @@ import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.compon
 import { AgmCoreModule } from '@agm/core';
 import { LocationService } from './services/location.service';
 
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   declarations: [
@@ -134,7 +136,7 @@ import { LocationService } from './services/location.service';
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     LoadingBarModule,
-
+    NgxMaskModule.forRoot(options)
   ],
   providers: [LocationService],
   bootstrap: [AppComponent]

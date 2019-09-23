@@ -1,11 +1,9 @@
 import * as express from 'express';
-import ContaCorrenteCtrl from '../controllers/ContaCorrenteCtrl';
-import PagamentoCtrl from '../controllers/PagamentoCtrl';
+import UserCtrl from '../controllers/UserCtrl';
+
 
 var router = express.Router();
 
-router.post('/conta' , ContaCorrenteCtrl.create);
-router.post('/pagar' , PagamentoCtrl.create);
-
+router.post("/user", UserCtrl.createUser);
 
 export = router;

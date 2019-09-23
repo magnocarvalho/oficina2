@@ -16,15 +16,16 @@
                     <form [formGroup]="form">
                         <div fxLayout="column" fxLayoutAlign="start stretch">
                             <div class="larg-100">
-                                <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-                                    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                                <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom" draggable="true"
+                                    (mapClick)="clickEventNow($event)">
+                                    <agm-marker [latitude]="latitude" [longitude]="longitude" draggable="true"></agm-marker>
                                 </agm-map>
                             </div>
                             <mat-divider></mat-divider>
                             <span class="marg-button-20"></span>
                             <mat-form-field class="larg-100" appearance="outline">
                                 <mat-label>Endereço completo</mat-label>
-                                <input required matValidateAddress #matGoogleMapsAutocomplete="matGoogleMapsAutocomplete" matInput
+                                <input required matValidateAddress #matGoogleMapsAutocomplete="matGoogleMapsAutocomplete" matInput maxlength="100"
                                     matGoogleMapsAutocomplete [types]="['places']" (onAutocompleteSelected)="onAutocompleteSelected($event)"
                                     (onLocationSelected)="onLocationSelected($event)" formControlName="googlePlace">
                                 <mat-error *ngIf="matGoogleMapsAutocomplete.addressSearchControl.hasError('required')">
@@ -37,36 +38,47 @@
                             <span fxLayout="row" fxLayoutAlign="space-between start">
                                 <mat-form-field appearance="outline" fxFlex="65">
                                     <mat-label>Rua</mat-label>
-                                    <input matInput required placeholder="rua" formControlName="rua">
+                                    <input matInput maxlength="100" required placeholder="rua" formControlName="rua">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="30">
                                     <mat-label>Numero</mat-label>
-                                    <input matInput required placeholder="Numero" formControlName="numero">
+                                    <input matInput maxlength="100" required placeholder="Numero" formControlName="numero">
                                 </mat-form-field>
                             </span>
                             <span fxLayout="row" fxLayoutAlign="space-between start">
                                 <mat-form-field appearance="outline" fxFlex="50">
                                     <mat-label>Complemento</mat-label>
-                                    <input matInput placeholder="Complemento" formControlName="complemento">
+                                    <input matInput maxlength="100" placeholder="Complemento" formControlName="complemento">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="45">
                                     <mat-label>CEP</mat-label>
-                                    <input matInput required placeholder="CEP" formControlName="cep">
+                                    <input matInput maxlength="100" required placeholder="CEP" formControlName="cep">
                                 </mat-form-field>
                             </span>
                             <span fxLayout="row" fxLayoutAlign="space-between start">
                                 <mat-form-field appearance="outline" fxFlex="45">
                                     <mat-label>Bairro</mat-label>
-                                    <input matInput required placeholder="Bairro" formControlName="bairro">
+                                    <input matInput maxlength="100" required placeholder="Bairro" formControlName="bairro">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="50">
                                     <mat-label>Cidade</mat-label>
-                                    <input matInput required placeholder="Cidade" formControlName="cidade">
+                                    <input matInput maxlength="100" required placeholder="Cidade" formControlName="cidade">
                                 </mat-form-field>
                             </span>
+                            <span fxLayout="row" fxLayoutAlign="space-between start">
+                                <mat-form-field appearance="outline" fxFlex="45">
+                                    <mat-label>Estado</mat-label>
+                                    <input matInput maxlength="100" required placeholder="Estado" formControlName="estado">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="50">
+                                    <mat-label>Pais</mat-label>
+                                    <input matInput maxlength="100" required placeholder="Pais" formControlName="pais">
+                                </mat-form-field>
+                            </span>
+
                             <mat-form-field appearance="outline">
-                                <mat-label>Pais</mat-label>
-                                <input matInput required placeholder="Pais" formControlName="pais">
+                                <mat-label>CNPJ</mat-label>
+                                <input matInput formControlName="cnpj" type="text" required placeholder="CNPJ" [mask]="mascaraCnpj">
                             </mat-form-field>
                         </div>
                     </form>
@@ -87,7 +99,7 @@
                     </span>
                 </div>
                 <div class="larg-100" *ngIf="emailVerified" fxLayout="row" fxLayoutAlign="center center">
-                    <button mat-raised-button color="primary">Salvar</button>
+                    <button mat-raised-button color="primary" (click)="salvarDados()">Salvar</button>
                 </div>
             </mat-card-actions>
         </mat-card>
