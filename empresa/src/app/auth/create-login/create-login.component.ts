@@ -71,6 +71,9 @@ export class CreateLoginComponent implements OnInit {
   loginFacebook() {
     this.auth.doFacebookLogin().then(res => {
       this.rota.navigate(["form-empresa"])
+      this.snackBar.open("Usuario Criado com sucesso", "ok", {
+        duration: 5000
+      });
     }).catch(erro => {
       this.snackBar.open(erro.message, "erro", {
         duration: 3000
@@ -79,11 +82,7 @@ export class CreateLoginComponent implements OnInit {
   }
 
   registrar() {
-    // this.reCaptchaV3Service.execute(this.reCAPTCHA, 'homepage', (token) => {
-    //   console.log('This is your token: ', token);
-    // }, {
-    //   useGlobalDomain: false // optional
-    // });
+
     if (!this.arquivoImg) {
       this.snackBar.open("Carregamento da imagem obrigatorio", "ok", {
         duration: 4000
@@ -95,6 +94,9 @@ export class CreateLoginComponent implements OnInit {
         .doRegister(this.form.value, this.arquivoImg)
         .then(res => {
           // console.log("registro", res);
+          this.snackBar.open("Email registrado com sucesso", "ok", {
+            duration: 5000
+          });
           this.rota.navigate(["form-empresa"]);
         })
         .catch(erro => {

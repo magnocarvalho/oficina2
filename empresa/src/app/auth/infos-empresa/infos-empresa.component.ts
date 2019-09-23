@@ -152,7 +152,7 @@ export class InfosEmpresaComponent implements OnInit {
           console.log('Usuario Criado', res)
           this.rota.navigate(['index'])
         }, error => {
-          this.snackBar.open(error.message, 'error', {duration: 5000})
+          this.snackBar.open(error.message, 'error', { duration: 5000 })
         })
       }
     } else {

@@ -15,7 +15,7 @@ export class ApiService {
         })
     }
     post(rota, obj): Observable<any> {
-        return this.http.post<any>(this.baseurl + rota, obj)
+        return this.http.post<any>(this.baseurl + rota, obj, { headers: this.httpOptions.headers })
     }
     get(rota, param?): Observable<any> {
         return this.http.get<any>(this.baseurl + rota + '/' + param)
@@ -24,6 +24,10 @@ export class ApiService {
     createUser(obj): Observable<any> {
         return this.post('user', obj)
     }
+    getUser(uid): Observable<any> {
+        return this.http.get<any>(this.baseurl + 'user', { headers: this.httpOptions.headers })
+    }
+
     errorHandl(error) {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {
