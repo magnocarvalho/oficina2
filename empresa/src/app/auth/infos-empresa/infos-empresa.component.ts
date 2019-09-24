@@ -42,12 +42,14 @@ export class InfosEmpresaComponent implements OnInit {
         this.emailVerified = user.emailVerified;
         this.photoURL = user.photoURL;
         this.uid = user.uid;
-        this.carregarDados();
+        setTimeout(() => {
+          this.carregarDados();
+        }, 1000);
       }
     });
     this.form = this.formBuilder.group({
       rua: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      numero: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      numero: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       bairro: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       cidade: [{ value: "", disabled: true }, , [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       estado: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
@@ -55,6 +57,7 @@ export class InfosEmpresaComponent implements OnInit {
       cep: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       cnpj: ["", [Validators.required, Validators.maxLength(22)]],
       complemento: [""],
+      tipo: ["", [Validators.required]],
       googlePlace: ["", [Validators.required]]
     });
     this.geocoder = new google.maps.Geocoder();

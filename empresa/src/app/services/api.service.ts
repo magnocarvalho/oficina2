@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs'
 import { retry, catchError } from 'rxjs/operators';
 import { AuthfireService } from './authfire.service';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -12,46 +11,38 @@ export class ApiService {
     baseurl = 'http://localhost:1337/api/'
     private token: String;
     constructor(private http: HttpClient, public auth: AuthfireService) {
-
+        this.getToken()
     }
-    getToken(): String {
-        if (this.token != "" && this.token != undefined && this.token != null) {
-            return this.token
-        } else {
-            this.auth.user.subscribe(user => {
-                if (user) {
-                    console.log("Cliente", user.displayName)
-                    user.getIdToken(true).then(idToken => {
-                        return this.token = idToken
-                    })
-                } else {
-                    return this.token = null;
-                }
-            })
-        }
+    getToken() {
+        this.auth.user.subscribe(user => {
+            if (user) {
+                console.log("Cliente", user.displayName)
+                user.getIdToken(true).then(idToken => {
+                    this.token = idToken
+
+                })
+            } else {
+                this.token = null;
+            }
+        });
     }
-
-    headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.getToken()}`
-    })
-
     post(rota, obj): Observable<any> {
         return this.http.post<any>(this.baseurl + rota, obj, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.getToken()}`
+                'Authorization': `Bearer ${this.token}`
             }
         })
     }
     get(rota, param?): Observable<any> {
+
         let url = `${this.baseurl}${rota}/`
         if (param != undefined)
             url + param
         return this.http.get<any>(url, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.getToken()}`
+                'Authorization': `Bearer ${this.token}`
             }
         })
     }
