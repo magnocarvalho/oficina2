@@ -6,17 +6,20 @@ import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { CreateLoginComponent } from "./auth/create-login/create-login.component";
 import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardGuard } from './guard/dashboard.guard';
+import { AuthGuard } from './guard/auth.guard';
+import { FormGuard } from './guard/form.guard';
 
 const routes: Routes = [
   {
     path: "login",
-    component: LoginComponent
+    component: LoginComponent, canActivate: [DashboardGuard]
   },
-  { path: "register", component: CreateLoginComponent },
-  { path: "index", component: DashboardComponent },
-  { path: "landpage", component: LandingPageComponent },
-  { path: "form-empresa", component: InfosEmpresaComponent },
-  { path: "", redirectTo: "/index", pathMatch: "full" },
+  { path: "register", component: CreateLoginComponent, canActivate: [DashboardGuard] },
+  { path: "index", component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: "landpage", component: LandingPageComponent, canActivate: [DashboardGuard] },
+  { path: "form-empresa", component: InfosEmpresaComponent, canActivate: [FormGuard] },
+  { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "**", component: NotFoundPageComponent }
 ];
 

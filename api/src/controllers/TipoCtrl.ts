@@ -1,8 +1,8 @@
-import { TypeMasterSchema, TypeComercio } from "../model/typecomercio";
+import { Tipo } from "../model/Tipo";
 
 class TipoCtrl {
   public static getTipos(req, res, next) {
-    return TypeComercio.find((err: any, data: any) => {
+    return Tipo.find((err: any, data: any) => {
       if (err) {
         console.log(err);
         next(err);

@@ -11,7 +11,7 @@ import { User } from "../model/user";
 export class AuthfireService {
   public user: Observable<firebase.User>;
   public userData: User = {
-    uid: "",
+    uid: null,
     email: "",
     displayName: "",
     photoURL: "",
@@ -25,6 +25,8 @@ export class AuthfireService {
     afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
     this.user = afAuth.authState;
     this.user.subscribe(user => {
+      /* Saving user data in localstorage when 
+      logged in and setting up null when logged out */
       try {
         if (user) {
           this.userData = {
@@ -35,13 +37,25 @@ export class AuthfireService {
             emailVerified: user.emailVerified
           };
           console.log("Email logado : ", this.userData.email);
+          localStorage.setItem('user', JSON.stringify(this.userData));
         } else {
+          localStorage.setItem('user', null);
+          JSON.parse(localStorage.getItem('user'));
           console.log("Nenhum usuario logado");
         }
       } catch (error) {
         this.afAuth.auth.signOut();
       }
     });
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return (user !== null && user.emailVerified !== false) ? true : false;
+  }
+  get isLoggedInNotUser(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return (user !== null && user.uid !== null) ? true : false;
   }
 
   doUserDados() {

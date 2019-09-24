@@ -18,7 +18,7 @@ app.options("*", cors());
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false); // biblioteca depreciada
 mongoose
-  .connect(process.env.MONGODB, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true
   })
   .then(() => {
