@@ -14,6 +14,7 @@ export interface IUserModel extends IDefault, mongoose.Document {
   pais: string;
   rua: string;
   location: any;
+  tipo: any;
 }
 
 let schema = {
@@ -38,7 +39,8 @@ let schema = {
       type: [Number],
       required: true
     }
-  }
+  },
+  tipo: { type: mongoose.Schema.Types.ObjectId, ref: 'type', required: true },
 };
 
 Inject(schema);

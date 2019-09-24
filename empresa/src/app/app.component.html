@@ -1,9 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <ngx-loading-bar></ngx-loading-bar>
 <mat-toolbar color="primary">
-    <span>Oficina 2</span>
-    <span class="example-spacer"></span>
-    <span *ngIf="!uid">
+  <span>Gastando Pouco</span>
+  <span class="example-spacer"></span>
+  <span *ngIf="!uid">
     <button class="margin-r30" mat-raised-button (click)="linkRota('login')">
       <mat-icon>account_circle</mat-icon> Login
     </button>
@@ -11,12 +11,12 @@
       <mat-icon>person_add</mat-icon> Register
     </button>
   </span>
-    <span *ngIf="uid && !emailVerified">
+  <span *ngIf="uid && !emailVerified">
     <button mat-raised-button (click)="onLoginOut()">
       <mat-icon>close</mat-icon>Sair
     </button>
   </span>
-    <span *ngIf="emailVerified">
+  <span *ngIf="emailVerified">
 
     <button mat-raised-button [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon> {{displayName}}
@@ -33,5 +33,5 @@
   </span>
 </mat-toolbar>
 <div id="rotas">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

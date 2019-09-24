@@ -30,7 +30,7 @@ export class InfosEmpresaComponent implements OnInit {
   public latitude: number;
   public longitude: number;
   public selectedAddress: google.maps.places.PlaceResult;
-
+  public tiposCarregados = [];
   form: FormGroup;
   mascaraCnpj = "00.000.000/0000-00"
   constructor(private rota: Router, public api: ApiService, public snackBar: MatSnackBar, public auth: AuthfireService, private formBuilder: FormBuilder, private mapLoader: MapsAPILoader, private reverso: LocationService) {
@@ -42,6 +42,7 @@ export class InfosEmpresaComponent implements OnInit {
         this.emailVerified = user.emailVerified;
         this.photoURL = user.photoURL;
         this.uid = user.uid;
+        this.carregarDados();
       }
     });
     this.form = this.formBuilder.group({
@@ -62,7 +63,7 @@ export class InfosEmpresaComponent implements OnInit {
 
 
   ngOnInit() {
-    this.carregarDados();
+
     this.setCurrentPosition();
   }
 
@@ -72,7 +73,11 @@ export class InfosEmpresaComponent implements OnInit {
     })
   }
 
-  async carregarDados() { }
+  async carregarDados() {
+    this.api.getTipos().subscribe(res => {
+      this.tiposCarregados = res;
+    })
+  }
 
   private setCurrentPosition() {
     if ('geolocation' in navigator) {

@@ -2,30 +2,74 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs'
 import { retry, catchError } from 'rxjs/operators';
+import { AuthfireService } from './authfire.service';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
-    baseurl = 'http://localhost:1337/'
-    constructor(private http: HttpClient) { }
-    httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json'
+    baseurl = 'http://localhost:1337/api/'
+    private token: String;
+    constructor(private http: HttpClient, public auth: AuthfireService) {
+
+    }
+    getToken(): String {
+        if (this.token != "" && this.token != undefined && this.token != null) {
+            return this.token
+        } else {
+            this.auth.user.subscribe(user => {
+                if (user) {
+                    console.log("Cliente", user.displayName)
+                    user.getIdToken(true).then(idToken => {
+                        return this.token = idToken
+                    })
+                } else {
+                    return this.token = null;
+                }
+            })
+        }
+    }
+
+    headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.getToken()}`
+    })
+
+    post(rota, obj): Observable<any> {
+        return this.http.post<any>(this.baseurl + rota, obj, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.getToken()}`
+            }
         })
     }
-    post(rota, obj): Observable<any> {
-        return this.http.post<any>(this.baseurl + rota, obj, { headers: this.httpOptions.headers })
-    }
     get(rota, param?): Observable<any> {
-        return this.http.get<any>(this.baseurl + rota + '/' + param)
+        let url = `${this.baseurl}${rota}/`
+        if (param != undefined)
+            url + param
+        return this.http.get<any>(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.getToken()}`
+            }
+        })
     }
 
     createUser(obj): Observable<any> {
         return this.post('user', obj)
     }
-    getUser(uid): Observable<any> {
-        return this.http.get<any>(this.baseurl + 'user', { headers: this.httpOptions.headers })
+    getUser(token): Observable<any> {
+        this.token = token;
+        return this.http.get<any>(this.baseurl + 'user', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+    }
+    getTipos(): Observable<any> {
+        return this.get('tipos')
     }
 
     errorHandl(error) {

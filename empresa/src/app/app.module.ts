@@ -67,6 +67,7 @@ import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
 import { AgmCoreModule } from '@agm/core';
 import { LocationService } from './services/location.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -79,7 +80,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     ProdutoComponent,
     NotFoundPageComponent,
     LandingPageComponent,
-    InfosEmpresaComponent
+    InfosEmpresaComponent,
+    DashboardComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

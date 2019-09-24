@@ -9,12 +9,12 @@ html {
 
 body {
   line-height: 1;
-  background-size: auto;
+  /* background-size: auto; */
   margin: 0;
   padding: 0;
   border: 0;
   vertical-align: baseline;
-  background: rgb(250, 250, 250);
+  /* background: rgb(250, 250, 250);
   background: -moz-linear-gradient(
     180deg,
     rgba(250, 250, 250, 1) 0%,
@@ -30,7 +30,7 @@ body {
     rgba(250, 250, 250, 1) 0%,
     rgba(163, 45, 253, 0.3617822128851541) 100%
   );
-  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#fafafa", endColorstr="#a32dfd", GradientType=1);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#fafafa", endColorstr="#a32dfd", GradientType=1); */
 }
 
 .login {
@@ -114,4 +114,7 @@ mat-toolbar {
   position: fixed;
   top: 0;
   z-index: 999;
+}
+.mat-card {
+  margin-bottom: 20px;
 }

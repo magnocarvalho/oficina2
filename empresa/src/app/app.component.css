@@ -7,6 +7,8 @@
   min-height: 600px;
   height: auto;
   margin-top: 63px;
+  position: relative;
+  padding-bottom: 30px;
 }
 .img-button-header {
   width: 30px;

@@ -5,6 +5,7 @@ import { NotFoundPageComponent } from "./auth/not-found-page/not-found-page.comp
 import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { CreateLoginComponent } from "./auth/create-login/create-login.component";
 import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -12,8 +13,9 @@ const routes: Routes = [
     component: LoginComponent
   },
   { path: "register", component: CreateLoginComponent },
-  { path: "index", component: LandingPageComponent },
-  { path: "form-empresa", component: InfosEmpresaComponent},
+  { path: "index", component: DashboardComponent },
+  { path: "landpage", component: LandingPageComponent },
+  { path: "form-empresa", component: InfosEmpresaComponent },
   { path: "", redirectTo: "/index", pathMatch: "full" },
   { path: "**", component: NotFoundPageComponent }
 ];
@@ -22,4 +24,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
