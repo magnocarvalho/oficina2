@@ -1,0 +1,9 @@
+div#painel {
+  background-color: darkslateblue;
+  width: 100%;
+  min-width: min-content;
+}
+mat-card#card-left {
+  margin: 20px;
+  width: 250px;
+}

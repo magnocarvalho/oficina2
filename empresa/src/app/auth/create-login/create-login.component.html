@@ -47,9 +47,10 @@
                             Senha menor que 6 caracteres
                         </mat-error>
                     </mat-form-field>
-                    <ngx-recaptcha2 *ngIf="!isDevMode" #captchaElem [siteKey]="sitekey" (reset)="handleReset()" (ready)="handleReady()" (load)="handleLoad()" (success)="handleSuccess($event)" (expire)="handleExpire()" (error)="handleError()" [useGlobalDomain]="false" [theme]="theme"
+                    <ngx-invisible-recaptcha #captchaElem [siteKey]="sitekey" (reset)="handleReset()" (ready)="handleReady()" (load)="handleLoad()"
+                        (success)="handleSuccess($event)" (expire)="handleExpire()" (error)="handleError()" [useGlobalDomain]="false" [theme]="theme"
                         [type]="type" formControlName="recaptchaFRM">
-                    </ngx-recaptcha2>
+                    </ngx-invisible-recaptcha>
                     <div class="login-button">
                         <button mat-raised-button color="primary" class="button-login" fxFlexAdivgn="center" (click)="registrar()">
                             <mat-icon>person_add</mat-icon> Registrar com email

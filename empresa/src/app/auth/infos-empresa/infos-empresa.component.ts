@@ -158,7 +158,7 @@ export class InfosEmpresaComponent implements OnInit {
         console.log(obj)
         this.api.createUser(obj).subscribe(res => {
           console.log('Usuario Criado', res)
-          this.rota.navigate(['index'])
+          this.rota.navigate(['adm'])
         }, error => {
           this.snackBar.open(error.message, 'error', { duration: 5000 })
         })

@@ -40,7 +40,7 @@ let schema = {
       required: true
     }
   },
-  tipo: { type: mongoose.Schema.Types.ObjectId, ref: "type", required: true }
+  tipo: { type: mongoose.Schema.Types.ObjectId, ref: "tipo", required: true }
 };
 
 Inject(schema);

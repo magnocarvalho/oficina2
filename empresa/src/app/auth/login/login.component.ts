@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.api.getUser(idT).subscribe(usuario => {
           this.ngxBar.increment(90)
           this.snack.open("Login Realizado com sucesso", 'ok', { duration: 5000 })
-          this.rotas.navigate(["index"]);
+          this.rotas.navigate(["adm"]);
         }, err => {
           this.snack.open("Login Realizado com sucesso, falta terminar o cadastro", 'ok', { duration: 5000 })
           this.rotas.navigate(["form-empresa"]);

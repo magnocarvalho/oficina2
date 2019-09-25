@@ -40,7 +40,7 @@ export class AuthfireService {
           localStorage.setItem('user', JSON.stringify(this.userData));
         } else {
           localStorage.setItem('user', null);
-          JSON.parse(localStorage.getItem('user'));
+          // JSON.parse(localStorage.getItem('user'));
           console.log("Nenhum usuario logado");
         }
       } catch (error) {
@@ -134,6 +134,7 @@ export class AuthfireService {
     return new Promise((resolve, reject) => {
       if (firebase.auth().currentUser) {
         this.afAuth.auth.signOut();
+        localStorage.setItem('user', null);
         resolve();
       } else {
         reject();

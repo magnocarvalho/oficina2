@@ -68,8 +68,9 @@ import { InfosEmpresaComponent } from './auth/infos-empresa/infos-empresa.compon
 import { AgmCoreModule } from '@agm/core';
 import { LocationService } from './services/location.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { IndexComponent } from './auth/index/index.component';
 
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NotFoundPageComponent,
     LandingPageComponent,
     InfosEmpresaComponent,
-    DashboardComponent
+    DashboardComponent,
+    IndexComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -138,7 +140,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     LoadingBarModule,
-    NgxMaskModule.forRoot(options)
+    NgxMaskModule.forRoot()
   ],
   providers: [LocationService],
   bootstrap: [AppComponent]

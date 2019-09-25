@@ -16,9 +16,9 @@ export class FormGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isLoggedIn) {
+    if (!this.authService.isLoggedInNotUser) {
 
-      this.router.navigate(['form-empresa'])
+      this.router.navigate(['login'])
     }
     return true;
   }
