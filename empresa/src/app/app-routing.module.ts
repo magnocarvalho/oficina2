@@ -10,6 +10,7 @@ import { DashboardGuard } from './guard/dashboard.guard';
 import { AuthGuard } from './guard/auth.guard';
 import { FormGuard } from './guard/form.guard';
 import { IndexComponent } from './auth/index/index.component';
+import { NewPromoComponent } from './component/new-promo/new-promo.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,11 @@ const routes: Routes = [
     path: 'index', component: IndexComponent, canActivate: [DashboardGuard]
   },
   { path: "register", component: CreateLoginComponent, canActivate: [DashboardGuard] },
-  { path: "adm", component: DashboardComponent, canActivate: [AuthGuard] },
+  {
+    path: "adm", component: DashboardComponent, canActivate: [AuthGuard], children: [
+      { path: 'new-promo', component: NewPromoComponent }
+    ]
+  },
   { path: "landpage", component: LandingPageComponent, canActivate: [DashboardGuard] },
   { path: "form-empresa", component: InfosEmpresaComponent, canActivate: [FormGuard] },
   { path: "", redirectTo: "/index", pathMatch: "full" },

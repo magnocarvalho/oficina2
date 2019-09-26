@@ -1,32 +1,68 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs'
+import { HttpClient, HttpHeaders, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
+import { Observable, throwError, BehaviorSubject } from 'rxjs'
 import { retry, catchError } from 'rxjs/operators';
 import { AuthfireService } from './authfire.service';
 import { environment } from "src/environments/environment";
 import { Usuario, User } from '../model/user';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ApiService {
+export class ApiService implements HttpInterceptor {
+
     baseurl = environment.baseURL
     private token: String;
     public userFire: User;
     public userDados: Usuario;
-    constructor(private http: HttpClient, public auth: AuthfireService) {
+    public isLoading = new BehaviorSubject(false);
+    private requests: HttpRequest<any>[] = [];
+    constructor(private http: HttpClient, public auth: AuthfireService, public loadingBar: LoadingBarService) {
         this.getToken()
+    }
+    removeRequest(req: HttpRequest<any>) {
+        const i = this.requests.indexOf(req);
+        if (i >= 0) {
+            this.requests.splice(i, 1);
+        }
+        this.isLoading.next(this.requests.length > 0);
+    }
+
+
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+        this.requests.push(req);
+        console.log("No of requests--->" + this.requests.length);
+        this.isLoading.next(true);
+        return Observable.create(observer => {
+            const subscription = next.handle(req)
+                .subscribe(
+                    event => {
+                        if (event instanceof HttpResponse) {
+                            this.removeRequest(req);
+                            observer.next(event);
+                        }
+                    },
+                    err => {
+                        alert('error returned');
+                        this.removeRequest(req);
+                        observer.error(err);
+                    },
+                    () => {
+                        this.removeRequest(req);
+                        observer.complete();
+                    });
+            // remove request from queue when cancelled
+            return () => {
+                this.removeRequest(req);
+                subscription.unsubscribe();
+            };
+        });
     }
 
     get getUserDados(): Usuario {
         return this.userDados;
-    }
-
-    loginInit() {
-        if (this.userFire) {
-            console.log(this.userFire)
-        }
-
     }
 
     getUserInformation() {
@@ -38,7 +74,6 @@ export class ApiService {
             })
         })
     }
-
 
     getToken() {
         this.auth.user.subscribe(user => {
@@ -59,6 +94,7 @@ export class ApiService {
         });
     }
     post(rota, obj): Observable<any> {
+        this.loadingBar.start()
         return this.http.post<any>(this.baseurl + rota, obj, {
             headers: {
                 'Content-Type': 'application/json',
@@ -67,6 +103,7 @@ export class ApiService {
         })
     }
     get(rota, param?): Observable<any> {
+        this.loadingBar.start()
         let url = `${this.baseurl}${rota}/`
         if (param != undefined)
             url + param
@@ -121,8 +158,6 @@ export class ApiService {
         return throwError(errorMessage);
     }
     logout() {
-
-
         localStorage.setItem('userDados', null);
         this.auth.doLogout().finally(() => {
             console.error('Logout');
