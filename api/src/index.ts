@@ -2,11 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 //rotas publicas e privadas
-import routes from "./routes/Rotas";
-import router from "./routes/rotasPrivate";
-
 import * as admin from "firebase-admin";
 import moment = require('moment');
+import router from "./routes/rotasPrivate";
 
 require("dotenv").config();
 var cors = require("cors");
@@ -48,7 +46,7 @@ app.options("*", function(req, res, next) {
     res.sendStatus(200);
 });
 // app.use("") //static
-app.use("/public", routes); //publicas
+// app.use("/public", routes); //publicas
 app.use("/api", router); //privadas
 
 app.use(function(req, res, next) {
@@ -75,8 +73,7 @@ if (app.get("env") === "development") {
   });
 }
 
-var port = 1337;
-// app.listen(port);
+var port = process.env.PORT || 1337;
 
 try {
   admin.initializeApp({

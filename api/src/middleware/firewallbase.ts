@@ -1,5 +1,5 @@
 import moment = require("moment");
-import log from "../log";
+
 const admin = require.main.require("firebase-admin");
 
 export default function firewallbase(req, res, next) {
@@ -18,14 +18,14 @@ export default function firewallbase(req, res, next) {
         )} ${req.originalUrl} ${req.ip} ${req.ips}
         `;
         console.log(logs);
-        log.info(logs);
+       
         // res.locals.user = decodedToken;
         res.locals.uid = decodedToken.uid;
         next();
       })
       .catch(err => {
-        console.log(err);
-        log.info("error", err.messagem);
+     
+        console.log("error", err.messagem);
         res.sendStatus(401);
       });
   } else {
