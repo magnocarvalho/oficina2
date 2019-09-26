@@ -79,15 +79,17 @@ export class ApiService implements HttpInterceptor {
         this.auth.user.subscribe(user => {
             if (user) {
                 console.log("Cliente", user.displayName)
-                user.getIdToken(true).then(idToken => {
-                    this.token = idToken;
-                    if (this.token)
-                        this.getUser(idToken).subscribe(empresa => {
-                            console.log(empresa)
-                        })
-                }).catch(erro => {
-                    this.logout()
-                })
+                if (user.emailVerified) {
+                    user.getIdToken(true).then(idToken => {
+                        this.token = idToken;
+                        if (this.token)
+                            this.getUser(idToken).subscribe(empresa => {
+                                console.log(empresa)
+                            })
+                    }).catch(erro => {
+                        this.logout()
+                    })
+                }
             } else {
                 this.logout()
             }
