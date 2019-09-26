@@ -23,7 +23,8 @@ class UserCtrl {
       } else {
         // console.log(data);
         if (data == undefined) {
-          res.sendStatus(404);
+          // res.json({error: 'Usuario nao encontrado'})
+          res.sendStatus(405);
         } else {
           res.json(data);
         }

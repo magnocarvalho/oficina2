@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { Router, NavigationStart, NavigationError } from "@angular/router";
 import { User } from "./model/user";
 import { AuthfireService } from "./services/authfire.service";
+import { ApiService } from './services/api.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "app-root",
@@ -16,7 +18,11 @@ export class AppComponent {
   displayName: any = "";
   photoURL: any = "";
   emailVerified: boolean = false;
-  constructor(private rota: Router, public auth: AuthfireService) {
+  color = 'primary';
+  mode = 'indeterminate';
+  value = 50;
+  isLoading: Subject<boolean> = this.api.isLoading;
+  constructor(private rota: Router, public auth: AuthfireService, public api: ApiService) {
     rota.events.forEach((event) => {
       if (event instanceof NavigationStart) {
         auth.user.subscribe(user => {

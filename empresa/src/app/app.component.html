@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<ngx-loading-bar></ngx-loading-bar>
+<ngx-loading-bar *ngIf="isLoading | async"></ngx-loading-bar>
 <mat-toolbar color="primary">
   <span>Gastando Pouco</span>
   <span class="example-spacer"></span>

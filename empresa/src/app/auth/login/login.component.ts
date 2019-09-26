@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
       this.auth.doUserDados().getIdToken(true).then(idT => {
         this.ngxBar.increment(60)
-        this.api.getUser(idT).subscribe(usuario => {
+        this.api.getUserLogin(idT).subscribe(usuario => {
           this.ngxBar.increment(90)
           this.snack.open("Login Realizado com sucesso", 'ok', { duration: 5000 })
           this.rotas.navigate(["adm"]);

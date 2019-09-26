@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs'
 import { retry, catchError } from 'rxjs/operators';
@@ -13,13 +13,14 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 export class ApiService implements HttpInterceptor {
 
     baseurl = environment.baseURL
-    private token: String;
+    private token: String = null;
     public userFire: User;
     public userDados: Usuario;
     public isLoading = new BehaviorSubject(false);
     private requests: HttpRequest<any>[] = [];
+
     constructor(private http: HttpClient, public auth: AuthfireService, public loadingBar: LoadingBarService) {
-        this.getToken()
+        this.checkToken()
     }
     removeRequest(req: HttpRequest<any>) {
         const i = this.requests.indexOf(req);
@@ -29,11 +30,19 @@ export class ApiService implements HttpInterceptor {
         this.isLoading.next(this.requests.length > 0);
     }
 
+    checkToken() {
+        //console.log(this.userDados, this.userFire, this.token)
+        if (this.token == null) {
+            this.getToken()
+        }
+
+    }
+
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         this.requests.push(req);
-        console.log("No of requests--->" + this.requests.length);
+        // //("No of requests--->" + this.requests.length);
         this.isLoading.next(true);
         return Observable.create(observer => {
             const subscription = next.handle(req)
@@ -45,7 +54,7 @@ export class ApiService implements HttpInterceptor {
                         }
                     },
                     err => {
-                        alert('error returned');
+                        // alert('error returned');
                         this.removeRequest(req);
                         observer.error(err);
                     },
@@ -65,33 +74,38 @@ export class ApiService implements HttpInterceptor {
         return this.userDados;
     }
 
-    getUserInformation() {
-        return new Promise<Usuario>((resolve, reject) => {
-            this.get('infoUser').subscribe(res => {
-                resolve(res)
-            }, err => {
-                reject(err)
-            })
-        })
-    }
-
     getToken() {
         this.auth.user.subscribe(user => {
             if (user) {
-                console.log("Cliente", user.displayName)
+                // //("Cliente", user.displayName, user.emailVerified)
                 if (user.emailVerified) {
+                    // //('usuario verificado')
                     user.getIdToken(true).then(idToken => {
                         this.token = idToken;
-                        if (this.token)
-                            this.getUser(idToken).subscribe(empresa => {
-                                console.log(empresa)
-                            })
+                        // if (this.token) {
+                        //     this.getUser(idToken).subscribe(empresa => {
+                        // //('token encontrado', this.token)
+                        //     })
+                        // }
+
+                        this.loadingBar.complete()
                     }).catch(erro => {
-                        this.logout()
+                        // this.logout()
+                        this.loadingBar.complete()
+
+                        // //('error getToken', erro)
+
                     })
+                } else {
+                    this.loadingBar.complete()
+
+                    // //('usuario nao verificado')
                 }
             } else {
-                this.logout()
+                this.loadingBar.complete()
+
+                // //('usuario', user)
+                // this.logout()
             }
         });
     }
@@ -120,6 +134,10 @@ export class ApiService implements HttpInterceptor {
     createUser(obj): Observable<any> {
         return this.post('user', obj)
     }
+    getUserLogin(token): Observable<any> {
+        return this.getUser(token);
+    }
+
     getUser(token): Observable<any> {
         this.token = token;
         let retorno: Observable<any>;
@@ -130,13 +148,22 @@ export class ApiService implements HttpInterceptor {
             }
         })
         retorno.subscribe(res => {
-
             this.userDados = Object.assign({}, res)
             // this.userDados = Object.assign({}, res, this.userFire)
             localStorage.setItem('userDados', JSON.stringify(this.userDados));
         }, err => {
-            this.logout()
-            console.log('erro ao buscar o usario :', err.message)
+            // //(err.status)
+            if (err.status == '401') {
+                // //('erro ao buscar o usario 401: nao autorizado falta token', err.message)
+
+            }
+            if (err.status == 405) {
+                // //('erro ao buscar o usario 405: usuario nao encontrado', err.message)
+            } else {
+                // this.logout()
+                // //('erro ao buscar o usario :', err.message)
+            }
+
         })
 
 
@@ -162,7 +189,7 @@ export class ApiService implements HttpInterceptor {
     logout() {
         localStorage.setItem('userDados', null);
         this.auth.doLogout().finally(() => {
-            console.error('Logout');
+            console.log('Logout');
         })
         this.token = null;
         this.userDados = null;

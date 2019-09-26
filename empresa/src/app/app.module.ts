@@ -6,7 +6,7 @@ import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { RouterModule } from "@angular/router";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 //flexlayout Module
 import { FlexLayoutModule } from '@angular/flex-layout';
 // Angular Material Components
@@ -71,6 +71,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './auth/index/index.component';
 import { NewPromoComponent } from './component/new-promo/new-promo.component';
 import { ReportsComponent } from './component/reports/reports.component';
+import { ApiService } from './services/api.service';
 
 
 
@@ -146,7 +147,7 @@ import { ReportsComponent } from './component/reports/reports.component';
     LoadingBarModule,
     NgxMaskModule.forRoot()
   ],
-  providers: [LocationService],
+  providers: [LocationService, { provide: HTTP_INTERCEPTORS, useClass: ApiService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
