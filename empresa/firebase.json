@@ -1,25 +1,26 @@
 {
-  "hosting": [ {
-  	"target": "gastandopouco",
-    "public": "dist/empresa",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  },
-   {
-   	"target": "oficina2utfpr",
-    "public": "dist/empresa",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
-],
-
-  "storage": {
-    "rules": "storage.rules"
-  }
+  "hosting": [
+    {
+      "target": "empresa-default",
+      "public": "dist/empresa-utfpr",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "empresa",
+      "public": "dist/empresa",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
 }
