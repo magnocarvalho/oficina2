@@ -1,5 +1,6 @@
 {
-  "hosting": {
+  "hosting": [ {
+  	"target": "gastandopouco",
     "public": "dist/empresa",
     "ignore": [
       "firebase.json",
@@ -7,6 +8,17 @@
       "**/node_modules/**"
     ]
   },
+   {
+   	"target": "oficina2utfpr",
+    "public": "dist/empresa",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+],
+
   "storage": {
     "rules": "storage.rules"
   }

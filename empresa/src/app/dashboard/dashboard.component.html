@@ -22,6 +22,6 @@
         </mat-card-content>
     </mat-card>
     <div id="painel">
-        <span>{{user | json}}</span>
+        <span *ngIf="user">{{user | json}}</span>
     </div>
 </div>

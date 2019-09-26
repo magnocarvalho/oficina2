@@ -12,9 +12,9 @@ export class DashboardComponent implements OnInit {
   constructor(public api: ApiService) {
     let usss = new Usuario()
     usss = api.getUserDados;
-    // this.user.displayName = usss.displayName;
-    // this.user.email = usss.email;
-    // this.user.uid = usss.uid;
+     this.user.displayName = usss.displayName;
+      this.user.email = usss.email;
+     this.user.uid = usss.uid;
     // this.user.numero = usss.numero;
     // this.user.estado = usss.estado;
     console.log(usss)

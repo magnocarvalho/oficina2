@@ -2,5 +2,14 @@
   "projects": {
     "default": "oficina2utfpr",
     "prod": "oficina2utfpr"
+  },
+  "targets": {
+    "oficina2utfpr": {
+      "hosting": {
+        "gastandopouco": [
+          "oficina2utfpr"
+        ]
+      }
+    }
   }
 }
