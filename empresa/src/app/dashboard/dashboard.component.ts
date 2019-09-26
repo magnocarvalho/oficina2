@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { Usuario } from '../model/user';
+import { Usuario, User } from '../model/user';
+import { AuthfireService } from '../services/authfire.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,17 +9,22 @@ import { Usuario } from '../model/user';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public user: Usuario;
-  constructor(public api: ApiService) {
-    let usss = new Usuario()
-    usss = api.getUserDados;
-     this.user.displayName = usss.displayName;
-      this.user.email = usss.email;
-     this.user.uid = usss.uid;
-    // this.user.numero = usss.numero;
-    // this.user.estado = usss.estado;
-    console.log(usss)
-
+  public user: User;
+  public loadingDados: Boolean = false;
+  constructor(public auth: AuthfireService, public api: ApiService) {
+    // this.user = api.getUserDados;
+    auth.user.subscribe(user => {
+      if (user) {
+        this.user = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          emailVerified: user.emailVerified
+        };
+        this.loadingDados = true;
+      }
+    });
   }
 
   ngOnInit() {

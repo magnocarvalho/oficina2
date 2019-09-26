@@ -69,6 +69,8 @@ import { AgmCoreModule } from '@agm/core';
 import { LocationService } from './services/location.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndexComponent } from './auth/index/index.component';
+import { NewPromoComponent } from './component/new-promo/new-promo.component';
+import { ReportsComponent } from './component/reports/reports.component';
 
 
 
@@ -83,7 +85,9 @@ import { IndexComponent } from './auth/index/index.component';
     LandingPageComponent,
     InfosEmpresaComponent,
     DashboardComponent,
-    IndexComponent
+    IndexComponent,
+    NewPromoComponent,
+    ReportsComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

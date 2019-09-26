@@ -5,6 +5,7 @@ import { retry, catchError } from 'rxjs/operators';
 import { AuthfireService } from './authfire.service';
 import { environment } from "src/environments/environment";
 import { Usuario, User } from '../model/user';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -15,12 +16,29 @@ export class ApiService {
     public userDados: Usuario;
     constructor(private http: HttpClient, public auth: AuthfireService) {
         this.getToken()
-        this.userDados = JSON.parse(localStorage.getItem('userDados'));
     }
 
     get getUserDados(): Usuario {
         return this.userDados;
     }
+
+    loginInit() {
+        if (this.userFire) {
+            console.log(this.userFire)
+        }
+
+    }
+
+    getUserInformation() {
+        return new Promise<Usuario>((resolve, reject) => {
+            this.get('infoUser').subscribe(res => {
+                resolve(res)
+            }, err => {
+                reject(err)
+            })
+        })
+    }
+
 
     getToken() {
         this.auth.user.subscribe(user => {
@@ -28,10 +46,14 @@ export class ApiService {
                 console.log("Cliente", user.displayName)
                 user.getIdToken(true).then(idToken => {
                     this.token = idToken;
-                    this.userFire = user;
+                    if (this.token)
+                        this.getUser(idToken).subscribe(empresa => {
+                            console.log(empresa)
+                        })
+                }).catch(erro => {
+                    this.logout()
                 })
             } else {
-
                 this.logout()
             }
         });
@@ -69,7 +91,9 @@ export class ApiService {
             }
         })
         retorno.subscribe(res => {
-            this.userDados = Object.assign({}, res, this.userFire)
+
+            this.userDados = Object.assign({}, res)
+            // this.userDados = Object.assign({}, res, this.userFire)
             localStorage.setItem('userDados', JSON.stringify(this.userDados));
         }, err => {
             this.logout()
@@ -97,8 +121,15 @@ export class ApiService {
         return throwError(errorMessage);
     }
     logout() {
+
+
         localStorage.setItem('userDados', null);
+        this.auth.doLogout().finally(() => {
+            console.error('Logout');
+        })
         this.token = null;
+        this.userDados = null;
+        this.userFire = null;
     }
 
 

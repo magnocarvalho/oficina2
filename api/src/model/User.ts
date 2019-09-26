@@ -20,7 +20,7 @@ export interface IUserModel extends IDefault, mongoose.Document {
 let schema = {
   uid: { type: String, required: true, index: true },
   bairro: { type: String, required: true },
-  cep: { type: String, required: true },
+  cep: { type: String, required: true, trim: true },
   cidade: { type: String, required: true },
   complemento: { type: String },
   estado: { type: String, required: true },
@@ -28,7 +28,7 @@ let schema = {
   numero: { type: String, required: true },
   pais: { type: String, required: true },
   rua: { type: String, required: true },
-  cnpj: { type: String, required: true, index: true },
+  cnpj: { type: String, required: true, index: true, trim: true },
   location: {
     type: {
       type: String, // Don't do `{ location: { type: String } }`
@@ -44,6 +44,7 @@ let schema = {
 };
 
 Inject(schema);
+
 export const UserMasterSchema = new mongoose.Schema(schema, {
   timestamps: true
 });

@@ -1,4 +1,6 @@
-import { UserModel, IUserModel } from "../model/user";
+import { IUserModel, UserModel } from "../model/User";
+import log from "../log";
+
 var admin = require("firebase-admin");
 class UserCtrl {
   public static createUser(req, res, next) {
@@ -6,6 +8,7 @@ class UserCtrl {
     UserModel.create(obj, (err: any, data: any) => {
       if (err) {
         console.log(err);
+        log.info(new Date().toLocaleString(), err.messagem);
         next(err);
       } else res.json(data);
     });
@@ -16,6 +19,7 @@ class UserCtrl {
     UserModel.findOne({ uid: uid }, (err: any, data: any) => {
       if (err) {
         console.log(err);
+        log.info(new Date().toLocaleString(), err.messagem);
         next(err);
       } else {
         // console.log(data);

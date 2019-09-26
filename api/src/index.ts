@@ -6,10 +6,12 @@ import routes from "./routes/Rotas";
 import router from "./routes/rotasPrivate";
 
 import * as admin from "firebase-admin";
+import moment = require('moment');
 
 require("dotenv").config();
 var cors = require("cors");
 var app = express();
+moment.locale('pt-BR');
 
 app.use(bodyParser.json({ limit: "1mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +24,7 @@ mongoose
     useNewUrlParser: true
   })
   .then(() => {
-    console.log("🚀 Mongo DB inicializado com sucesso");
+    console.log("🚀 Mongo DB inicializado com sucesso as", moment().format("dddd, MMMM Do YYYY, h:mm:ss a"));
   });
 
 app.use(function(req, res, next) {
