@@ -1,9 +1,13 @@
 div#painel {
-  background-color: skyblue;
-  width: 100%;
+  width: calc(100% - 40px);
   min-width: min-content;
+  margin: 20px;
+  min-height: 300px;
 }
 mat-card#card-left {
   margin: 20px;
-  width: 250px;
+  min-width: 100%;
+}
+.button-dash {
+  padding: 5px;
 }

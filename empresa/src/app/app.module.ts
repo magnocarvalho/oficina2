@@ -72,6 +72,7 @@ import { IndexComponent } from './auth/index/index.component';
 import { NewPromoComponent } from './component/new-promo/new-promo.component';
 import { ReportsComponent } from './component/reports/reports.component';
 import { ApiService } from './services/api.service';
+import { MenuComponent } from './dashboard/menu/menu.component';
 
 
 
@@ -88,7 +89,8 @@ import { ApiService } from './services/api.service';
     DashboardComponent,
     IndexComponent,
     NewPromoComponent,
-    ReportsComponent
+    ReportsComponent,
+    MenuComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

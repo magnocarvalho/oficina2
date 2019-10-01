@@ -18,6 +18,7 @@ export class ApiService implements HttpInterceptor {
     public userDados: Usuario;
     public isLoading = new BehaviorSubject(false);
     private requests: HttpRequest<any>[] = [];
+    public userComplete = new BehaviorSubject(false);
 
     constructor(private http: HttpClient, public auth: AuthfireService, public loadingBar: LoadingBarService) {
         this.checkToken()
@@ -82,12 +83,15 @@ export class ApiService implements HttpInterceptor {
                     // //('usuario verificado')
                     user.getIdToken(true).then(idToken => {
                         this.token = idToken;
-                        // if (this.token) {
-                        //     this.getUser(idToken).subscribe(empresa => {
-                        // //('token encontrado', this.token)
-                        //     })
-                        // }
-
+                        if (this.token) {
+                            if (this.userComplete.value != true) {
+                                this.getUser(this.token).subscribe(empresa => {
+                                    console.log('endereço da empresa', empresa.googlePlace)
+                                    this.userComplete.next(true)
+                                })
+                            }
+                        }
+                        // this.userComplete.next(true)
                         this.loadingBar.complete()
                     }).catch(erro => {
                         // this.logout()
@@ -148,9 +152,18 @@ export class ApiService implements HttpInterceptor {
             }
         })
         retorno.subscribe(res => {
-            this.userDados = Object.assign({}, res)
+
             // this.userDados = Object.assign({}, res, this.userFire)
-            localStorage.setItem('userDados', JSON.stringify(this.userDados));
+            if (res != undefined) {
+                this.userDados = Object.assign({}, res)
+                localStorage.setItem('userDados', JSON.stringify(this.userDados));
+                // console.log('Dados dos usuario', res)
+                this.userComplete.next(true)
+            } else {
+                this.userComplete.next(false)
+                console.log("Erro ao buscar o usuario", res)
+            }
+
         }, err => {
             // //(err.status)
             if (err.status == '401') {

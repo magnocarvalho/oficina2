@@ -11,6 +11,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { FormGuard } from './guard/form.guard';
 import { IndexComponent } from './auth/index/index.component';
 import { NewPromoComponent } from './component/new-promo/new-promo.component';
+import { ReportsComponent } from './component/reports/reports.component';
 
 const routes: Routes = [
   {
@@ -22,10 +23,10 @@ const routes: Routes = [
   },
   { path: "register", component: CreateLoginComponent, canActivate: [DashboardGuard] },
   {
-    path: "adm", component: DashboardComponent, canActivate: [AuthGuard], children: [
-      { path: 'new-promo', component: NewPromoComponent }
-    ]
+    path: "adm", component: DashboardComponent, canActivate: [AuthGuard]
   },
+  { path: "reports", component: ReportsComponent, canActivate: [AuthGuard] },
+  { path: 'new-promo', component: NewPromoComponent, canActivate: [AuthGuard] },
   { path: "landpage", component: LandingPageComponent, canActivate: [DashboardGuard] },
   { path: "form-empresa", component: InfosEmpresaComponent, canActivate: [FormGuard] },
   { path: "", redirectTo: "/index", pathMatch: "full" },

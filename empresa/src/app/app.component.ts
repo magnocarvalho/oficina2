@@ -22,6 +22,7 @@ export class AppComponent {
   mode = 'indeterminate';
   value = 50;
   isLoading: Subject<boolean> = this.api.isLoading;
+  userComplete: Subject<boolean> = this.api.userComplete;
   constructor(private rota: Router, public auth: AuthfireService, public api: ApiService) {
     rota.events.forEach((event) => {
       if (event instanceof NavigationStart) {
@@ -48,7 +49,8 @@ export class AppComponent {
   }
 
   onLoginOut() {
-    this.auth.doLogout();
+    // this.auth.doLogout();
+    this.api.logout()
     this.uid = "";
     this.email = "";
     this.displayName = "";
