@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<ngx-loading-bar *ngIf="isLoading | async"></ngx-loading-bar>
+<ngx-loading-bar></ngx-loading-bar>
 <mat-toolbar color="primary">
   <span>Gastando Pouco</span>
   <span class="example-spacer"></span>
@@ -36,7 +36,7 @@
   <div id="menu" *ngIf="emailVerified && userComplete | async" fxLayoutAlign="start stretch">
     <app-menu></app-menu>
   </div>
-  <div id="largura-total" fxLayout="column" fxLayoutAlign="start stretch" [ngClass]="{'login-total': !emailVerified}">
+  <div id="largura-total" fxLayout="column" fxLayoutAlign="start stretch" [ngClass]="{'login-total': userComplete | async}">
     <router-outlet></router-outlet>
   </div>
 </div>

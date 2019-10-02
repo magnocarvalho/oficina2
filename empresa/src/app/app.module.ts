@@ -7,11 +7,12 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ImageCropperModule } from 'ngx-image-cropper';
 //flexlayout Module
 import { FlexLayoutModule } from '@angular/flex-layout';
 // Angular Material Components
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatCheckboxModule } from "@angular/material";
+import { MatCheckboxModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } from "@angular/material";
 import { MatButtonModule } from "@angular/material";
 import { MatInputModule } from "@angular/material/input";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
@@ -41,6 +42,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
 // for HttpClient import:
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
 // for Router import:
@@ -73,8 +75,6 @@ import { NewPromoComponent } from './component/new-promo/new-promo.component';
 import { ReportsComponent } from './component/reports/reports.component';
 import { ApiService } from './services/api.service';
 import { MenuComponent } from './dashboard/menu/menu.component';
-
-
 
 @NgModule({
   declarations: [
@@ -147,9 +147,13 @@ import { MenuComponent } from './dashboard/menu/menu.component';
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     LoadingBarModule,
-    NgxMaskModule.forRoot()
+    MatMomentDateModule,
+    NgxMaskModule.forRoot(),
+    ImageCropperModule
   ],
-  providers: [LocationService, { provide: HTTP_INTERCEPTORS, useClass: ApiService, multi: true }],
+  providers: [LocationService,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

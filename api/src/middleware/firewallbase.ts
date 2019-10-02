@@ -17,7 +17,7 @@ export default function firewallbase(req, res, next) {
           "h:mm:ss:S a"
         )} ${req.originalUrl} ${req.ip} ${req.ips}
         `;
-        console.log(logs);
+        // console.log(logs);
        
         // res.locals.user = decodedToken;
         res.locals.uid = decodedToken.uid;

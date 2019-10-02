@@ -4,6 +4,8 @@ import { User } from "./model/user";
 import { AuthfireService } from "./services/authfire.service";
 import { ApiService } from './services/api.service';
 import { Subject } from 'rxjs';
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
 
 @Component({
   selector: "app-root",
