@@ -5,7 +5,9 @@ export class Promo {
     initDate: Moment;
     endDate: Moment;
     _id: String;
-    foto: String;
+    thumbnail: String;
+    initPrice: Number;
+    endPrice: Number;
     descont: Number;
     about: String;
 }

@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { CurrencyMaskModule } from "ng2-currency-mask";
 //flexlayout Module
 import { FlexLayoutModule } from '@angular/flex-layout';
 // Angular Material Components
@@ -149,8 +150,8 @@ import { MenuComponent } from './dashboard/menu/menu.component';
     LoadingBarModule,
     MatMomentDateModule,
     NgxMaskModule.forRoot(),
-    ImageCropperModule
-  ],
+    ImageCropperModule,
+    CurrencyMaskModule],
   providers: [LocationService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiService, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'pt-br' },

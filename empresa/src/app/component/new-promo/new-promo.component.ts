@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import * as moment from 'moment';
 import { Promo } from 'src/app/model/promo';
 import 'moment/locale/pt-br';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
+import { priceValidator } from 'src/app/validator/priceValidator';
+import { ImgUploadService } from 'src/app/services/img-upload.service';
 
 @Component({
   selector: 'app-new-promo',
@@ -19,8 +21,8 @@ export class NewPromoComponent implements OnInit {
   fotoThumb: any = {};
   fotoThumbAplicado: boolean = false;
   imagemPerfil: any = "/assets/img500x.png";
-
-  constructor(private formBuilder: FormBuilder) {
+  valorMenor: Number = 0;
+  constructor(private formBuilder: FormBuilder, public imagemUpload: ImgUploadService) {
 
   }
 
@@ -29,11 +31,26 @@ export class NewPromoComponent implements OnInit {
     this.form = this.formBuilder.group({
       title: ["", [Validators.required, Validators.minLength(2)]],
       about: ["", [Validators.required, Validators.minLength(2)]],
+      initPrice: [0, [Validators.required, Validators.min(1)]],
+      endPrice: [0, [Validators.required, Validators.min(1)]],
       initDate: [moment(), [Validators.required]],
       endDate: [moment(), [Validators.required]],
-      thumbnail: [null, [Validators.required]],
+      thumbnail: ["", [Validators.required]],
+      descont: [{ value: "", disabled: true }, [Validators.required]]
+    }, {
+      validators: priceValidator('initPrice', 'endPrice', 'descont')
     })
   }
+  consultDescont(): String {
+    let tmp = (this.form.get('endPrice').value / this.form.get('initPrice').value) * 100;
+    if (tmp) {
+      return parseFloat('' + tmp).toFixed(2) + "%";
+    } else {
+      return 'Porcentagem Invalida'
+    }
+
+  }
+
 
   fileChangeEventThumb(event: any): void {
     this.imageChangedEventThumb = event;
@@ -83,7 +100,11 @@ export class NewPromoComponent implements OnInit {
   }
   salvar() {
     var tmp: Promo = this.form.value
+    if (this.form.valid) {
+      // this.imagemUpload.uploadFoto()
+    }
     console.log(tmp)
+
   }
 
 }
