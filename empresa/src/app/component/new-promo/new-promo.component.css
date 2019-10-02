@@ -4,7 +4,6 @@
 }
 .personal-image {
   text-align: center;
-  margin-bottom: 30px;
 }
 .personal-image input[type="file"] {
   display: none;
@@ -78,4 +77,7 @@
 }
 .pading-5-left {
   padding-left: 10px;
+}
+.botao-caption {
+  height: 100%;
 }

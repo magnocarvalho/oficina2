@@ -17,12 +17,15 @@ export class NewPromoComponent implements OnInit {
   day = moment();
   mes = moment();
   fotoThumb: any = {};
-  fotoThumbAplicado: boolean;
+  fotoThumbAplicado: boolean = false;
   imagemPerfil: any = "/assets/img500x.png";
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {
+
+  }
 
   ngOnInit() {
+    moment.locale('pt-br')
     this.form = this.formBuilder.group({
       title: ["", [Validators.required, Validators.minLength(2)]],
       about: ["", [Validators.required, Validators.minLength(2)]],
@@ -36,59 +39,51 @@ export class NewPromoComponent implements OnInit {
     this.imageChangedEventThumb = event;
   }
   onFileChange(event: ImageCroppedEvent) {
-    // var foto = this.fotoThumb;
-    // if (event.file) {
-    //   foto.file = event.file;
-    //   this.fotoThumb.url = event.base64;
-    //   this.form.get('thumbnail').setValue(event.base64);
-    // }
+
+    if (event.base64) {
+      this.fotoThumb = event.base64;
+    }
   }
-  removeThumb(e) {
-    e.preventDefault();
-    // (<any>document.getElementById('filethumb')).value = "";
-    // this.fotoThumb = {};
-    // this.fileChangeEventThumb(null);
+  removeThumb() {
+    this.fotoThumbAplicado = false;
+    this.fotoThumb = null;
   }
 
   aplicarFotoThumb() {
-    // this.fotoThumbAplicado = true;
-    // console.log(this.fotoThumb.url)
+    this.fotoThumbAplicado = true;
+  }
+  retirarFotoThumb() {
+    this.fotoThumbAplicado = false;
+    this.imageChangedEventThumb = null;
+
   }
 
-  retirarFotoThumb() {
-    // this.fotoThumb = {};
-    // this.form.get('thumbnail').setValue(null);
-    // this.fotoThumbAplicado = false;
-  }
   rotateLeft(e) {
     e.preventDefault();
-
-    // this.imageCropper.rotateLeft();
+    this.imageCropper.rotateLeft();
   }
   rotateRight(e) {
     e.preventDefault();
-
     this.imageCropper.rotateRight();
   }
   flipHorizontal(e) {
     e.preventDefault();
-
     this.imageCropper.flipHorizontal();
   }
   flipVertical(e) {
     e.preventDefault();
-
     this.imageCropper.flipVertical();
   }
-  salvar() {
-    var tmp: Promo = this.form.value
-    console.log(tmp)
-  }
+
   imageLoaded() {
     // show cropper
   }
   loadImageFailed() {
     // show message
+  }
+  salvar() {
+    var tmp: Promo = this.form.value
+    console.log(tmp)
   }
 
 }

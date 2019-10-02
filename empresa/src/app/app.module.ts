@@ -153,6 +153,7 @@ import { MenuComponent } from './dashboard/menu/menu.component';
   ],
   providers: [LocationService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiService, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-br' },
   ],
   bootstrap: [AppComponent]
 })

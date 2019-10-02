@@ -16,9 +16,6 @@
                                 </figure>
                             </label>
                         </div>
-                        <mat-error style="margin-top: 5px;"
-                            *ngIf="form.get('thumbnail').touched && (form.get('thumbnail').value == '' || form.get('thumbnail').value == null) && form.get('thumbnail').hasError('required')">
-                            Thumbnail obrigatório</mat-error>
                         <div class="crop-fix">
                             <div class="form-group foto">
                                 <image-cropper #cropthumb [imageChangedEvent]="imageChangedEventThumb" [maintainAspectRatio]="true"
@@ -27,39 +24,48 @@
                                     class="preview-image">
                                 </image-cropper>
                                 <div class="buttons-crop" *ngIf="imageChangedEventThumb">
-                                    <button title="Rotacionar para esquerda" button mat-raised-button color="white" (click)="rotateLeft($event)">
-                                        <i class="material-icons">rotate_left</i>
-                                    </button>
-                                    <button title="Rotacionar para direita" button mat-raised-button color="white" (click)="rotateRight($event)">
-                                        <i class="material-icons">rotate_right</i>
-                                    </button>
-                                    <button title="Espelhar horizontalmente" button mat-raised-button color="white" (click)="flipHorizontal($event)">
-                                        <i class="material-icons">flip</i>
-                                    </button>
-                                    <button title="Espelhar verticalmente" button mat-raised-button color="white" (click)="flipVertical($event)">
-                                        <i class="material-icons flip-vertical">flip</i>
-                                    </button>
-                                    <button title="Remover foto" mat-raised-button color="warn" type="reset" *ngIf="!fotoThumbAplicado"
-                                        (click)="removeThumb($event)">
-                                        Remover
-                                    </button>
-                                    <button title="Aplicar" mat-raised-button color="primary" (click)="aplicarFotoThumb()">
-                                        Aplicar
-                                    </button>
+                                    <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="gappx">
+                                        <button title="Rotacionar para esquerda" button mat-raised-button color="white" (click)="rotateLeft($event)">
+                                            <i class="material-icons">rotate_left</i>
+                                        </button>
+                                        <button title="Rotacionar para direita" button mat-raised-button color="white" (click)="rotateRight($event)">
+                                            <i class="material-icons">rotate_right</i>
+                                        </button>
+                                        <button title="Espelhar horizontalmente" button mat-raised-button color="white"
+                                            (click)="flipHorizontal($event)">
+                                            <i class="material-icons">flip</i>
+                                        </button>
+                                        <button title="Espelhar verticalmente" button mat-raised-button color="white" (click)="flipVertical($event)">
+                                            <i class="material-icons flip-vertical">flip</i>
+                                        </button>
+                                    </div>
+                                    <div fxLayout="row" style="margin-top: 5px;" fxLayoutAlign="space-around center" fxLayoutGap="gappx">
+                                        <button title="Remover foto" mat-raised-button color="warn" type="reset" (click)="retirarFotoThumb()">
+                                            Remover Foto
+                                        </button>
+                                        <button title="Aplicar" mat-raised-button color="primary" (click)="aplicarFotoThumb()">
+                                            Aplicar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div *ngIf="fotoThumbAplicado">
-                        <div class="preview-crop">
-                            <img class="postagem-thumbnail" src="{{fotoThumb.url}}" alt="" />
-                            <div class="overlay-preview">
-                                <button mat-raised-button color="warn" type="reset" (click)="retirarFotoThumb()">
-                                    Remover
-                                </button>
-                            </div>
-                        </div>
+                        <figure fxFlex="100" class="personal-figure">
+                            <img class="postagem-thumbnail" src="{{fotoThumb}}" alt="" />
+                            <figcaption class="personal-figcaption botao-remove">
+                                <div class="botao-caption" fxLayout="column" fxLayoutAlign="center center">
+                                    <button mat-raised-button color="warn" type="reset" (click)="removeThumb()">
+                                        Remover
+                                    </button>
+                                </div>
+                            </figcaption>
+                        </figure>
                     </div>
+                    <mat-error style="margin-top: 5px;"
+                        *ngIf="form.get('thumbnail').touched && (form.get('thumbnail').value == '' || form.get('thumbnail').value == null) && form.get('thumbnail').hasError('required')">
+                        Thumbnail obrigatório</mat-error>
                 </div>
                 <div fxLayout="column" class="pading-5-left" fxFlex="auto" fxLayoutAlign="start start">
                     <mat-form-field class="formbase" appearance="outline">
