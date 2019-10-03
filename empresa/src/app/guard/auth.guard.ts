@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthfireService } from '../services/authfire.service';
+import { ApiService } from '../services/api.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(
-    public authService: AuthfireService,
+    public authService: ApiService,
     public router: Router
   ) { }
 
@@ -17,8 +18,15 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authService.isLoggedIn !== true) {
       console.log('Não logado')
-      this.router.navigate(['login'])
+      this.router.navigate(['index'])
+      return false
     }
+    // else
+    //   if (!this.authService.empresaDados) {
+    //     // alert('Termine Seu cadastro!')
+    //     this.router.navigate(['form-empresa'])
+    //     return false
+    //   }
     return true;
   }
 

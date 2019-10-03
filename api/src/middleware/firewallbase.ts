@@ -12,10 +12,11 @@ export default function firewallbase(req, res, next) {
       .verifyIdToken(token[1])
       .then(decodedToken => {
         res.locals.uid = decodedToken.uid;
+        // console.log('Autorizado para',decodedToken.email)
         next();
       })
       .catch(err => {
-        console.log("error", err.messagem);
+        console.log("error", err.code);
         res.sendStatus(401);
       });
   } else {

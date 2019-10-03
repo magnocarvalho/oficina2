@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ImgUploadService } from './img-upload.service';
+import { ApiService } from './api.service';
 
-describe('ImgUploadService', () => {
+describe('ApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ImgUploadService = TestBed.get(ImgUploadService);
+    const service: ApiService = TestBed.get(ApiService);
     expect(service).toBeTruthy();
   });
 });

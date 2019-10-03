@@ -1,2 +1,74 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ngx-toastr/toastr";
+@import '~swiper/css/swiper.min.css';
+body,
+html {
+    min-height: 100%;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+    line-height: 1;
+    /* background-size: auto; */
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+
+mat-toolbar.example-header {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+
+.example-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.example-container {
+    top: 54px !important;
+}
+
+.example-container {
+    position: absolute;
+    top: 60px;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.example-sidenav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    padding-right: 10;
+}
+
+#rotas {
+    min-height: calc(100vh - 64px);
+}
+
+@media (max-width: 600px) {
+    #rotas {
+        min-height: calc(100vh - 54px) !important;
+    }
+}
+.mat-content {
+    align-items: center !important;
+  }
+  .mat-slider{
+      padding: 0 !important;
+  }

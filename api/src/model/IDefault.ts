@@ -2,9 +2,9 @@ import * as mongoose from "mongoose";
 
 export interface IDefault {
   isDeleted?: boolean;
-  createdby?: string;
+  createdby?: String;
   createdon?: Date;
-  modifiedby?: string;
+  modifiedby?: String;
   modifiedon?: Date;
 }
 export const Inject = (obj: any): void => {

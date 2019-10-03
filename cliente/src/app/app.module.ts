@@ -1,12 +1,8 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-// import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-//Angular Material Components
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { NgxCaptchaModule } from 'ngx-captcha';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatCheckboxModule } from "@angular/material";
+import { MatCheckboxModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } from "@angular/material";
 import { MatButtonModule } from "@angular/material";
 import { MatInputModule } from "@angular/material/input";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
@@ -36,13 +32,67 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { ToastrModule } from 'ngx-toastr';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
+// for HttpClient import:
+import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
+// for Router import:
+import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MatCarouselModule } from '@ngmodule/material-carousel';
+//flexlayout Module
+import { FlexLayoutModule } from '@angular/flex-layout';
+// for Core import:
+import { LoadingBarModule } from "@ngx-loading-bar/core";
+import { NgxUsefulSwiperModule } from "ngx-useful-swiper"
+// firebase
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './rotas/login/login.component';
+import { PromoComponent } from './rotas/promo/promo.component';
+import { NotFoundPageComponent } from './rotas/not-found-page/not-found-page.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    PromoComponent,
+    NotFoundPageComponent
+  ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // firestore
+    AngularFireAuthModule, // auth
+    AngularFireStorageModule, // storage
+    AgmCoreModule.forRoot({
+      apiKey: environment.googlemaps,
+      language: 'pt-BR',
+      libraries: ['places', 'geometry']
+    }),
+    MatGoogleMapsAutocompleteModule.forRoot(),
     BrowserModule,
-    BrowserAnimationsModule,
+    HttpClientModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
     AppRoutingModule,
+    FlexLayoutModule,
+    NgxCaptchaModule,
+    BrowserAnimationsModule,
     MatCheckboxModule,
     MatCheckboxModule,
     MatButtonModule,
@@ -73,9 +123,22 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    LoadingBarHttpClientModule,
+    LoadingBarRouterModule,
+    LoadingBarModule,
+    MatMomentDateModule,
+    NgxMaskModule.forRoot(),
+    ToastrModule.forRoot(),
+    MatCarouselModule.forRoot(),
+    ImageCropperModule,
+    CurrencyMaskModule,
+    NgxUsefulSwiperModule,
+
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-br' },
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

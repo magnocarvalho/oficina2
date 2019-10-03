@@ -1,21 +1,45 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>
+<ngx-loading-bar></ngx-loading-bar>
+<ng-container>
+    <mat-toolbar color="primary" class="example-header">
+        <mat-icon class="menu-botao" (click)="sidenav.toggle()" *ngIf="cliente">
+            menu
+        </mat-icon>
+        <mat-icon *ngIf="!cliente">loyalty</mat-icon>
+        <span>Gastando Pouco</span>
+        <span class="example-spacer"></span>
+        <button mat-mini-fab [matMenuTriggerFor]="menuLogin" color="primary" *ngIf="cliente">
+            <mat-icon>shop</mat-icon>
+        </button>
+        <mat-menu #menuLogin="matMenu">
+            <!-- <button mat-menu-item class="margin-r30" (click)="linkRota('login')">
+                <mat-icon>account_circle</mat-icon> Login
+            </button>
+            <button mat-menu-item (click)="linkRota('register')">
+                <mat-icon>loyalty</mat-icon> Register
+            </button> -->
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>close</mat-icon> Logout
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+    <mat-sidenav-container class="example-container min-container" autosize>
+        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" class="example-sidenav">
+            <mat-nav-list>
+                <mat-list-item [routerLink]="[ '/index' ]" routerLinkActive="active">
+                    <mat-icon>money</mat-icon> Promoçoes
+                </mat-list-item>
+                <mat-list-item [routerLink]="[ '/maps' ]" routerLinkActive="active">
+                    <mat-icon>map</mat-icon> Mapa
+                </mat-list-item>
+                <mat-list-item [routerLink]="[ '/favorite' ]" routerLinkActive="active">
+                    <mat-icon>favorite</mat-icon> Favoritos
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div fxLayout="column" fxLayoutAlign="start stretch" flex="100" id="rotas">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</ng-container>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthfireService } from 'src/app/services/authfire.service';
 import { ApiService } from 'src/app/services/api.service';
 import { User } from 'src/app/model/user';
 
@@ -12,9 +11,9 @@ export class MenuComponent implements OnInit {
 
   public user: User;
   public loadingDados: Boolean = false;
-  constructor(public auth: AuthfireService, public api: ApiService) {
+  constructor(public api: ApiService) {
     // this.user = api.getUserDados;
-    auth.user.subscribe(user => {
+    api.user.subscribe(user => {
       if (user) {
         this.user = {
           uid: user.uid,

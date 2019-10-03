@@ -5,8 +5,8 @@ import { Promo } from 'src/app/model/promo';
 import 'moment/locale/pt-br';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { priceValidator } from 'src/app/validator/priceValidator';
-import { ImgUploadService } from 'src/app/services/img-upload.service';
-import { AuthfireService } from 'src/app/services/authfire.service';
+import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-promo',
@@ -24,8 +24,9 @@ export class NewPromoComponent implements OnInit {
   imagemPerfil: any = "/assets/img500x.png";
   valorMenor: Number = 0;
   uid: String;
-  constructor(private formBuilder: FormBuilder, public imagemUpload: ImgUploadService, public authApi: AuthfireService) {
-    authApi.user.subscribe(res => {
+  descont: Number = 0;
+  constructor(private formBuilder: FormBuilder, public api: ApiService, public rota: Router) {
+    api.user.subscribe(res => {
       this.uid = res.uid
     });
   }
@@ -48,7 +49,11 @@ export class NewPromoComponent implements OnInit {
   consultDescont(): String {
     let tmp = (this.form.get('initPrice').value - this.form.get('endPrice').value) / this.form.get('initPrice').value;
     if (tmp) {
-      return parseFloat('' + tmp * 100).toFixed(2) + "%";
+      var mmm = parseFloat('' + tmp * 100).toFixed(2)
+      this.form.get('descont').setValue(mmm)
+      this.descont = tmp;
+      var retorno = parseFloat(mmm) + "%";
+      return retorno
     } else {
       return 'Porcentagem Invalida'
     }
@@ -99,22 +104,34 @@ export class NewPromoComponent implements OnInit {
   loadImageFailed() {
     // show message
   }
-  salvar() {
+  async salvar() {
     var tmp: Promo = this.form.value
-    if (this.fotoThumb) {
-      console.log(this.fotoThumb.substring(0, 30), this.uid, tmp.title)
-      this.imagemUpload.uploadFoto(this.fotoThumb, this.uid, tmp.title).then(ress => {
-        console.log('responsta ', ress)
+    tmp.descont = this.descont
+    if (!tmp.thumbnail && this.fotoThumb && tmp.title) {
+      this.api.uploadFoto(this.fotoThumb, this.uid, tmp.title).then(ress => {
         tmp.thumbnail = ress;
+        this.form.get('thumbnail').setValue(ress);
+        this.enviarFormServidor(tmp)
       })
-
+    } else {
+      if (!this.form.valid) {
+        return
+      } else {
+        if (tmp.thumbnail) {
+          this.enviarFormServidor(tmp)
+        }
+      }
     }
+  }
 
-
+  enviarFormServidor(tmp: Promo) {
+    console.log(tmp)
     if (this.form.valid) {
+      this.api.promoPost(tmp).subscribe(res => {
+        console.log(res)
+        this.rota.navigate(['promo-list'])
+      })
     }
-    console.log(this.uid, tmp)
-
   }
 
 }

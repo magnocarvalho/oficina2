@@ -5,7 +5,6 @@ import {
   FormControl,
   FormBuilder
 } from "@angular/forms";
-import { AuthfireService } from 'src/app/services/authfire.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { ApiService } from 'src/app/services/api.service';
@@ -18,7 +17,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  constructor(private formBuilder: FormBuilder, public api: ApiService, public auth: AuthfireService, public rotas: Router, public snack: MatSnackBar, public ngxBar: LoadingBarService) { }
+  constructor(private formBuilder: FormBuilder, public api: ApiService, public rotas: Router, public snack: MatSnackBar, public ngxBar: LoadingBarService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -29,28 +28,15 @@ export class LoginComponent implements OnInit {
 
   goLogin() {
     this.ngxBar.start()
-    this.auth.doLogin(this.form.value).then(res => {
+    this.api.doLogin(this.form.value).then(res => {
       this.ngxBar.increment(30)
-      // console.log(res)
-
-      this.auth.doUserDados().getIdToken(true).then(idT => {
-        this.ngxBar.increment(60)
-        this.api.getUserLogin(idT).subscribe(usuario => {
-          this.ngxBar.increment(90)
-          this.snack.open("Login Realizado com sucesso", 'ok', { duration: 5000 })
-          this.rotas.navigate(["adm"]);
-        }, err => {
-          this.snack.open("Login Realizado com sucesso, falta terminar o cadastro", 'ok', { duration: 5000 })
-          this.rotas.navigate(["form-empresa"]);
-        })
-      })
-
+      console.log(res)
 
     }).catch(err => {
-
       this.snack.open(err.message, 'erro', { duration: 5000 })
       console.error(err)
     }).finally(() => {
+
       this.ngxBar.complete()
     })
   }

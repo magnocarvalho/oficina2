@@ -12,23 +12,27 @@ import { FormGuard } from './guard/form.guard';
 import { IndexComponent } from './auth/index/index.component';
 import { NewPromoComponent } from './component/new-promo/new-promo.component';
 import { ReportsComponent } from './component/reports/reports.component';
+import { PromoListComponent } from './component/promo-list/promo-list.component';
+import { EditProfileComponent } from './component/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
     path: "login",
-    component: LoginComponent, canActivate: [DashboardGuard]
+    component: LoginComponent
   },
   {
-    path: 'index', component: IndexComponent, canActivate: [DashboardGuard]
+    path: 'index', component: IndexComponent
   },
-  { path: "register", component: CreateLoginComponent, canActivate: [DashboardGuard] },
+  { path: "register", component: CreateLoginComponent },
   {
     path: "adm", component: DashboardComponent, canActivate: [AuthGuard]
   },
   { path: "reports", component: ReportsComponent, canActivate: [AuthGuard] },
+  { path: "promo-list", component: PromoListComponent, canActivate: [AuthGuard] },
+  { path: "edit-profile", component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: 'new-promo', component: NewPromoComponent, canActivate: [AuthGuard] },
-  { path: "landpage", component: LandingPageComponent, canActivate: [DashboardGuard] },
-  { path: "form-empresa", component: InfosEmpresaComponent, canActivate: [FormGuard] },
+  { path: "landpage", component: LandingPageComponent },
+  { path: "form-empresa", component: InfosEmpresaComponent },
   { path: "", redirectTo: "/index", pathMatch: "full" },
   { path: "**", component: NotFoundPageComponent }
 ];

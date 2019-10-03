@@ -15,9 +15,13 @@ export interface IUserModel extends IDefault, mongoose.Document {
   rua: string;
   location: any;
   tipo: any;
+  cnpj: string;
 }
 
 let schema = {
+  displayName: { type: String, required: true },
+  email: { type: String, required: true },
+  photoURL: { type: String, required: true },
   uid: { type: String, required: true, index: true },
   bairro: { type: String, required: true },
   cep: { type: String, required: true, trim: true },

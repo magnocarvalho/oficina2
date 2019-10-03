@@ -5,11 +5,12 @@ import {
   FormControl,
   FormBuilder
 } from "@angular/forms";
-import { AuthfireService } from "src/app/services/authfire.service";
+
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 import { ReCaptchaV3Service, InvisibleReCaptchaComponent } from 'ngx-captcha';
 import { environment } from "src/environments/environment";
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: "app-create-login",
@@ -32,7 +33,7 @@ export class CreateLoginComponent implements OnInit {
   @ViewChild('captchaElem', { static: false }) captchaElem: InvisibleReCaptchaComponent;
   constructor(
     private formBuilder: FormBuilder,
-    public auth: AuthfireService,
+    public auth: ApiService,
     public rota: Router,
     public snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef
