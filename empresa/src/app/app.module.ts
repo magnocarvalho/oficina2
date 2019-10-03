@@ -56,10 +56,11 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from "src/environments/environment";
+
 // 
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
-
+import { ToastrModule } from 'ngx-toastr';
 // conmponents
 import { LoginComponent } from "./auth/login/login.component";
 import { LogoutComponent } from "./auth/logout/logout.component";
@@ -150,9 +151,10 @@ import { MenuComponent } from './dashboard/menu/menu.component';
     LoadingBarModule,
     MatMomentDateModule,
     NgxMaskModule.forRoot(),
+    ToastrModule.forRoot(),
     ImageCropperModule,
     CurrencyMaskModule],
-  providers: [LocationService,
+  providers: [LocationService, ApiService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiService, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'pt-br' },
   ],

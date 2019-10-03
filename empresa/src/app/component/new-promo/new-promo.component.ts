@@ -5,8 +5,7 @@ import { Promo } from 'src/app/model/promo';
 import 'moment/locale/pt-br';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { priceValidator } from 'src/app/validator/priceValidator';
-import { ImgUploadService } from 'src/app/services/img-upload.service';
-import { AuthfireService } from 'src/app/services/authfire.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-new-promo',
@@ -24,8 +23,8 @@ export class NewPromoComponent implements OnInit {
   imagemPerfil: any = "/assets/img500x.png";
   valorMenor: Number = 0;
   uid: String;
-  constructor(private formBuilder: FormBuilder, public imagemUpload: ImgUploadService, public authApi: AuthfireService) {
-    authApi.user.subscribe(res => {
+  constructor(private formBuilder: FormBuilder, public api: ApiService) {
+    api.user.subscribe(res => {
       this.uid = res.uid
     });
   }
@@ -99,22 +98,18 @@ export class NewPromoComponent implements OnInit {
   loadImageFailed() {
     // show message
   }
-  salvar() {
+  async salvar() {
     var tmp: Promo = this.form.value
-    if (this.fotoThumb) {
-      console.log(this.fotoThumb.substring(0, 30), this.uid, tmp.title)
-      this.imagemUpload.uploadFoto(this.fotoThumb, this.uid, tmp.title).then(ress => {
-        console.log('responsta ', ress)
+    if (!tmp.thumbnail && this.fotoThumb && tmp.title) {
+      this.api.uploadFoto(this.fotoThumb, this.uid, tmp.title).then(ress => {
         tmp.thumbnail = ress;
+        this.form.get('thumbnail').setValue(ress);
       })
-
+    } else {
+      if (!this.form.valid) {
+        return
+      }
     }
-
-
-    if (this.form.valid) {
-    }
-    console.log(this.uid, tmp)
-
   }
 
 }

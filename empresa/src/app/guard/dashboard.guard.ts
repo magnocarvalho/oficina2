@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthfireService } from '../services/authfire.service';
+import { ApiService } from '../services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardGuard implements CanActivate {
   constructor(
-    public authService: AuthfireService,
+    public authService: ApiService,
     public router: Router
   ) { }
 

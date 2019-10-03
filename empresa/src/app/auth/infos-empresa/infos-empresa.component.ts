@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { User } from "src/app/model/user";
 import { Router } from "@angular/router";
 import { MapsAPILoader, GoogleMapsAPIWrapper } from '@agm/core';
-import { AuthfireService } from "src/app/services/authfire.service";
 import { Observable, from, of } from "rxjs";
 import { Location, Appearance } from '@angular-material-extensions/google-maps-autocomplete';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,9 +32,9 @@ export class InfosEmpresaComponent implements OnInit {
   public tiposCarregados = [];
   form: FormGroup;
   mascaraCnpj = "00.000.000/0000-00"
-  constructor(private rota: Router, public api: ApiService, public snackBar: MatSnackBar, public auth: AuthfireService, private formBuilder: FormBuilder, private mapLoader: MapsAPILoader, private reverso: LocationService) {
+  constructor(private rota: Router, public api: ApiService, public snackBar: MatSnackBar, private formBuilder: FormBuilder, private mapLoader: MapsAPILoader, private reverso: LocationService) {
 
-    this.auth.user.subscribe(user => {
+    this.api.user.subscribe(user => {
       if (user) {
         this.displayName = user.displayName;
         this.email = user.email;
@@ -71,7 +70,7 @@ export class InfosEmpresaComponent implements OnInit {
   }
 
   reEnviarEmail() {
-    this.auth.doCheckEmail().then(res => {
+    this.api.doCheckEmail().then(res => {
       alert('Email reenviado para ' + this.email)
     })
   }
@@ -146,7 +145,7 @@ export class InfosEmpresaComponent implements OnInit {
   async salvarDados() {
     if (this.form.valid) {
       // console.log(this.form.value)
-      var uid = await this.auth.userData.uid;
+      var uid = await this.api.firebaseUser.uid;
       if (uid) {
         var obj = this.form.value
         obj.uid = uid;
