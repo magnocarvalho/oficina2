@@ -6,6 +6,7 @@ import 'moment/locale/pt-br';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { priceValidator } from 'src/app/validator/priceValidator';
 import { ImgUploadService } from 'src/app/services/img-upload.service';
+import { AuthfireService } from 'src/app/services/authfire.service';
 
 @Component({
   selector: 'app-new-promo',
@@ -17,13 +18,16 @@ export class NewPromoComponent implements OnInit {
   imageChangedEventThumb: any = '';
   @ViewChild("cropthumb", { static: false }) imageCropper: ImageCropperComponent;
   day = moment();
-  mes = moment();
-  fotoThumb: any = {};
+  mes = moment().add(1, 'months');
+  fotoThumb: String;
   fotoThumbAplicado: boolean = false;
   imagemPerfil: any = "/assets/img500x.png";
   valorMenor: Number = 0;
-  constructor(private formBuilder: FormBuilder, public imagemUpload: ImgUploadService) {
-
+  uid: String;
+  constructor(private formBuilder: FormBuilder, public imagemUpload: ImgUploadService, public authApi: AuthfireService) {
+    authApi.user.subscribe(res => {
+      this.uid = res.uid
+    });
   }
 
   ngOnInit() {
@@ -33,8 +37,8 @@ export class NewPromoComponent implements OnInit {
       about: ["", [Validators.required, Validators.minLength(2)]],
       initPrice: [0, [Validators.required, Validators.min(1)]],
       endPrice: [0, [Validators.required, Validators.min(1)]],
-      initDate: [moment(), [Validators.required]],
-      endDate: [moment(), [Validators.required]],
+      initDate: ["", [Validators.required]],
+      endDate: ["", [Validators.required]],
       thumbnail: ["", [Validators.required]],
       descont: [{ value: "", disabled: true }, [Validators.required]]
     }, {
@@ -42,21 +46,19 @@ export class NewPromoComponent implements OnInit {
     })
   }
   consultDescont(): String {
-    let tmp = (this.form.get('endPrice').value / this.form.get('initPrice').value) * 100;
+    let tmp = (this.form.get('initPrice').value - this.form.get('endPrice').value) / this.form.get('initPrice').value;
     if (tmp) {
-      return parseFloat('' + tmp).toFixed(2) + "%";
+      return parseFloat('' + tmp * 100).toFixed(2) + "%";
     } else {
       return 'Porcentagem Invalida'
     }
 
   }
 
-
   fileChangeEventThumb(event: any): void {
     this.imageChangedEventThumb = event;
   }
   onFileChange(event: ImageCroppedEvent) {
-
     if (event.base64) {
       this.fotoThumb = event.base64;
     }
@@ -71,10 +73,9 @@ export class NewPromoComponent implements OnInit {
   }
   retirarFotoThumb() {
     this.fotoThumbAplicado = false;
+    this.fotoThumb = null;
     this.imageChangedEventThumb = null;
-
   }
-
   rotateLeft(e) {
     e.preventDefault();
     this.imageCropper.rotateLeft();
@@ -100,10 +101,19 @@ export class NewPromoComponent implements OnInit {
   }
   salvar() {
     var tmp: Promo = this.form.value
-    if (this.form.valid) {
-      // this.imagemUpload.uploadFoto()
+    if (this.fotoThumb) {
+      console.log(this.fotoThumb.substring(0, 30), this.uid, tmp.title)
+      this.imagemUpload.uploadFoto(this.fotoThumb, this.uid, tmp.title).then(ress => {
+        console.log('responsta ', ress)
+        tmp.thumbnail = ress;
+      })
+
     }
-    console.log(tmp)
+
+
+    if (this.form.valid) {
+    }
+    console.log(this.uid, tmp)
 
   }
 
