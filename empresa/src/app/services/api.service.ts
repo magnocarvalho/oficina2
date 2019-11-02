@@ -252,7 +252,6 @@ export class ApiService implements HttpInterceptor {
         }
         this.isLoading.next(this.requests.length > 0);
     }
-
     showSuccess(mensagem) {
         this.toastr.success(mensagem, 'Sucesso');
     }
@@ -496,6 +495,7 @@ export class ApiService implements HttpInterceptor {
         localStorage.setItem('userDados', null);
         this.doLogout().finally(() => {
             // console.log('Logout');
+            console.log('Logout');
         })
         this.token = null;
         this.empresaDados = null;
@@ -512,18 +512,18 @@ export class ApiService implements HttpInterceptor {
             taksUpload.task.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
                 this.loadingBar.set((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
                 if (snapshot.state == "sucess") {
-                    console.log('Uploaded a data_url string!', snapshot.downloadURL);
+                    // console.log('Uploaded a data_url string!', snapshot.downloadURL);
                     this.loadingBar.complete()
                     // this.loadingBar.
                 }
             }, erro => {
-                console.log('Falhou o upload')
+                // console.log('Falhou o upload')
                 alert('Falha ao fazer o upload da sua imagem, tente novamente mais tarde')
                 this.loadingBar.complete()
                 reject(erro)
             }, () => {
                 taksUpload.task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-                    console.log('File available at', downloadURL);
+                    // console.log('File available at', downloadURL);
                     resolve(downloadURL)
                 });
             })
@@ -548,7 +548,7 @@ export class ApiService implements HttpInterceptor {
                         resolve({ caminhoImagem });
                     },
                     erroImg => {
-                        // console.log(erroImg);
+                        console.log(erroImg);
                         this.loadingBar.complete()
                         reject(erroImg);
                     }
