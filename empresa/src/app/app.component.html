@@ -10,8 +10,8 @@
     <span *ngIf="emailVerified && !!api.empresaDados" (click)="linkRota('adm')">Gastando Pouco</span>
     <span class="example-spacer"></span>
     <span *ngIf="uid && (!emailVerified || !api.empresaDados)">
-      <button mat-raised-button (click)="onLoginOut()">
-        <mat-icon>close</mat-icon>Sair
+      <button mat-raised-button (click)="onLoginOut()" color="warn">
+        <mat-icon>exit_to_app</mat-icon>Logout
       </button>
     </span>
     <span *ngIf="emailVerified && !!api.empresaDados">

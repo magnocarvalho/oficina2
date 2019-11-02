@@ -2,29 +2,53 @@
 <ng-container>
     <mat-toolbar color="primary" class="example-header">
         <mat-icon class="menu-botao" (click)="sidenav.toggle()" *ngIf="cliente">
-            menu
+            filter_list
         </mat-icon>
         <mat-icon *ngIf="!cliente">loyalty</mat-icon>
-        <span>Gastando Pouco</span>
+        <span>Gastando Pouco</span><span>&nbsp;&nbsp;&nbsp;</span>
+        <mat-icon *ngIf="cliente">shopping_cart</mat-icon>
         <span class="example-spacer"></span>
         <button mat-mini-fab [matMenuTriggerFor]="menuLogin" color="primary" *ngIf="cliente">
-            <mat-icon>shop</mat-icon>
+            <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menuLogin="matMenu">
-            <!-- <button mat-menu-item class="margin-r30" (click)="linkRota('login')">
-                <mat-icon>account_circle</mat-icon> Login
+            <button mat-menu-item [routerLink]="[ '/index' ]" routerLinkActive="active">
+                <mat-icon>money</mat-icon> Promoçoes
             </button>
-            <button mat-menu-item (click)="linkRota('register')">
-                <mat-icon>loyalty</mat-icon> Register
-            </button> -->
+            <button mat-menu-item [routerLink]="[ '/maps' ]" routerLinkActive="active">
+                <mat-icon>map</mat-icon> Mapa
+            </button>
+            <button mat-menu-item [routerLink]="[ '/favorite' ]" routerLinkActive="active">
+                <mat-icon>favorite</mat-icon> Favoritos
+            </button>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>close</mat-icon> Logout
             </button>
         </mat-menu>
     </mat-toolbar>
     <mat-sidenav-container class="example-container min-container" autosize>
-        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" class="example-sidenav">
-            <mat-nav-list>
+        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" class="example-sidenav" [opened]="cliente">
+            <mat-card>
+                <mat-card-content>
+                    <mat-card-title>
+                        {{apiLocation.location.city}}
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        {{apiLocation.location.state}}
+                    </mat-card-subtitle>
+                    <mat-card-subtitle>Distancia : {{distancia}} Metros</mat-card-subtitle>
+                    <mat-slider class="example-margin" max="8000" min="0" step="100" thumbLabel="true" [(ngModel)]="distancia">
+                    </mat-slider>
+
+                </mat-card-content>
+            </mat-card>
+            <mat-selection-list #shoes>
+                <mat-list-option *ngFor="let shoe of tipos" [selected]="true">
+                    <mat-icon matListIcon>{{shoe.icon}}</mat-icon>
+                    <h3 matLine> {{shoe.value}} </h3>
+                </mat-list-option>
+            </mat-selection-list>
+            <!-- <mat-nav-list>
                 <mat-list-item [routerLink]="[ '/index' ]" routerLinkActive="active">
                     <mat-icon>money</mat-icon> Promoçoes
                 </mat-list-item>
@@ -34,7 +58,7 @@
                 <mat-list-item [routerLink]="[ '/favorite' ]" routerLinkActive="active">
                     <mat-icon>favorite</mat-icon> Favoritos
                 </mat-list-item>
-            </mat-nav-list>
+            </mat-nav-list> -->
         </mat-sidenav>
         <mat-sidenav-content>
             <div fxLayout="column" fxLayoutAlign="start stretch" flex="100" id="rotas">

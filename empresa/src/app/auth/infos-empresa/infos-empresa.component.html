@@ -1,6 +1,6 @@
 <div class="login">
-    <div class="margin-100px">
-        <mat-card class="card-login">
+    <div class="margin-100px card-login">
+        <mat-card>
             <mat-card-header>
                 <img mat-card-avatar *ngIf="photoURL" class="example-header-image" [src]="photoURL">
                 <mat-card-title *ngIf="displayName">{{displayName}}</mat-card-title>
@@ -84,7 +84,7 @@
                                 <mat-label>Tipo de estabelecimento</mat-label>
                                 <mat-select placeholder="Seleciona o tipo de estabelecimento" formControlName="tipo" name="item">
                                     <mat-option required *ngFor="let item of tiposCarregados" [value]="item._id">
-                                       <mat-icon>{{item.icon}}</mat-icon> {{item.value}}
+                                        <mat-icon>{{item.icon}}</mat-icon> {{item.value}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>

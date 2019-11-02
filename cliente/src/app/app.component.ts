@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import { ApiService } from './services/api.service';
 import { User } from './model/user';
+import { LocationService } from './services/location.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,8 +15,10 @@ export class AppComponent {
   title = 'app-cliente';
   mobileQuery: MediaQueryList;
   cliente: User;
+  public tipos = [];
+  public distancia = 8000;
   private _mobileQueryListener: () => void;
-  constructor(private rota: Router, public api: ApiService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(private rota: Router, public api: ApiService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public apiLocation: LocationService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -28,11 +31,12 @@ export class AppComponent {
         });
       }
       if (event instanceof NavigationError) {
-        //caso de erro na rota ou falha na requisição
-        // api.doLogout();
       }
     });
-
+    this.apiLocation.setCurrentPosition()
+    this.api.getData('tipos').subscribe(res => {
+      this.tipos = res
+    })
   }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
@@ -46,4 +50,5 @@ export class AppComponent {
     this.api.doLogout()
     this.rota.navigate(['login'])
   }
+
 }
