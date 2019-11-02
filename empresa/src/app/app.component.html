@@ -2,26 +2,14 @@
 <ngx-loading-bar></ngx-loading-bar>
 <ng-container>
   <mat-toolbar color="primary" class="example-header">
-    <mat-icon
-      *ngIf="emailVerified && !!api.empresaDados"
-      class="menu-botao"
-      (click)="sidenav.toggle()"
-    >
+    <mat-icon *ngIf="emailVerified && !!api.empresaDados" class="menu-botao" (click)="sidenav.toggle()">
       menu
     </mat-icon>
-    <span *ngIf="!emailVerified" (click)="linkRota('index')"
-      >Gastando Pouco</span
-    >
-    <span
-      *ngIf="emailVerified && !api.empresaDados && uid"
-      (click)="linkRota('form-empresa')"
-      >Terminar cadastro</span
-    >
-    <span *ngIf="emailVerified && !!api.empresaDados" (click)="linkRota('adm')"
-      >Gastando Pouco</span
-    >
+    <span *ngIf="!emailVerified" (click)="linkRota('index')">Gastando Pouco</span>
+    <span *ngIf="emailVerified && !api.empresaDados && uid" (click)="linkRota('form-empresa')">Terminar cadastro</span>
+    <span *ngIf="emailVerified && !!api.empresaDados" (click)="linkRota('adm')">Gastando Pouco</span>
     <span class="example-spacer"></span>
-    <span *ngIf="uid && !emailVerified">
+    <span *ngIf="uid && (!emailVerified || !api.empresaDados)">
       <button mat-raised-button (click)="onLoginOut()">
         <mat-icon>close</mat-icon>Sair
       </button>
@@ -55,12 +43,7 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="example-container min-container" autosize>
-    <mat-sidenav
-      #sidenav
-      [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [opened]="emailVerified && !!api.empresaDados"
-      class="example-sidenav"
-    >
+    <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="emailVerified && !!api.empresaDados" class="example-sidenav">
       <!-- <app-menu></app-menu> -->
       <mat-card id="header-infos" *ngIf="emailVerified && !!api.empresaDados">
         <mat-card-header color="primary">
@@ -79,10 +62,7 @@
         <mat-list-item [routerLink]="['/promo-list']" routerLinkActive="active">
           <mat-icon>shopping_cart</mat-icon> Promoções
         </mat-list-item>
-        <mat-list-item
-          [routerLink]="['/edit-profile']"
-          routerLinkActive="active"
-        >
+        <mat-list-item [routerLink]="['/edit-profile']" routerLinkActive="active">
           <mat-icon>account_box</mat-icon> Perfil
         </mat-list-item>
         <mat-list-item [routerLink]="['/reports']" routerLinkActive="active">
@@ -91,43 +71,18 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div
-        class="min-container"
-        fxLayout="row"
-        flex="100"
-        fxLayoutAlign="start stretch"
-      >
+      <div class="min-container" fxLayout="row" flex="100" fxLayoutAlign="start stretch">
         <div id="largura-total" fxLayout="column" fxLayoutAlign="start stretch">
           <router-outlet></router-outlet>
         </div>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <mat-toolbar
-    class="example-footer"
-    color="primary"
-    fxShow.gt-sm="true"
-    fxHide
-    *ngIf="emailVerified"
-  >
-    <mat-card-header
-      color="primary"
-      *ngIf="emailVerified && !!api.empresaDados"
-    >
+  <mat-toolbar class="example-footer" color="primary" fxShow.gt-sm="true" fxHide *ngIf="emailVerified && !!api.empresaDados">
+    <mat-card-header color=" primary" *ngIf="emailVerified && !!api.empresaDados">
       <img mat-card-avatar *ngIf="photoURL" [src]="photoURL" />
       <mat-card-title *ngIf="displayName">{{ displayName }}</mat-card-title>
     </mat-card-header>
     <!-- <img class="foto-footer" *ngIf="emailVerified && photoURL" [src]="photoURL"><span>{{displayName}}</span> -->
   </mat-toolbar>
 </ng-container>
-
-<!-- <div id="rotas" fxLayout="row" fxLayoutAlign="start stretch" fxShow.gt-xs="true" fxHide> -->
-<!-- <div>
-      <div id="menu" class="controle-menu" *ngIf="emailVerified && userComplete | async" fxLayoutAlign="start stretch">
-        <app-menu></app-menu>
-      </div>
-    </div>
-    <div id="largura-total" fxLayout="column" fxLayoutAlign="start stretch" [ngClass]="{'login-total': userComplete | async}">
-      <router-outlet></router-outlet>
-    </div>
-  </div> -->

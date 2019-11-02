@@ -92,7 +92,8 @@ export class ApiService implements HttpInterceptor {
                     this.userComplete.next(true)
                     await this.getPromocoes(this.empresaDados._id)
                 } else {
-                    // console.log("78 Erro ao buscar o usuario", res)
+                    this.empresaDados = null;
+                    console.log("78 Erro ao buscar o usuario", res)
                     this.userComplete.next(false)
                 }
             })
