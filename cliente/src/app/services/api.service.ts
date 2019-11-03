@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as firebase from "firebase/app";
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Promo } from '../model/promo';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class ApiService {
     displayName: null,
     photoURL: null,
   };
+  public promos = [];
   constructor(private http: HttpClient, public rotas: Router, public loadingBar: LoadingBarService, private storage: AngularFireStorage, public afAuth: AngularFireAuth, private toastr: ToastrService) {
 
     afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
@@ -182,6 +184,12 @@ export class ApiService {
 
   showSuccess(mensagem) {
     this.toastr.success(mensagem, 'Sucesso');
+  }
+
+  getPromos(latitude, longitude, distancia, category = []) {
+    this.getData('promos', { lat: latitude, lng: longitude, distance: distancia, category: category }).subscribe(res => {
+      this.promos = res
+    })
   }
 
 }

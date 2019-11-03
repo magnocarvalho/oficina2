@@ -1,5 +1,5 @@
 <div fxLayout="column">
-    <mat-accordion class="example-headers-align">
+    <!-- <mat-accordion class="example-headers-align">
         <mat-expansion-panel hideToggle [expanded]="panelOpenState" (opened)="abrirState(true)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -25,9 +25,9 @@
                 <button class="windth-100" mat-raised-button flex="100" (click)="abrirState(false)" color="primary">Atualizar busca</button>
             </div>
         </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
     <div fxLayout="column" fxLayout.gt-xs="row wrap">
-        <div class="tamanho-maximo" *ngFor="let objTemp of retorno">
+        <div class="tamanho-maximo" *ngFor="let objTemp of api.promos">
             <mat-card>
                 <mat-card-header>
                     <img matCardAvatar [src]="objTemp.photoURL">

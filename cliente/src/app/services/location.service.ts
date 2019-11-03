@@ -10,13 +10,14 @@ import { Localizacao } from '../model/localizacao';
 export class LocationService {
   baseurl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
   basePlace = 'https://maps.googleapis.com/maps/api/place/details/json?place_id='
+  public location: Localizacao = new Localizacao();
   constructor(private http: HttpClient) { }
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   }
-  public location: Localizacao = new Localizacao();
+
   // GET
   getReverseGeocode(lan, lng): Observable<any> {
     return this.http.get<any>(this.baseurl + lan + ',' + lng + '&key=AIzaSyA1zOktcOr1AkPuG6SPT7_mOiK7Y67Z2rM')
@@ -53,6 +54,14 @@ export class LocationService {
           this.onAutocompleteSelected(location.results[0], location.results)
         })
       });
+    }
+  }
+  async getPosition() {
+    if (this.location.latitude && this.location.longitude) {
+      return this.location;
+    } else {
+      await this.setCurrentPosition()
+      return this.location;
     }
   }
   onAutocompleteSelected(result: google.maps.places.PlaceResult, todos = []) {

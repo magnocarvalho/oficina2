@@ -17,6 +17,8 @@ export class AppComponent {
   cliente: User;
   public tipos = [];
   public distancia = 8000;
+  public panelOpenState = false;
+  public selectedOptions = [];
   private _mobileQueryListener: () => void;
   constructor(private rota: Router, public api: ApiService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public apiLocation: LocationService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -34,10 +36,14 @@ export class AppComponent {
       }
     });
     this.apiLocation.setCurrentPosition()
+    this.getPromos()
+  }
+  getPromos() {
     this.api.getData('tipos').subscribe(res => {
       this.tipos = res
     })
   }
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
@@ -49,6 +55,19 @@ export class AppComponent {
   logout() {
     this.api.doLogout()
     this.rota.navigate(['login'])
+  }
+  abrirState(tmp) {
+    this.panelOpenState = tmp;
+    if (!tmp) {
+      this.api.getPromos(this.apiLocation.location.latitude, this.apiLocation.location.longitude, this.distancia, this.selectedOptions)
+    }
+  }
+  categorias($event) {
+    // console.log($event)
+    // console.log(v);
+    // console.log(s);
+    console.log(this.selectedOptions)
+
   }
 
 }

@@ -1,14 +1,20 @@
 import { Promo, IPromo } from "../model/Promo";
 import { UserModel } from "../model/User";
+import * as mongoose from 'mongoose';
+import { ObjectId } from "bson";
+
 
 class PromoCtrl {
   public static getPromos(req, res, next) {
     let lat: Number = parseFloat(req.query.lat);
     let lng: Number = parseFloat(req.query.lng);
+    let category: string[] = req.query.category || [];
+
     let coordinates = [lat, lng];
     let distance = req.query.distance;
+    const cat = req.query.category ? { tipo: { $in: category.map(m => new ObjectId(m)) } } : {}
     const dateIn = new Date();
-    // console.log([lat, lng, distance]);
+    // console.log(category);
 
     return UserModel.aggregate(
       [
@@ -32,6 +38,7 @@ class PromoCtrl {
             }
           }
         },
+
         {
           $lookup: {
             from: "promo",
@@ -44,7 +51,8 @@ class PromoCtrl {
           $match: {
             $and: [
               { "promos.endDate": { $gte: dateIn } },
-              { "promos.initDate": { $lt: dateIn } }
+              { "promos.initDate": { $lt: dateIn } },
+              cat,
             ]
           }
         },

@@ -69,25 +69,6 @@ text-align: left;
   text-decoration: line-through;
 }
 
-.example-headers-align .mat-expansion-panel-header{
-  padding: 0 16px !important;
-}
-.example-headers-align .mat-content {
-  align-items: center !important;
-  white-space: nowrap !important;
-}
-.example-headers-align .mat-expansion-panel-header-description{
-  margin-right: 0 !important;
-}
-.example-headers-align .mat-expansion-panel-header-title,
-.example-headers-align .mat-expansion-panel-header-description {
- font-size: 16px;
-}
-
-.example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
-}
 .example-h2 {
   margin: 10px;
 }
@@ -98,9 +79,7 @@ text-align: left;
   align-items: center;
   height: 60px;
 }
-.windth-100{
-  width: 100%;
-}
+
 .mat-slider-horizontal {
   width: 100%;
 }

@@ -35,13 +35,11 @@ mat-toolbar.example-header {
     flex: 1 1 auto;
 }
 
-.example-container {
-    top: 54px !important;
-}
+
 
 .example-container {
     position: absolute;
-    top: 60px;
+    top: 60px !important;
     bottom: 60px;
     left: 0;
     right: 0;
@@ -65,6 +63,17 @@ mat-toolbar.example-header {
     #rotas {
         min-height: calc(100vh - 54px) !important;
     }
+    .example-container {
+        top: 54px !important;
+    }
+    .tamanho-maximo{
+        margin-top: 0 !important;
+    margin-left: 0 !important;
+    }
+}
+.tamanho-maximo{
+    margin-top: 20px ;
+    margin-left: 20px ;
 }
 .mat-content {
     align-items: center !important;
@@ -72,3 +81,63 @@ mat-toolbar.example-header {
   .mat-slider{
       padding: 0 !important;
   }
+  
+.example-headers-align .mat-expansion-panel-header{
+    padding: 0 16px !important;
+  }
+  .example-headers-align .mat-content {
+    align-items: center !important;
+    white-space: nowrap !important;
+  }
+  .example-headers-align .mat-expansion-panel-header-description{
+    margin-right: 0 !important;
+  }
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+   font-size: 16px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .padding-20{
+      padding: 20px;
+  }
+  .windth-100{
+    width: 100%;
+  }
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
