@@ -27,14 +27,16 @@ mongoose
   });
 
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Method", "PUT, POST, DELETE, GET");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "PUT, POST, DELETE, GET, PATCH"
   );
   res.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
   res.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin, Content-Type, Accept, Accept-Language, Origin, User-Agent');
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
