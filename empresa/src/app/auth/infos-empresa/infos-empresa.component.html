@@ -81,6 +81,14 @@
                                 <input matInput formControlName="cnpj" type="text" required placeholder="CNPJ" [mask]="mascaraCnpj">
                             </mat-form-field>
                             <mat-form-field appearance="outline">
+                                <mat-label>Telefone</mat-label>
+                                <input matInput formControlName="telefone" type="text" required placeholder="Telefone" [mask]="mascaratelefone">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Descrição</mat-label>
+                                <input matInput formControlName="description" type="text" required placeholder="Descrição">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
                                 <mat-label>Tipo de estabelecimento</mat-label>
                                 <mat-select placeholder="Seleciona o tipo de estabelecimento" formControlName="tipo" name="item">
                                     <mat-option required *ngFor="let item of tiposCarregados" [value]="item._id">

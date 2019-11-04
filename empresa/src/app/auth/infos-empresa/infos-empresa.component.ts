@@ -28,6 +28,7 @@ export class InfosEmpresaComponent implements OnInit {
   public tiposCarregados = [];
   form: FormGroup;
   mascaraCnpj = "00.000.000/0000-00"
+  public mascaratelefone: String = "(00) 00000-0000"
   constructor(private rota: Router, public api: ApiService, public snackBar: MatSnackBar, private formBuilder: FormBuilder, private reverso: LocationService) {
 
     this.api.user.subscribe(user => {
@@ -52,6 +53,8 @@ export class InfosEmpresaComponent implements OnInit {
       cep: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       cnpj: ["", [Validators.required, Validators.maxLength(22)]],
       complemento: [""],
+      telefone: ["", [Validators.required]],
+      description: [""],
       tipo: ["", [Validators.required]],
       googlePlace: ["", [Validators.required]]
     });

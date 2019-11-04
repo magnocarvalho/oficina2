@@ -109,14 +109,15 @@ class UserCtrl {
         } else {
           // console.log(data)
           if (data[0].promos) {
-            let favorite: IFavorite = data[0].favorites
+            let favorite: IFavorite = await data[0].favorites
             let promocoes: IPromo[] = await data[0].promos;
-
+            console.log(favorite)
             data[0].promos = promocoes.map(p => {
               for (let i = 0; i < favorite.promos.length; i++) {
-                // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
+                console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
                 if (favorite.promos[i].id.toString() == p._id.toString()) {
                   p.favorito = true
+                  return p
                 } else {
                   p.favorito = false
                 }

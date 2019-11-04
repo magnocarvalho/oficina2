@@ -67,9 +67,9 @@ export class EditProfileComponent implements OnInit {
       complemento: [""],
       photoURL: ["", [Validators.required]],
       foto: [""],
-      description: [""],
       displayName: ["", [Validators.required]],
       telefone: ["", [Validators.required]],
+      description: [""],
       tipo: ["", [Validators.required]],
       googlePlace: ["", [Validators.required]]
     });
