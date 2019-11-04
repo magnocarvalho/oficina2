@@ -12,6 +12,7 @@ export interface IPromo extends IDefault, mongoose.Document {
   endPrice: Number;
   descont: Number;
   about: String;
+  favorito: boolean;
 }
 let schema = {
   title: { type: String, required: true },
@@ -20,7 +21,7 @@ let schema = {
   thumbnail: { type: String, required: true },
   initPrice: { type: Number, required: true },
   endPrice: { type: Number, required: true },
-  descont: { type: Number},
+  descont: { type: Number },
   about: { type: String, required: true },
 };
 

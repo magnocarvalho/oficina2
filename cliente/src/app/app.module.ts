@@ -65,6 +65,7 @@ import { LoginComponent } from './rotas/login/login.component';
 import { PromoComponent } from './rotas/promo/promo.component';
 import { NotFoundPageComponent } from './rotas/not-found-page/not-found-page.component';
 import { EmpresaComponent } from './rotas/empresa/empresa.component';
+import { FavoriteComponent } from './rotas/favorite/favorite.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { EmpresaComponent } from './rotas/empresa/empresa.component';
     LoginComponent,
     PromoComponent,
     NotFoundPageComponent,
-    EmpresaComponent
+    EmpresaComponent,
+    FavoriteComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

@@ -37,5 +37,9 @@ export class EmpresaComponent implements OnInit {
   dataString(data): String {
     return moment(data).format('l')
   }
-  favoritar(id) { }
+  favoritar(id) {
+    this.api.postData('favorites', { id: id }).subscribe(res => {
+      console.log(res)
+    })
+  }
 }

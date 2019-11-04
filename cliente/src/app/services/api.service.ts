@@ -117,8 +117,6 @@ export class ApiService {
 
   postData(rota, obj): Observable<any> {
     this.loadingBar.start()
-    if (rota != 'user')
-      obj['createduid'] = this.firebaseUser.uid
     return new Observable(observer => {
       this.getTokenHeader()
         .then(tokenOptions => {

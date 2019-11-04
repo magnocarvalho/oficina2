@@ -9,7 +9,7 @@ class PromoCtrl {
     let lat: Number = parseFloat(req.query.lat);
     let lng: Number = parseFloat(req.query.lng);
     let category: string[] = req.query.category || [];
-
+    let uid = res.locals.uid;
     let coordinates = [lat, lng];
     let distance = req.query.distance;
     const cat = req.query.category ? { tipo: { $in: category.map(m => new ObjectId(m)) } } : {}
@@ -38,7 +38,6 @@ class PromoCtrl {
             }
           }
         },
-
         {
           $lookup: {
             from: "promo",
@@ -56,6 +55,7 @@ class PromoCtrl {
             ]
           }
         },
+
         {
           $lookup: {
             from: "tipo",

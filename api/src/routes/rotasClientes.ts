@@ -9,12 +9,11 @@ import firewallbase from '../middleware/firewallbase';
 var rotasCliente = express.Router();
 
 rotasCliente.get("/promos:lat?:lng?:distance?", PromoCtrl.getPromos);
-//empresa
-rotasCliente.get("/empresa:empresa?", UserCtrl.findByIdAllPromos);
 // tipo de comercio
 rotasCliente.get("/tipos", TipoCtrl.getTipos);
-//favoritos
+//favoritos e empresa
 rotasCliente.use("/", firewallbase);
+rotasCliente.get("/empresa:empresa?", UserCtrl.findByIdAllPromos);
 rotasCliente.get("/favorites", FavoriteCtrl.getFavorites);
 rotasCliente.post("/favorites", FavoriteCtrl.createFavorites);
 

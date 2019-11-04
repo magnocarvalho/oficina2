@@ -61,10 +61,15 @@
           fxLayoutAlign="space-between flex-end"
           fxLayoutGap="gappx"
         >
-          <button mat-raised-button (click)="favoritar(obj._id)" color="accent">
-            Favoritar
-            <mat-icon>favorite</mat-icon>
-            <mat-icon>favorite_border</mat-icon>
+          <button
+            mat-raised-button
+            (click)="favoritar(obj._id)"
+            [color]="obj.favorito ? 'accent' : ''"
+          >
+            {{ obj.favorito ? "Salvo" : "Salvar Favorito" }}
+            <mat-icon>
+              {{ obj.favorito ? "favorite" : "favorite_border" }}</mat-icon
+            >
           </button>
         </div>
       </mat-card-actions>

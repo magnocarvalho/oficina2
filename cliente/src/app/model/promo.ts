@@ -8,6 +8,7 @@ export class Promo {
     thumbnail: String;
     initPrice: Number;
     endPrice: Number;
+    favorito: boolean;
     descont: Number;
     about: String;
 }
