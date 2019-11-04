@@ -31,7 +31,8 @@
             <mat-card>
                 <mat-card-header>
                     <img matCardAvatar [src]="objTemp.photoURL">
-                    <mat-card-title>{{objTemp.displayName}}</mat-card-title>
+                    <mat-card-title [routerLink]="['/empresa', objTemp._id]">{{objTemp.displayName}}
+                    </mat-card-title>
                     <mat-card-subtitle>{{objTemp.tipo.value}}</mat-card-subtitle>
                     <span class="example-spacer"></span>
                     <mat-icon class="mat-18">{{objTemp.tipo.icon}}</mat-icon>

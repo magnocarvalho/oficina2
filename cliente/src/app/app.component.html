@@ -2,34 +2,34 @@
 <ng-container>
     <mat-toolbar color="primary" class="example-header">
         <mat-icon class="menu-botao" (click)="sidenav.toggle()" *ngIf="cliente">
-            filter_list
+            {{sidenav.opened ? 'close': 'filter_list' }}
         </mat-icon>
         <mat-icon *ngIf="!cliente">loyalty</mat-icon>
         <span>&nbsp;</span>
         <span>Gastando Pouco</span>
         <span>&nbsp;&nbsp;&nbsp;</span>
-        <mat-icon *ngIf="cliente">shopping_cart</mat-icon>
+        <mat-icon *ngIf="cliente && !mobileQuery.matches">shopping_cart</mat-icon>
         <span class="example-spacer"></span>
         <button mat-mini-fab [matMenuTriggerFor]="menuLogin" color="primary" *ngIf="cliente">
             <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menuLogin="matMenu">
             <button mat-menu-item [routerLink]="[ '/index' ]" routerLinkActive="active">
-                <mat-icon>money</mat-icon> Promoçoes
+                <mat-icon>loyalty</mat-icon>&nbsp;Promoçoes
             </button>
-            <button mat-menu-item [routerLink]="[ '/maps' ]" routerLinkActive="active">
+            <!-- <button mat-menu-item [routerLink]="[ '/maps' ]" routerLinkActive="active">
                 <mat-icon>map</mat-icon> Mapa
-            </button>
+            </button> -->
             <button mat-menu-item [routerLink]="[ '/favorite' ]" routerLinkActive="active">
-                <mat-icon>favorite</mat-icon> Favoritos
+                <mat-icon>favorite</mat-icon>&nbsp;Favoritos
             </button>
             <button mat-menu-item (click)="logout()">
-                <mat-icon>close</mat-icon> Logout
+                <mat-icon>close</mat-icon>&nbsp;Logout
             </button>
         </mat-menu>
     </mat-toolbar>
     <mat-sidenav-container class="example-container min-container" autosize>
-        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" class="example-sidenav" [opened]="cliente">
+        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" class="example-sidenav" [opened]="!mobileQuery.matches && cliente">
             <div class="padding-20">
                 <mat-card-content>
                     <mat-card-title>
@@ -66,8 +66,12 @@
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
-            <div class="padding-20">
-                <button class="windth-100 " mat-raised-button flex="100" (click)="abrirState(false)" color="primary">Atualizar
+            <div class="padding-20" *ngIf="mobileQuery.matches">
+                <button class="windth-100 " mat-raised-button flex="100" (click)="sidenav.toggle(); abrirState(false);" color="primary">Atualizar
+                    busca</button>
+            </div>
+            <div class="padding-20" *ngIf="!mobileQuery.matches">
+                <button class="windth-100 " mat-raised-button flex="100" (click)="abrirState(false);" color="primary">Atualizar
                     busca</button>
             </div>
 
