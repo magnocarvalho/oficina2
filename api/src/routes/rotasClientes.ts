@@ -2,13 +2,21 @@ import * as express from 'express';
 import UserCtrl from '../controllers/UserCtrl';
 import PromoCtrl from '../controllers/PromoCtrl';
 import TipoCtrl from '../controllers/TipoCtrl';
+import FavoriteCtrl from '../controllers/FavoriteCtrl';
+import firewallbase from '../middleware/firewallbase';
 
 
-var rotasPublicas = express.Router();
+var rotasCliente = express.Router();
 
-rotasPublicas.get("/promos:lat?:lng?:distance?", PromoCtrl.getPromos);
-rotasPublicas.get("/empresa:empresa?", UserCtrl.findByIdAllPromos);
+rotasCliente.get("/promos:lat?:lng?:distance?", PromoCtrl.getPromos);
+//empresa
+rotasCliente.get("/empresa:empresa?", UserCtrl.findByIdAllPromos);
 // tipo de comercio
-rotasPublicas.get("/tipos", TipoCtrl.getTipos);
+rotasCliente.get("/tipos", TipoCtrl.getTipos);
+//favoritos
+rotasCliente.use("/", firewallbase);
+rotasCliente.get("/favorites", FavoriteCtrl.getFavorites);
+rotasCliente.post("/favorites", FavoriteCtrl.createFavorites);
 
-export = rotasPublicas;
+
+export = rotasCliente;

@@ -17,7 +17,7 @@ import { Promo } from '../model/promo';
 export class ApiService {
   public user: Observable<firebase.User>;
   private token: String = null;
-  private baseurl = environment.baseURL
+  private baseurl = environment.baseURL;
   public firebaseUser: User = {
     uid: null,
     email: null,

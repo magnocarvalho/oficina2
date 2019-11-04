@@ -78,11 +78,4 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <mat-toolbar class="example-footer" color="primary" fxShow.gt-sm="true" fxHide *ngIf="emailVerified && !!api.empresaDados">
-    <mat-card-header color=" primary" *ngIf="emailVerified && !!api.empresaDados">
-      <img mat-card-avatar *ngIf="photoURL" [src]="photoURL" />
-      <mat-card-title *ngIf="displayName">{{ displayName }}</mat-card-title>
-    </mat-card-header>
-    <!-- <img class="foto-footer" *ngIf="emailVerified && photoURL" [src]="photoURL"><span>{{displayName}}</span> -->
-  </mat-toolbar>
 </ng-container>

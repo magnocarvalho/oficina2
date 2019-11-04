@@ -37,4 +37,5 @@ export class EmpresaComponent implements OnInit {
   dataString(data): String {
     return moment(data).format('l')
   }
+  favoritar(id) { }
 }

@@ -23,6 +23,7 @@ export class EditProfileComponent implements OnInit {
   public selectedAddress: google.maps.places.PlaceResult;
   public tiposCarregados = [];
   public mascaraCnpj: String = "00.000.000/0000-00";
+  public mascaratelefone: String = "(00) 00000-0000"
   public user: User;
   public arquivoImg: any;
   imagemPerfil: any = "";
@@ -44,6 +45,8 @@ export class EditProfileComponent implements OnInit {
           this.form.get('estado').setValue(UserDados.estado);
           this.form.get('cnpj').setValue(UserDados.cnpj);
           this.form.get('tipo').setValue(UserDados.tipo);
+          this.form.get('telefone').setValue(UserDados.telefone);
+          this.form.get('description').setValue(UserDados.description);
           this.form.get('complemento').setValue(UserDados.complemento);
           this.form.get('googlePlace').setValue(UserDados.googlePlace);
           this.latitude = UserDados.location.coordinates[0]
@@ -64,7 +67,9 @@ export class EditProfileComponent implements OnInit {
       complemento: [""],
       photoURL: ["", [Validators.required]],
       foto: [""],
+      description: [""],
       displayName: ["", [Validators.required]],
+      telefone: ["", [Validators.required]],
       tipo: ["", [Validators.required]],
       googlePlace: ["", [Validators.required]]
     });

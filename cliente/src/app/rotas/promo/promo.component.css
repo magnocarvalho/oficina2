@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
 }
-swiper{
+swiper {
   height: 100%;
   width: 100%;
   margin: auto;
@@ -25,46 +25,45 @@ swiper{
   -webkit-align-items: center;
   align-items: center;
 }
-.imagem-carrosel{
+.imagem-carrosel {
   width: 100%;
 }
-.valor-desconto{
+.valor-desconto {
   position: absolute;
   top: 0;
   padding: 10px;
   color: #fff;
-text-align: left;
+  text-align: left;
   left: 0;
   background-color: #3f51b5;
   border-radius: 0 0 5px 0;
 }
-.valor-antigo{
+.valor-antigo {
   position: absolute;
   top: 0;
   padding: 10px;
   color: #fff;
 
   right: 0;
-  background-color:#ff4081;
+  background-color: #ff4081;
   border-radius: 0 0 0 5px;
-
 }
-.about-promo{
+.about-promo {
   text-align: left;
   font-size: 16px;
   padding-top: 3px;
   padding-bottom: 20px;
 }
-.about-promo p{
+.about-promo p {
   padding-top: 0;
   margin-top: 0;
   text-align: justify;
 }
-.desconto{
+.desconto {
   text-align: right;
   font-size: 14px;
 }
-.valor-de{
+.valor-de {
   font-size: 16px;
   text-decoration: line-through;
 }
@@ -87,14 +86,14 @@ text-align: left;
   text-align: left;
   padding-top: 10px;
 }
-@media  (max-width: 599px)
-{ .tamanho-maximo{
-  max-width: 100%;
-  width: max-content;
+@media (max-width: 599px) {
+  .tamanho-maximo {
+    max-width: 100%;
+    width: max-content;
+  }
 }
-}
-@media  (min-width: 600px)
-{ .tamanho-maximo{
-  max-width: 300px;
-}
+@media (min-width: 600px) {
+  .tamanho-maximo {
+    max-width: 320px;
+  }
 }

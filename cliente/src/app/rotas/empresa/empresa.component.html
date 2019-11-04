@@ -1,48 +1,71 @@
 <div *ngIf="icons" fxLayout="column">
   <div class="padding-15">
     <mat-card-header>
-      <img mat-card-avatar class="example-header-image" [src]="infos.photoURL">
-      <mat-card-title>{{infos.displayName}}</mat-card-title>
-      <mat-card-subtitle>{{categoria}}</mat-card-subtitle>
+      <img
+        mat-card-avatar
+        class="example-header-image"
+        [src]="infos.photoURL"
+      />
+      <mat-card-title>{{ infos.displayName }}</mat-card-title>
+      <mat-card-subtitle>{{ categoria }}</mat-card-subtitle>
       <span class="example-spacer"></span>
-      <mat-icon class="mat-18">{{icons}}</mat-icon>
+      <mat-icon class="mat-18">{{ icons }}</mat-icon>
     </mat-card-header>
-    <mat-card-subtitle>{{infos.telefone}}</mat-card-subtitle>
-    <mat-card-subtitle>{{infos.googlePlace}}</mat-card-subtitle>
-    <p>{{infos.description}}</p>
+    <mat-card-subtitle>{{ infos.description }}</mat-card-subtitle>
+    <p>{{ infos.telefone | mask: "(00) 00000-0000" }}</p>
+    <mat-card-subtitle>{{ infos.googlePlace }}</mat-card-subtitle>
   </div>
   <div>
-    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+    <agm-map
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [scrollwheel]="false"
+      [zoom]="zoom"
+    >
       <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
     </agm-map>
   </div>
-
 </div>
 <div fxLayout="column" fxLayout.gt-xs="row wrap">
   <div class="wit-250" *ngFor="let obj of promos">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{obj.title}}</mat-card-title>
-        <mat-card-subtitle>De {{obj.initPrice | currency: 'BRL'}} por <strong>{{obj.endPrice | currency : 'BRL'}}</strong></mat-card-subtitle>
+        <mat-card-title>{{ obj.title }}</mat-card-title>
+        <mat-card-subtitle
+          >De {{ obj.initPrice | currency: "BRL" }} por
+          <strong>{{
+            obj.endPrice | currency: "BRL"
+          }}</strong></mat-card-subtitle
+        >
       </mat-card-header>
       <mat-card-header>
-        <mat-card-subtitle>Validade até<br> <strong>{{dataString(obj.endDate)}}</strong></mat-card-subtitle>
+        <mat-card-subtitle
+          >Validade até<br />
+          <strong>{{ dataString(obj.endDate) }}</strong></mat-card-subtitle
+        >
         <span class="example-spacer"></span>
         <mat-chip-list>
-          <mat-chip>-{{obj.descont | percent: '2.2-2'}}<mat-icon>local_offer</mat-icon>
+          <mat-chip
+            >-{{ obj.descont | percent: "2.2-2"
+            }}<mat-icon>local_offer</mat-icon>
           </mat-chip>
         </mat-chip-list>
       </mat-card-header>
-      <img matCardImage [src]="obj.thumbnail">
+      <img matCardImage [src]="obj.thumbnail" />
       <mat-card-content>
-
-        <mat-card-subtitle>{{obj.about}}</mat-card-subtitle>
+        <mat-card-subtitle>{{ obj.about }}</mat-card-subtitle>
       </mat-card-content>
       <mat-card-actions>
-        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-          <!-- <button mat-raised-button (click)="relatorio(obj)">Relatorio</button>
-      <button mat-raised-button (click)="deletar(obj)" color="warn">Deletar</button>
-      <button mat-raised-button (click)="editPromo(obj)" color="primary">Editar</button> -->
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between flex-end"
+          fxLayoutGap="gappx"
+        >
+          <button mat-raised-button (click)="favoritar(obj._id)" color="accent">
+            Favoritar
+            <mat-icon>favorite</mat-icon>
+            <mat-icon>favorite_border</mat-icon>
+          </button>
         </div>
       </mat-card-actions>
     </mat-card>

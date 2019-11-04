@@ -1,89 +1,115 @@
 <div fxLayout="column">
-    <!-- <mat-accordion class="example-headers-align">
-        <mat-expansion-panel hideToggle [expanded]="panelOpenState" (opened)="abrirState(true)">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{city}} - {{state}}
-                </mat-panel-title>
-                <mat-panel-description>
-                    &nbsp;
-                    <mat-icon class="menu-botao" color="primary">
-                        filter_list
-                    </mat-icon>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div>
-                <h4 class="example-h2 ">Distancia : {{distancia}} Metros</h4>
-                <mat-slider class="example-margin" max="8000" min="0" step="100" thumbLabel="true" [(ngModel)]="distancia">
-                </mat-slider>
-                <mat-selection-list #shoes>
-                    <mat-list-option *ngFor="let shoe of tipos" [selected]="true">
-                        <mat-icon matListIcon>{{shoe.icon}}</mat-icon>
-                        <h3 matLine> {{shoe.value}} </h3>
-                    </mat-list-option>
-                </mat-selection-list>
-                <button class="windth-100" mat-raised-button flex="100" (click)="abrirState(false)" color="primary">Atualizar busca</button>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion> -->
-    <div fxLayout="column" fxLayout.gt-xs="row wrap">
-        <div class="tamanho-maximo" *ngFor="let objTemp of api.promos">
-            <mat-card>
-                <mat-card-header>
-                    <img matCardAvatar [src]="objTemp.photoURL">
-                    <mat-card-title [routerLink]="['/empresa', objTemp._id]">{{objTemp.displayName}}
-                    </mat-card-title>
-                    <mat-card-subtitle>{{objTemp.tipo.value}}</mat-card-subtitle>
-                    <span class="example-spacer"></span>
-                    <mat-icon class="mat-18">{{objTemp.tipo.icon}}</mat-icon>
-                </mat-card-header>
-                <mat-card-content>
-                    <swiper [config]="config" #swipper>
-                        <div class="swiper-wrapper" #swipperrapper>
-                            <div class="swiper-slide" *ngFor="let item of objTemp.promos; let i of index">
-                                <div class="card-imagem" fxLayout="column">
-                                    <div class="controle-imagem">
-                                        <div class="div-controle">
-                                            <img class="imagem-carrosel" [src]="item.thumbnail" #swipperitem>
-                                            <div class="valor-antigo desconto">
-                                                <div>valido ate<br>{{dataString(item.endDate)}}</div>
-                                                <div>{{item.descont | percent: '2.2-2'}}</div>
-                                            </div>
-                                            <div class="valor-desconto">
-                                                <div class="valor-de div-desc">
-                                                    De: {{item.initPrice | currency: 'BRL' }}
-                                                </div>
-                                                <div class="valor-por div-desc">
-                                                    Por: {{item.endPrice | currency: 'BRL' }}
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="title-por">
-                                        <mat-card-title>{{item.title}}</mat-card-title>
-                                    </div>
-                                    <div class="about-promo">
-                                        <p>{{item.about}}</p>
-                                    </div>
-                                </div>
-                            </div>
+  <!-- <mat-accordion class="example-headers-align">
+		<mat-expansion-panel hideToggle [expanded]="panelOpenState" (opened)="abrirState(true)">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					{{city}} - {{state}}
+				</mat-panel-title>
+				<mat-panel-description>
+					&nbsp;
+					<mat-icon class="menu-botao" color="primary">
+						filter_list
+					</mat-icon>
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<div>
+				<h4 class="example-h2 ">Distancia : {{distancia}} Metros</h4>
+				<mat-slider class="example-margin" max="8000" min="0" step="100" thumbLabel="true" [(ngModel)]="distancia">
+				</mat-slider>
+				<mat-selection-list #shoes>
+					<mat-list-option *ngFor="let shoe of tipos" [selected]="true">
+						<mat-icon matListIcon>{{shoe.icon}}</mat-icon>
+						<h3 matLine> {{shoe.value}} </h3>
+					</mat-list-option>
+				</mat-selection-list>
+				<button class="windth-100" mat-raised-button flex="100" (click)="abrirState(false)" color="primary">Atualizar busca</button>
+			</div>
+		</mat-expansion-panel>
+	</mat-accordion> -->
+  <div fxLayout="column" fxLayout.gt-xs="row wrap">
+    <div class="tamanho-maximo" *ngFor="let objTemp of api.promos">
+      <mat-card>
+        <mat-card-header [routerLink]="['/empresa', objTemp._id]">
+          <img matCardAvatar [src]="objTemp.photoURL" />
+          <mat-card-title>{{ objTemp.displayName }} </mat-card-title>
+          <mat-card-subtitle>{{ objTemp.tipo.value }}</mat-card-subtitle>
+          <span class="example-spacer"></span>
+          <mat-icon class="mat-18">{{ objTemp.tipo.icon }}</mat-icon>
+        </mat-card-header>
+        <mat-card-content>
+          <swiper [config]="config" #swipper>
+            <div class="swiper-wrapper" #swipperrapper>
+              <div
+                class="swiper-slide"
+                *ngFor="let item of objTemp.promos; let i; of: index"
+              >
+                <div class="card-imagem" fxLayout="column">
+                  <div class="controle-imagem">
+                    <div class="div-controle">
+                      <img
+                        class="imagem-carrosel"
+                        [src]="item.thumbnail"
+                        #swipperitem
+                      />
+                      <div class="valor-antigo desconto">
+                        <div>
+                          valido ate<br />{{ dataString(item.endDate) }}
                         </div>
-                        <div class="swiper-pagination"></div>
-                        <div class="swiper-button-prev" *ngIf="objTemp.promos.length != 1"></div>
-                        <div class="swiper-button-next" *ngIf="objTemp.promos.length != 1"></div>
-                    </swiper>
-                </mat-card-content>
-                <mat-card-actions align="right">
-                    <button mat-raised-button (click)="gotToMaps(objTemp.location.coordinates[0], objTemp.location.coordinates[1])">
-                        <mat-icon class="mat-18">near_me</mat-icon>
-                        {{objTemp.dist.calculated | number : '0.0-0'}} Metros
-                    </button>
-                    <button mat-raised-button color="primary">Check-in</button>
-                </mat-card-actions>
-                <mat-card-footer>
-                </mat-card-footer>
-            </mat-card>
-        </div>
+                        <div>{{ item.descont | percent: "2.2-2" }}</div>
+                      </div>
+                      <div class="valor-desconto">
+                        <div class="valor-de div-desc">
+                          De: {{ item.initPrice | currency: "BRL" }}
+                        </div>
+                        <div class="valor-por div-desc">
+                          Por: {{ item.endPrice | currency: "BRL" }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="title-por">
+                    <mat-card-title>{{ item.title }}</mat-card-title>
+                  </div>
+                  <div class="about-promo">
+                    <p>{{ item.about }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div
+              class="swiper-button-prev"
+              *ngIf="objTemp.promos.length != 1"
+            ></div>
+            <div
+              class="swiper-button-next"
+              *ngIf="objTemp.promos.length != 1"
+            ></div>
+          </swiper>
+        </mat-card-content>
+        <mat-card-actions align="right">
+          <button
+            mat-raised-button
+            (click)="
+              gotToMaps(
+                objTemp.location.coordinates[0],
+                objTemp.location.coordinates[1]
+              )
+            "
+          >
+            <mat-icon class="mat-18">near_me</mat-icon>
+            {{ objTemp.dist.calculated | number: "0.0-0" }} Metros
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/empresa', objTemp._id]"
+          >
+            Informaçoes&nbsp;<mat-icon>store_mall_directory</mat-icon>
+          </button>
+        </mat-card-actions>
+        <mat-card-footer> </mat-card-footer>
+      </mat-card>
     </div>
+  </div>
 </div>

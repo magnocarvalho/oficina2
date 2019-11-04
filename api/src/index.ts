@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import * as admin from "firebase-admin";
 import moment = require('moment');
 import router from "./routes/rotasEmpresas";
-import rotasPublicas from "./routes/rotasClientes";
+import rotasCliente from "./routes/rotasClientes";
 
 require("dotenv").config();
 var cors = require("cors");
@@ -48,8 +48,8 @@ app.options("*", function (req, res, next) {
     res.sendStatus(200);
 });
 // app.use("") //static
-app.use("/public", rotasPublicas); //publicas
-app.use("/api", router); //privadas
+app.use("/public", rotasCliente); //clientes
+app.use("/api", router); //rotas empresa
 
 app.use(function (req, res, next) {
   let err: any;
