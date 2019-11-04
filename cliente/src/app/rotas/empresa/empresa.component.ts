@@ -21,11 +21,15 @@ export class EmpresaComponent implements OnInit {
   public longitude = 0;
   public zoom = 15;
   public categoria = '';
+  public id: String;
   constructor(private route: ActivatedRoute, private router: Router, public api: ApiService) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.api.getData('empresa', { empresa: id }).subscribe(res => {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getDados()
+  }
+  getDados() {
+    this.api.getData('empresa', { empresa: this.id }).subscribe(res => {
       this.promos = res[0].promos;
       this.infos = res[0];
       this.latitude = res[0].location.coordinates[0];
@@ -39,7 +43,8 @@ export class EmpresaComponent implements OnInit {
   }
   favoritar(id) {
     this.api.postData('favorites', { id: id }).subscribe(res => {
-      console.log(res)
+      // console.log(res)
+      this.getDados()
     })
   }
 }
