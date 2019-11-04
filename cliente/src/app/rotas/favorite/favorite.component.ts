@@ -18,10 +18,12 @@ export class FavoriteComponent implements OnInit {
 
   getdados() {
     this.api.getData('favorites').subscribe(res => {
-      if (res[0].uid) {
-        this.favoritos = res[0].promos;
-      } else {
-        this.favoritos = []
+      try {
+        if (res[0].promos) {
+          this.favoritos = res[0].promos;
+        }
+      } catch (error) {
+        this.favoritos = null;
       }
     })
   }
