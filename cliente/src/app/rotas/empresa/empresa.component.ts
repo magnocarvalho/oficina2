@@ -47,4 +47,9 @@ export class EmpresaComponent implements OnInit {
       this.getDados()
     })
   }
+  excluir(id) {
+    this.api.putData('favorites', { id: id }).subscribe(res => {
+      this.getDados()
+    })
+  }
 }

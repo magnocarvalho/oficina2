@@ -63,7 +63,7 @@
         >
           <button
             mat-raised-button
-            (click)="favoritar(obj._id)"
+            (click)="obj.favorito ? excluir(obj._id) : favoritar(obj._id)"
             [color]="obj.favorito ? 'accent' : ''"
           >
             {{ obj.favorito ? "Salvo" : "Salvar Favorito" }}

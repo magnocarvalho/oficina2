@@ -114,7 +114,7 @@ class UserCtrl {
             console.log(favorite)
             data[0].promos = promocoes.map(p => {
               for (let i = 0; i < favorite.promos.length; i++) {
-                console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
+                // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
                 if (favorite.promos[i].id.toString() == p._id.toString()) {
                   p.favorito = true
                   return p
