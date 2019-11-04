@@ -51,11 +51,11 @@ class PromoCtrl {
             $and: [
               { "promos.endDate": { $gte: dateIn } },
               { "promos.initDate": { $lt: dateIn } },
+              { "promos.isDeleted": false },
               cat,
             ]
           }
         },
-
         {
           $lookup: {
             from: "tipo",

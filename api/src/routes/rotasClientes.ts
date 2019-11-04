@@ -16,6 +16,7 @@ rotasCliente.use("/", firewallbase);
 rotasCliente.get("/empresa:empresa?", UserCtrl.findByIdAllPromos);
 rotasCliente.get("/favorites", FavoriteCtrl.getFavorites);
 rotasCliente.post("/favorites", FavoriteCtrl.createFavorites);
+rotasCliente.put("/favorites", FavoriteCtrl.deleteFavorite);
 
 
 export = rotasCliente;

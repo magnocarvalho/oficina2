@@ -1,14 +1,37 @@
 <div fxLayout="column" fxLayout.gt-xs="row wrap">
-  <div>
+  <div *ngFor="let obj of favoritos" class="wit-250">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Title</mat-card-title>
-        <mat-card-subtitle>Subtitle</mat-card-subtitle>
+        <img matCardAvatar [src]="obj.empresa.photoURL" />
+        <mat-card-title>{{ obj.empresa.displayName }}</mat-card-title>
+        <mat-card-subtitle>{{ obj.title }}</mat-card-subtitle>
+        <span class="example-spacer"></span>
+        <mat-icon class="mat-18">{{ obj.tipo.icon }}</mat-icon>
       </mat-card-header>
-
       <mat-card-content>
-        Text content
+        <div class="div-controler">
+          <img matCardImageLarge [src]="obj.thumbnail" />
+          <div class="valor-antigo desconto">
+            <div>valido ate<br />{{ dataString(obj.endDate) }}</div>
+            <div>{{ obj.descont | percent: "2.2-2" }}</div>
+          </div>
+          <div class="valor-desconto">
+            <div class="valor-de div-desc">
+              De: {{ obj.initPrice | currency: "BRL" }}
+            </div>
+            <div class="valor-por div-desc">
+              Por: {{ obj.endPrice | currency: "BRL" }}
+            </div>
+          </div>
+        </div>
+
+        <p>{{ obj.about }}</p>
       </mat-card-content>
+      <mat-card-actions align="start">
+        <button mat-button (click)="excluir(obj._id)">
+          Excluir<mat-icon>closed</mat-icon>
+        </button>
+      </mat-card-actions>
     </mat-card>
   </div>
 </div>

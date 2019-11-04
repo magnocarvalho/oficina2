@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Promo } from 'src/app/model/promo';
 import { ApiService } from 'src/app/services/api.service';
-
+import * as moment from 'moment'
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite.component.html',
@@ -9,12 +9,24 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class FavoriteComponent implements OnInit {
 
-  public favoritos: Promo = new Promo();
+  public favoritos: Promo[] = [];
   constructor(public api: ApiService) { }
 
   ngOnInit() {
-    this.api.getData('favorite').subscribe(res => {
-      this.favoritos = res;
+    this.getdados()
+  }
+
+  getdados() {
+    this.api.getData('favorites').subscribe(res => {
+      this.favoritos = res[0].promos;
+    })
+  }
+  dataString(data): String {
+    return moment(data).format('l')
+  }
+  excluir(id) {
+    this.api.putData('favorites', { id: id }).subscribe(res => {
+      this.getdados()
     })
   }
 

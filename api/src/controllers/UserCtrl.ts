@@ -72,6 +72,7 @@ class UserCtrl {
           $and: [
             { "promos.endDate": { $gte: dateIn } },
             { "promos.initDate": { $lt: dateIn } },
+            { "promos.isDeleted": false }
           ]
         }
       },
@@ -107,21 +108,22 @@ class UserCtrl {
           next(err);
         } else {
           // console.log(data)
-          let favorite: IFavorite = data[0].favorites
-          let promocoes: IPromo[] = await data[0].promos;
+          if (data[0].promos) {
+            let favorite: IFavorite = data[0].favorites
+            let promocoes: IPromo[] = await data[0].promos;
 
-          let resutado = promocoes.map(p => {
-            for (let i = 0; i < favorite.promos.length; i++) {
-              console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
-              if (favorite.promos[i].id.toString() == p._id.toString()) {
-                p.favorito = true
-              } else {
-                p.favorito = false
+            data[0].promos = promocoes.map(p => {
+              for (let i = 0; i < favorite.promos.length; i++) {
+                // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
+                if (favorite.promos[i].id.toString() == p._id.toString()) {
+                  p.favorito = true
+                } else {
+                  p.favorito = false
+                }
               }
-            }
-            return p
-          })
-          data[0].promos = resutado
+              return p
+            })
+          }
           res.json(data);
         }
       })
