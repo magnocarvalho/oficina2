@@ -26,13 +26,14 @@ mongoose
     console.log("🚀 Mongo DB inicializado com sucesso as", moment().format("dddd, MMMM Do YYYY, h:mm:ss a"));
   });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Method", "PUT, POST, DELETE, GET");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "PUT, POST, DELETE, GET, PATCH"
   );
+  res.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
   res.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
   res.header(
     "Access-Control-Allow-Headers",
@@ -41,7 +42,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.options("*", function(req, res, next) {
+app.options("*", function (req, res, next) {
   if (req.method == "OPTIONS")
     // res.status(200);
     res.sendStatus(200);
@@ -50,7 +51,7 @@ app.options("*", function(req, res, next) {
 app.use("/public", rotasPublicas); //publicas
 app.use("/api", router); //privadas
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   let err: any;
   err = new Error("Not found");
   err.status = 404;
@@ -65,7 +66,7 @@ app.use((err, req, res, next) => {
 });
 
 if (app.get("env") === "development") {
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.json({
       message: err.message,

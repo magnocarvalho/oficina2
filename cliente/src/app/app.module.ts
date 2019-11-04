@@ -135,8 +135,7 @@ import { EmpresaComponent } from './rotas/empresa/empresa.component';
     MatCarouselModule.forRoot(),
     ImageCropperModule,
     CurrencyMaskModule,
-    NgxUsefulSwiperModule,
-
+    NgxUsefulSwiperModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-br' },

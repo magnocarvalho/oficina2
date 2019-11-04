@@ -16,6 +16,8 @@ export interface IUserModel extends IDefault, mongoose.Document {
   location: any;
   tipo: any;
   cnpj: string;
+  telefone: string;
+  description: string
 }
 
 let schema = {
@@ -27,10 +29,12 @@ let schema = {
   cep: { type: String, required: true, trim: true },
   cidade: { type: String, required: true },
   complemento: { type: String },
+  description: { type: String },
   estado: { type: String, required: true },
   googlePlace: { type: String, required: true },
   numero: { type: String, required: true },
   pais: { type: String, required: true },
+  telefone: { type: String, required: true },
   rua: { type: String, required: true },
   cnpj: { type: String, required: true, index: true, trim: true },
   location: {

@@ -65,7 +65,7 @@ export class LocationService {
     }
   }
   onAutocompleteSelected(result: google.maps.places.PlaceResult, todos = []) {
-    console.log(todos)
+    // console.log(todos)
     const cidade = todos.find(e => {
       return e.types.find(f => f == "locality")
     })
@@ -81,7 +81,7 @@ export class LocationService {
         [mapKeys[validKey]]: next.long_name
       }
     }, {})
-    console.log(cidade)
+    // console.log(cidade)
     // if (cidade) {
     //   this.getReversePlaceDetails(cidade.place_id).subscribe(res => {
     //     console.log(res)

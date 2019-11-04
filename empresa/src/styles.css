@@ -151,6 +151,7 @@ span#pe-footer {
   }
   .wit-400 {
     max-width: 100% !important;
+    width: 100% !important;
     margin: 0 auto !important;
   }
   .card-login.card-promo {
