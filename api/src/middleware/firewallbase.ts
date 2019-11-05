@@ -4,7 +4,7 @@ const admin = require.main.require("firebase-admin");
 
 export default function firewallbase(req, res, next) {
   const authorization = req.header("Authorization");
-  //   console.log(authorization);
+  // //  console.log(authorization);
   if (authorization) {
     let token = authorization.split(" ");
     admin
@@ -16,11 +16,11 @@ export default function firewallbase(req, res, next) {
         next();
       })
       .catch(err => {
-        console.log("error", err.code);
+      //  console.log("error", err.code);
         res.sendStatus(401);
       });
   } else {
-    console.log("Authorization header is not found");
+  //  console.log("Authorization header is not found");
     res.sendStatus(405);
   }
 }

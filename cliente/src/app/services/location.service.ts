@@ -84,7 +84,7 @@ export class LocationService {
     // console.log(cidade)
     // if (cidade) {
     //   this.getReversePlaceDetails(cidade.place_id).subscribe(res => {
-    //     console.log(res)
+    //   //  console.log(res)
     //   })
     // }
     this.location.state = filterResponse['state'];

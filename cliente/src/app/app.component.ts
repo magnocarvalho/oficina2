@@ -66,7 +66,7 @@ export class AppComponent {
     // console.log($event)
     // console.log(v);
     // console.log(s);
-    console.log(this.selectedOptions)
+  //  console.log(this.selectedOptions)
 
   }
 

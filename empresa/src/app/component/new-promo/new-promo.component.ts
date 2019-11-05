@@ -125,10 +125,10 @@ export class NewPromoComponent implements OnInit {
   }
 
   enviarFormServidor(tmp: Promo) {
-    console.log(tmp)
+  //  console.log(tmp)
     if (this.form.valid) {
       this.api.promoPost(tmp).subscribe(res => {
-        console.log(res)
+      //  console.log(res)
         this.rota.navigate(['promo-list'])
       })
     }

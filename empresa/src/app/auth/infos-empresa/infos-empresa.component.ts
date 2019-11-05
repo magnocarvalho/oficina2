@@ -152,9 +152,9 @@ export class InfosEmpresaComponent implements OnInit {
         obj.pais = this.form.get('pais').value
         obj.estado = this.form.get('estado').value
         obj.location = { coordinates: [this.latitude, this.longitude], type: 'Point' }
-        console.log(obj)
+      //  console.log(obj)
         this.api.createUser(obj).subscribe(res => {
-          console.log('Usuario Criado', res)
+        //  console.log('Usuario Criado', res)
           this.rota.navigate(['adm'])
         }, error => {
           this.snackBar.open(error.message, 'error', { duration: 5000 })

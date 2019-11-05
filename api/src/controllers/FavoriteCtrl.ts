@@ -46,8 +46,8 @@ class FavoriteCtrl {
 
         ], (err: any, data: any) => {
             if (err) {
-                console.log(err);
-                console.log(new Date().toLocaleString(), err.messagem);
+              //  console.log(err);
+              //  console.log(new Date().toLocaleString(), err.messagem);
                 next(err);
             } else {
                 if (data[0]) {
@@ -80,8 +80,8 @@ class FavoriteCtrl {
         let uid = res.locals.uid;
         return Favorite.findOneAndUpdate({ uid: uid }, { $pull: { promos: obj } }, { new: true }, (err: any, data: any) => {
             if (err) {
-                console.log(err);
-                console.log(new Date().toLocaleString(), err.messagem);
+              //  console.log(err);
+              //  console.log(new Date().toLocaleString(), err.messagem);
                 next(err);
             } else res.json(data);
         });
@@ -102,8 +102,8 @@ class FavoriteCtrl {
             } else {
                 return Favorite.findOneAndUpdate({ uid: uid }, { $addToSet: { promos: obj } }, { new: true }, (err: any, data: any) => {
                     if (err) {
-                        console.log(err);
-                        console.log(new Date().toLocaleString(), err.messagem);
+                      //  console.log(err);
+                      //  console.log(new Date().toLocaleString(), err.messagem);
                         next(err);
                     } else res.json(data);
                 });
@@ -111,8 +111,8 @@ class FavoriteCtrl {
         } else {
             return Favorite.create({ uid: uid, promos: [obj] }, (err: any, data: any) => {
                 if (err) {
-                    console.log(err);
-                    console.log(new Date().toLocaleString(), err.messagem);
+                  //  console.log(err);
+                  //  console.log(new Date().toLocaleString(), err.messagem);
                     next(err);
                 } else res.json(data);
             });

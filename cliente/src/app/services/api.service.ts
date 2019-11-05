@@ -75,7 +75,7 @@ export class ApiService {
           resolve(res);
         },
         err => {
-          console.log(err);
+        //  console.log(err);
           reject(err);
         }
       );
@@ -164,6 +164,7 @@ export class ApiService {
         this.token = tk
         let tokenHeader = {
           'Content-Type': 'application/json',
+          "Set-Cookie": "HttpOnly;Secure;SameSite=Strict",
           'Authorization': `Bearer ${tk}`
         };
         return tokenHeader;
@@ -173,6 +174,7 @@ export class ApiService {
     if (this.token) {
       let tokenHeader = {
         'Content-Type': 'application/json',
+        "Set-Cookie": "HttpOnly;Secure;SameSite=Strict",
         'Authorization': `Bearer ${this.token}`
       };
       return tokenHeader;

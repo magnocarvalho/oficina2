@@ -10,7 +10,7 @@ class UserCtrl {
     UserModel.create(obj, (err: any, data: any) => {
       if (err) {
         // console.log(err);
-        console.log(new Date().toLocaleString(), err.messagem);
+      //  console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else res.json(data);
     });
@@ -25,7 +25,7 @@ class UserCtrl {
       (err: any, data: any) => {
         if (err) {
           // console.log(err);
-          console.log(new Date().toLocaleString(), err.messagem);
+        //  console.log(new Date().toLocaleString(), err.messagem);
           next(err);
         } else res.json(data);
       }
@@ -37,7 +37,7 @@ class UserCtrl {
     UserModel.findOne({ uid: uid }, (err: any, data: any) => {
       if (err) {
         // console.log(err);
-        console.log(new Date().toLocaleString(), err.messagem);
+      //  console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else {
         // console.log(data);
@@ -103,15 +103,15 @@ class UserCtrl {
       async (err: any, data: any) => {
 
         if (err) {
-          console.log(err);
-          console.log(new Date().toLocaleString(), err.messagem);
+        //  console.log(err);
+        //  console.log(new Date().toLocaleString(), err.messagem);
           next(err);
         } else {
           // console.log(data)
           if (data[0].promos) {
             let favorite: IFavorite = await data[0].favorites
             let promocoes: IPromo[] = await data[0].promos;
-            console.log(favorite)
+          //  console.log(favorite)
             data[0].promos = promocoes.map(p => {
               for (let i = 0; i < favorite.promos.length; i++) {
                 // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())

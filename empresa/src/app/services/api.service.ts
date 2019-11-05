@@ -65,7 +65,7 @@ export class ApiService implements HttpInterceptor {
                     // JSON.parse(localStorage.getItem('user'));
                     this.token = null
                     localStorage.removeItem('token')
-                    console.log("Nenhum usuario logado");
+                  //  console.log("Nenhum usuario logado");
                 }
             } catch (error) {
                 this.afAuth.auth.signOut();
@@ -93,7 +93,7 @@ export class ApiService implements HttpInterceptor {
                     await this.getPromocoes(this.empresaDados._id)
                 } else {
                     this.empresaDados = null;
-                    console.log("78 Erro ao buscar o usuario", res)
+                  //  console.log("78 Erro ao buscar o usuario", res)
                     this.userComplete.next(false)
                 }
             })
@@ -327,28 +327,28 @@ export class ApiService implements HttpInterceptor {
                             // console.log("email", email);
                             this.uploadPerfilImagem(arquivoImg, res.user.uid)
                                 .then(img => {
-                                    console.log(img);
+                                  //  console.log(img);
                                     this.doUpdateUser(value.name, img.caminhoImagem)
                                         .then(useUpdate => {
                                             resolve(this.afAuth.auth.currentUser);
                                         })
                                         .catch(updateErro => {
-                                            console.log("Erro Update perfil do usuario", updateErro);
+                                          //  console.log("Erro Update perfil do usuario", updateErro);
                                             reject(updateErro);
                                         });
                                 })
                                 .catch(imgErro => {
-                                    console.log("Erro uploadImg do usuario", imgErro);
+                                  //  console.log("Erro uploadImg do usuario", imgErro);
                                     reject(imgErro);
                                 });
                         })
                         .catch(errEmail => {
-                            console.log("Erro Check Email do usuario", errEmail);
+                          //  console.log("Erro Check Email do usuario", errEmail);
                             reject(errEmail);
                         });
                 })
                 .catch(err => {
-                    console.log("Erro Criar usuario", err);
+                  //  console.log("Erro Criar usuario", err);
                     reject(err);
                 });
         });
@@ -366,7 +366,7 @@ export class ApiService implements HttpInterceptor {
                             this.token = idT
                             this.loadingBar.increment(60)
                             this.getData('user').subscribe((empresa: Usuario) => {
-                                console.log('empresa 202', empresa)
+                              //  console.log('empresa 202', empresa)
 
                                 if (empresa['error'] == 405) {
                                     this.showSuccess("Login iniciado com sucesso, falta terminar o cadastro")
@@ -375,7 +375,7 @@ export class ApiService implements HttpInterceptor {
                                 } else {
                                     this.empresaDados = empresa
                                     localStorage.setItem('empresaDados', JSON.stringify(empresa));
-                                    console.log('Dados dos usuario 353', this.empresaDados.cidade)
+                                  //  console.log('Dados dos usuario 353', this.empresaDados.cidade)
                                     // localStorage.setItem('user', JSON.stringify(this.firebaseUser));
                                     localStorage.setItem('user', JSON.stringify({ displayName: res.user.displayName, email: res.user.email, emailVerified: res.user.emailVerified }));
                                     this.loadingBar.increment(90)
@@ -496,7 +496,7 @@ export class ApiService implements HttpInterceptor {
         localStorage.setItem('userDados', null);
         this.doLogout().finally(() => {
             // console.log('Logout');
-            console.log('Logout');
+          //  console.log('Logout');
         })
         this.token = null;
         this.empresaDados = null;
@@ -549,7 +549,7 @@ export class ApiService implements HttpInterceptor {
                         resolve({ caminhoImagem });
                     },
                     erroImg => {
-                        console.log(erroImg);
+                      //  console.log(erroImg);
                         this.loadingBar.complete()
                         reject(erroImg);
                     }

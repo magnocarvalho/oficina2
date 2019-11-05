@@ -156,7 +156,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   async salvarDados() {
-    console.log(this.form.value)
+  //  console.log(this.form.value)
     if (this.form.valid) {
 
       var uid = await this.api.firebaseUser.uid;
@@ -173,9 +173,9 @@ export class EditProfileComponent implements OnInit {
             obj.location = { coordinates: [this.latitude, this.longitude], type: 'Point' }
             obj.photoURL = img.caminhoImagem;
             obj.displayName = this.form.get('displayName').value
-            console.log(obj)
+          //  console.log(obj)
             this.api.updateUserDados(obj).subscribe(res => {
-              console.log('Usuario atualizado', res)
+            //  console.log('Usuario atualizado', res)
               this.rota.navigate(['adm'])
             }, error => {
               this.snackBar.open(error.message, 'error', { duration: 5000 })
@@ -194,9 +194,9 @@ export class EditProfileComponent implements OnInit {
           obj.pais = this.form.get('pais').value
           obj.estado = this.form.get('estado').value
           obj.location = { coordinates: [this.latitude, this.longitude], type: 'Point' }
-          console.log(obj)
+        //  console.log(obj)
           this.api.updateUserDados(obj).subscribe(res => {
-            console.log('Usuario atualizado', res)
+          //  console.log('Usuario atualizado', res)
             this.rota.navigate(['adm'])
           }, error => {
             this.snackBar.open(error.message, 'error', { duration: 5000 })

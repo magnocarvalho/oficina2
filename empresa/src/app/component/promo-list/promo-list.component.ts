@@ -39,15 +39,15 @@ export class PromoListComponent implements OnInit {
   }
   editPromo(obj) {
     alert('A ser feito')
-    console.log(obj)
+  //  console.log(obj)
   }
   relatorio(obj) {
     alert('A ser feito')
-    console.log(obj)
+  //  console.log(obj)
   }
   deletar(obj) {
     alert('A ser feito')
-    console.log(obj)
+  //  console.log(obj)
   }
 
 }
