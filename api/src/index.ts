@@ -23,7 +23,7 @@ mongoose
     useNewUrlParser: true
   })
   .then(() => {
-  //  console.log("🚀 Mongo DB inicializado com sucesso as", moment().format("dddd, MMMM Do YYYY, h:mm:ss a"));
+    console.log("🚀 Mongo DB inicializado com sucesso as", moment().format("dddd, MMMM Do YYYY, h:mm:ss a"));
   });
 
 app.use(function (req, res, next) {
@@ -95,10 +95,10 @@ try {
     credential: admin.credential.applicationDefault(),
     databaseURL: `https://oficina2utfpr.firebaseio.com`
   });
-//  console.log("🚀 Server app firebase iniciado");
+  console.log("🚀 Server app firebase iniciado");
 } catch (e) {
-//  console.log("🚀 Server app firebase falhou : ", e);
+  console.log("🚀 Server app firebase falhou : ", e);
 }
 app.listen(port, () => {
-//  console.log(`🚀 Server ready at http://localhost:${port}/api`);
+  console.log(`🚀 Server ready at http://localhost:${port}/api`);
 });
