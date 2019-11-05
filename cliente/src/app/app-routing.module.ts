@@ -5,6 +5,7 @@ import { PromoComponent } from './rotas/promo/promo.component';
 import { NotFoundPageComponent } from './rotas/not-found-page/not-found-page.component';
 import { EmpresaComponent } from './rotas/empresa/empresa.component';
 import { FavoriteComponent } from './rotas/favorite/favorite.component';
+import { AuthGuard } from './guard/auth.guard';
 
 
 const routes: Routes = [
@@ -13,13 +14,13 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'index', component: PromoComponent
+    path: 'index', component: PromoComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'favorite', component: FavoriteComponent
+    path: 'favorite', component: FavoriteComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'empresa/:id', component: EmpresaComponent
+    path: 'empresa/:id', component: EmpresaComponent, canActivate: [AuthGuard]
   },
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "**", component: NotFoundPageComponent }];

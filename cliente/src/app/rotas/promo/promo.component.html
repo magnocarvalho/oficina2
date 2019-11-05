@@ -1,31 +1,4 @@
 <div fxLayout="column">
-  <!-- <mat-accordion class="example-headers-align">
-		<mat-expansion-panel hideToggle [expanded]="panelOpenState" (opened)="abrirState(true)">
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					{{city}} - {{state}}
-				</mat-panel-title>
-				<mat-panel-description>
-					&nbsp;
-					<mat-icon class="menu-botao" color="primary">
-						filter_list
-					</mat-icon>
-				</mat-panel-description>
-			</mat-expansion-panel-header>
-			<div>
-				<h4 class="example-h2 ">Distancia : {{distancia}} Metros</h4>
-				<mat-slider class="example-margin" max="8000" min="0" step="100" thumbLabel="true" [(ngModel)]="distancia">
-				</mat-slider>
-				<mat-selection-list #shoes>
-					<mat-list-option *ngFor="let shoe of tipos" [selected]="true">
-						<mat-icon matListIcon>{{shoe.icon}}</mat-icon>
-						<h3 matLine> {{shoe.value}} </h3>
-					</mat-list-option>
-				</mat-selection-list>
-				<button class="windth-100" mat-raised-button flex="100" (click)="abrirState(false)" color="primary">Atualizar busca</button>
-			</div>
-		</mat-expansion-panel>
-	</mat-accordion> -->
   <div fxLayout="column" fxLayout.gt-xs="row wrap">
     <div class="tamanho-maximo" *ngFor="let objTemp of api.promos">
       <mat-card>

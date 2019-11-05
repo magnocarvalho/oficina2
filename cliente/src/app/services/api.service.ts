@@ -38,6 +38,7 @@ export class ApiService {
             displayName: user.displayName,
             photoURL: user.photoURL
           };
+          localStorage.setItem('user', JSON.stringify(this.firebaseUser));
           user.getIdToken(true).then(res => {
             this.token = res
             localStorage.setItem('token', res)
@@ -75,7 +76,7 @@ export class ApiService {
           resolve(res);
         },
         err => {
-        //  console.log(err);
+          //  console.log(err);
           reject(err);
         }
       );
@@ -89,7 +90,6 @@ export class ApiService {
           localStorage.setItem('user', null);
           this.token = null;
           this.firebaseUser = null;
-
           resolve();
         });
       } else {
@@ -190,6 +190,11 @@ export class ApiService {
     this.getData('promos', { lat: latitude, lng: longitude, distance: distancia, category: category }).subscribe(res => {
       this.promos = res
     })
+  }
+
+  get isLoggedIn(): boolean {
+    let user = JSON.parse(localStorage.getItem('user'));
+    return (user !== null && user.uid !== false) ? true : false;
   }
 
 }
