@@ -1,5 +1,5 @@
 import * as express from 'express';
-import UserCtrl from '../controllers/UserCtrl';
+import UserCtrl from '../controllers/EmpresaCtrl';
 import PromoCtrl from '../controllers/PromoCtrl';
 import TipoCtrl from '../controllers/TipoCtrl';
 import FavoriteCtrl from '../controllers/FavoriteCtrl';

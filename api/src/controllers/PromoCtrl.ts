@@ -1,5 +1,5 @@
 import { Promo, IPromo } from "../model/Promo";
-import { UserModel } from "../model/User";
+import { UserModel } from "../model/Empresa";
 import * as mongoose from 'mongoose';
 import { ObjectId } from "bson";
 
@@ -70,8 +70,8 @@ class PromoCtrl {
       ],
       (err: any, data: any) => {
         if (err) {
-        //  console.log(err);
-        //  console.log(new Date().toLocaleString(), err.messagem);
+          //  console.log(err);
+          //  console.log(new Date().toLocaleString(), err.messagem);
           next(err);
         } else res.json(data);
       }
@@ -82,7 +82,7 @@ class PromoCtrl {
     return Promo.create(obj, (err: any, data: any) => {
       if (err) {
         // console.log(err);
-      //  console.log(new Date().toLocaleString(), err.messagem);
+        //  console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else res.json(data);
     });
@@ -92,7 +92,7 @@ class PromoCtrl {
     return Promo.find({ createdby: idUser }, (err: any, data: any) => {
       if (err) {
         // console.log(err);
-      //  console.log(new Date().toLocaleString(), err.messagem);
+        //  console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else res.json(data);
     });

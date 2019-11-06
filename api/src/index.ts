@@ -8,14 +8,19 @@ import router from "./routes/rotasEmpresas";
 import rotasCliente from "./routes/rotasClientes";
 
 require("dotenv").config();
-var cors = require("cors");
+var cors = require('cors')
+
 var app = express();
 moment.locale('pt-BR');
 
+
+app.use(cors())
+app.options('*', cors())
+
 app.use(bodyParser.json({ limit: "1mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.options("*", cors());
+
+
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false); // biblioteca depreciada
 mongoose
@@ -27,33 +32,14 @@ mongoose
   });
 
 app.use(function (req, res, next) {
-  // Website you wish to allow to connect
-  res.header("Access-Control-Allow-Origin", "*");
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Access-Control-Allow-Origin, Content-Type, Accept, Accept-Language, Origin, User-Agent');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', "*");
-
-  // Pass to next layer of middleware
-  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  // res.setHeader(
-  //   "Access-Control-Allow-Methods",
-  //   "PUT, POST, DELETE, GET, PATCH"
-  // );
-  // res.header('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
-  // res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin, Content-Type, Accept, Accept-Language, Origin, User-Agent');
-  // res.header(
-  //   "Access-Control-Allow-Headers",
-  //   "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  // );
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   next();
 });
+
+
 
 app.options("*", function (req, res, next) {
   if (req.method == "OPTIONS")
@@ -72,6 +58,7 @@ app.use(function (req, res, next) {
 });
 
 app.use((err, req, res, next) => {
+  console.log(err.status, err.message);
   res.status(err.status || 500).json({
     message: err.message || "Something went wrong. Please try again",
     status: err.status || 500

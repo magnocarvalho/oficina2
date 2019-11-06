@@ -17,7 +17,7 @@ export interface IUserModel extends IDefault, mongoose.Document {
   tipo: any;
   cnpj: string;
   telefone: string;
-  description: string
+  description: string;
 }
 
 let schema = {
@@ -39,12 +39,12 @@ let schema = {
   cnpj: { type: String, required: true, index: true, trim: true },
   location: {
     type: {
-      type: String, // Don't do `{ location: { type: String } }`
-      enum: ["Point"], // 'location.type' must be 'Point'
+      type: String,
+      enum: ["Point"],
       required: true
     },
     coordinates: {
-      type: [Number],
+      type: [Number], // [latitute, longitude]
       required: true
     }
   },

@@ -1,5 +1,5 @@
 import * as express from "express";
-import UserCtrl from "../controllers/UserCtrl";
+import UserCtrl from "../controllers/EmpresaCtrl";
 import firewallbase from "../middleware/firewallbase";
 import TipoCtrl from "../controllers/TipoCtrl";
 import PromoCtrl from "../controllers/PromoCtrl";

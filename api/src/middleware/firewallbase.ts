@@ -12,15 +12,15 @@ export default function firewallbase(req, res, next) {
       .verifyIdToken(token[1])
       .then(decodedToken => {
         res.locals.uid = decodedToken.uid;
-        // console.log('Autorizado para',decodedToken.email)
+        console.log('Autorizado para', decodedToken.email)
         next();
       })
       .catch(err => {
-      //  console.log("error", err.code);
+        console.log("error", err.code);
         res.sendStatus(401);
       });
   } else {
-  //  console.log("Authorization header is not found");
+    console.log("Authorization header is not found");
     res.sendStatus(405);
   }
 }

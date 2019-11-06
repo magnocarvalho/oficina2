@@ -5,6 +5,8 @@ import Swiper, { SwiperOptions } from 'swiper';
 import { SwiperComponent } from 'ngx-useful-swiper';
 import * as moment from 'moment'
 import { LocationService } from 'src/app/services/location.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-promo',
   templateUrl: './promo.component.html',
@@ -17,6 +19,7 @@ export class PromoComponent implements OnInit {
   public longitude: number = 0;
   public city: String = '';
   public state: String = '';
+  public permissao: boolean = false;
   config: SwiperOptions = {
     slidesPerView: 1, // Slides Visible in Single View Default is 1
     pagination: { el: '.swiper-pagination', clickable: true },
@@ -31,7 +34,7 @@ export class PromoComponent implements OnInit {
   public tipos = [];
   public panelOpenState = false;
 
-  constructor(public api: ApiService, private reverso: LocationService) {
+  constructor(public api: ApiService, private reverso: LocationService, public rotas: Router, public snack: MatSnackBar) {
 
   }
   // abrirState(tmp) {
@@ -48,6 +51,21 @@ export class PromoComponent implements OnInit {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.api.getPromos(position.coords.latitude, position.coords.longitude, 8000)
+      }, err => {
+        console.log(err)
+        this.permissao = true
+      });
+    }
+  }
+
+  async localizacao() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        window.location.reload();
+      }, err => {
+        console.log(err)
+        this.snack.open(err.message, 'error', { duration: 5000 })
+        this.permissao = true
       });
     }
   }

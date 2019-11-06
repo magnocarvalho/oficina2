@@ -1,4 +1,4 @@
-import { IUserModel, UserModel } from "../model/User";
+import { IUserModel, UserModel } from "../model/Empresa";
 import { ObjectId } from "bson";
 import { IFavorite } from "../model/Favorite";
 import { IPromo } from "../model/Promo";
@@ -10,7 +10,7 @@ class UserCtrl {
     UserModel.create(obj, (err: any, data: any) => {
       if (err) {
         // console.log(err);
-      //  console.log(new Date().toLocaleString(), err.messagem);
+        //  console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else res.json(data);
     });
@@ -25,7 +25,7 @@ class UserCtrl {
       (err: any, data: any) => {
         if (err) {
           // console.log(err);
-        //  console.log(new Date().toLocaleString(), err.messagem);
+          //  console.log(new Date().toLocaleString(), err.messagem);
           next(err);
         } else res.json(data);
       }
@@ -37,7 +37,7 @@ class UserCtrl {
     UserModel.findOne({ uid: uid }, (err: any, data: any) => {
       if (err) {
         // console.log(err);
-      //  console.log(new Date().toLocaleString(), err.messagem);
+        //  console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else {
         // console.log(data);
@@ -53,7 +53,7 @@ class UserCtrl {
   public static findByIdAllPromos(req, res, next) {
     let empresa = req.query.empresa;
     let uid = res.locals.uid;
-    // console.log(uid);
+    console.log(uid, empresa);
     const dateIn = new Date();
     return UserModel.aggregate([
       {
@@ -103,29 +103,35 @@ class UserCtrl {
       async (err: any, data: any) => {
 
         if (err) {
-        //  console.log(err);
-        //  console.log(new Date().toLocaleString(), err.messagem);
+          console.log(err);
+          //  console.log(new Date().toLocaleString(), err.messagem);
           next(err);
         } else {
-          // console.log(data)
-          if (data[0].promos) {
-            let favorite: IFavorite = await data[0].favorites
-            let promocoes: IPromo[] = await data[0].promos;
-          //  console.log(favorite)
-            data[0].promos = promocoes.map(p => {
-              for (let i = 0; i < favorite.promos.length; i++) {
-                // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
-                if (favorite.promos[i].id.toString() == p._id.toString()) {
-                  p.favorito = true
-                  return p
-                } else {
-                  p.favorito = false
+          console.log(data.length, 'busca funcionou', new Date())
+          try {
+            if (data[0].promos) {
+              let favorite: IFavorite = await data[0].favorites
+              let promocoes: IPromo[] = await data[0].promos;
+              //  console.log(favorite)
+              data[0].promos = promocoes.map(p => {
+                for (let i = 0; i < favorite.promos.length; i++) {
+                  // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
+                  if (favorite.promos[i].id.toString() == p._id.toString()) {
+                    p.favorito = true
+                    return p
+                  } else {
+                    p.favorito = false
+                  }
                 }
-              }
-              return p
-            })
+                return p
+              })
+            }
+            res.json(data);
+          } catch (error) {
+            next(error);
           }
-          res.json(data);
+
+
         }
       })
   }
