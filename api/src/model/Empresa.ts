@@ -35,6 +35,7 @@ let schema = {
   numero: { type: String, required: true },
   pais: { type: String, required: true },
   telefone: { type: String, required: true },
+
   rua: { type: String, required: true },
   cnpj: { type: String, required: true, index: true, trim: true },
   location: {

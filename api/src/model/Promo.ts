@@ -23,6 +23,7 @@ let schema = {
   endPrice: { type: Number, required: true },
   descont: { type: Number },
   about: { type: String, required: true },
+  favoritos: { type: Number, default: 0 }
 };
 
 Inject(schema);

@@ -84,7 +84,9 @@ class PromoCtrl {
         console.log(err);
         console.log(new Date().toLocaleString(), err.messagem);
         next(err);
-      } else res.json(data);
+      } else {
+        res.json(data);
+      }
     });
   }
   public static getPromosIdUser(req, res, next) {
