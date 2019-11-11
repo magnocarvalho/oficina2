@@ -1,6 +1,6 @@
 import { IUserModel, UserModel } from "../model/Empresa";
 import { ObjectId } from "bson";
-import { IFavorite } from "../model/Favorite";
+import { IFavorite, Favorite } from "../model/Favorite";
 import { IPromo } from "../model/Promo";
 
 var admin = require("firebase-admin");
@@ -50,90 +50,80 @@ class UserCtrl {
       }
     });
   }
-  public static findByIdAllPromos(req, res, next) {
+  public static async findByIdAllPromos(req, res, next) {
     let empresa = req.query.empresa;
-    let uid = res.locals.uid;
-    console.log(uid, empresa);
+    let uid = req.query.uid || res.locals.uid;
+    // console.log(uid, empresa);
     const dateIn = new Date();
-    return UserModel.aggregate([
-      {
-        $match: { _id: new ObjectId(empresa) }
-      },
-      {
-        $lookup: {
-          from: "promo",
-          localField: "_id",
-          foreignField: "createdby",
-          as: "promos"
+    const favorites = await Favorite.findOne({ uid: uid });
+    return UserModel.aggregate(
+      [
+        {
+          $match: { _id: new ObjectId(empresa) }
+        },
+        {
+          $lookup: {
+            from: "promo",
+            localField: "_id",
+            foreignField: "createdby",
+            as: "promos"
+          }
+        },
+        {
+          $match: {
+            $and: [
+              { "promos.endDate": { $gte: dateIn } },
+              { "promos.initDate": { $lt: dateIn } },
+              { "promos.isDeleted": false }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "tipo",
+            localField: "tipo",
+            foreignField: "_id",
+            as: "tipo"
+          }
+        },
+        {
+          $unwind: "$tipo"
         }
-      },
-      {
-        $match: {
-          $and: [
-            { "promos.endDate": { $gte: dateIn } },
-            { "promos.initDate": { $lt: dateIn } },
-            { "promos.isDeleted": false }
-          ]
-        }
-      },
-      {
-        $lookup: {
-          from: "favorite",
-          let: { uid: uid },
-          pipeline: [
-            { $match: { uid: uid } }],
-          as: "favorites"
-        }
-      },
-      {
-        $unwind: "$favorites"
-      },
-      {
-        $lookup: {
-          from: "tipo",
-          localField: "tipo",
-          foreignField: "_id",
-          as: "tipo"
-        }
-      },
-      {
-        $unwind: "$tipo"
-      }
-    ],
+      ],
       async (err: any, data: any) => {
-
         if (err) {
           console.log(err);
-          //  console.log(new Date().toLocaleString(), err.messagem);
+          console.log(new Date().toLocaleString(), err.messagem);
           next(err);
         } else {
-          console.log(data.length, 'busca funcionou', new Date())
+          // console.log(data, "busca funcionou", new Date());
+          let favorite: IFavorite = await favorites;
           try {
-            if (data[0].promos) {
-              let favorite: IFavorite = await data[0].favorites
+            if (data[0].promos && favorite && favorite.promos.length > 0) {
               let promocoes: IPromo[] = await data[0].promos;
-              //  console.log(favorite)
-              data[0].promos = promocoes.map(p => {
-                for (let i = 0; i < favorite.promos.length; i++) {
-                  // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
-                  if (favorite.promos[i].id.toString() == p._id.toString()) {
-                    p.favorito = true
-                    return p
-                  } else {
-                    p.favorito = false
+              // console.log(favorite);
+              data[0].promos = promocoes.map((p) => {
+                if (favorite.promos) {
+                  for (let i = 0; i < favorite.promos.length; i++) {
+                    // console.log(favorite.promos[i].id, p._id, favorite.promos[i].id.toString() == p._id.toString())
+                    if (favorite.promos[i].id.toString() == p._id.toString()) {
+                      p.favorito = true;
+                      return p;
+                    } else {
+                      p.favorito = false;
+                    }
                   }
                 }
-                return p
-              })
+                return p;
+              });
             }
             res.json(data);
           } catch (error) {
             next(error);
           }
-
-
         }
-      })
+      }
+    );
   }
 }
 export default UserCtrl;

@@ -1,8 +1,7 @@
 import { Promo, IPromo } from "../model/Promo";
 import { UserModel } from "../model/Empresa";
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 import { ObjectId } from "bson";
-
 
 class PromoCtrl {
   public static getPromos(req, res, next) {
@@ -12,9 +11,10 @@ class PromoCtrl {
     let uid = res.locals.uid;
     let coordinates = [lat, lng];
     let distance = req.query.distance;
-    const cat = req.query.category ? { tipo: { $in: category.map(m => new ObjectId(m)) } } : {}
+    const cat = req.query.category
+      ? { tipo: { $in: category.map((m) => new ObjectId(m)) } }
+      : {};
     const dateIn = new Date();
-    // console.log(category);
 
     return UserModel.aggregate(
       [
@@ -52,7 +52,7 @@ class PromoCtrl {
               { "promos.endDate": { $gte: dateIn } },
               { "promos.initDate": { $lt: dateIn } },
               { "promos.isDeleted": false },
-              cat,
+              cat
             ]
           }
         },
@@ -70,8 +70,8 @@ class PromoCtrl {
       ],
       (err: any, data: any) => {
         if (err) {
-          //  console.log(err);
-          //  console.log(new Date().toLocaleString(), err.messagem);
+          console.log(err);
+          console.log(new Date().toLocaleString(), err.messagem);
           next(err);
         } else res.json(data);
       }
@@ -81,8 +81,8 @@ class PromoCtrl {
     let obj: IPromo = req.body;
     return Promo.create(obj, (err: any, data: any) => {
       if (err) {
-        // console.log(err);
-        //  console.log(new Date().toLocaleString(), err.messagem);
+        console.log(err);
+        console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else res.json(data);
     });
@@ -91,8 +91,8 @@ class PromoCtrl {
     let idUser = req.query.empresa;
     return Promo.find({ createdby: idUser }, (err: any, data: any) => {
       if (err) {
-        // console.log(err);
-        //  console.log(new Date().toLocaleString(), err.messagem);
+        console.log(err);
+        console.log(new Date().toLocaleString(), err.messagem);
         next(err);
       } else res.json(data);
     });

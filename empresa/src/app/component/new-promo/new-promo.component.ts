@@ -34,7 +34,7 @@ export class NewPromoComponent implements OnInit {
   ngOnInit() {
     moment.locale('pt-br')
     this.form = this.formBuilder.group({
-      title: ["", [Validators.required, Validators.minLength(2)]],
+      title: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       about: ["", [Validators.required, Validators.minLength(2)]],
       initPrice: [0, [Validators.required, Validators.min(1)]],
       endPrice: [0, [Validators.required, Validators.min(1)]],
@@ -125,10 +125,10 @@ export class NewPromoComponent implements OnInit {
   }
 
   enviarFormServidor(tmp: Promo) {
-  //  console.log(tmp)
+    //  console.log(tmp)
     if (this.form.valid) {
       this.api.promoPost(tmp).subscribe(res => {
-      //  console.log(res)
+        //  console.log(res)
         this.rota.navigate(['promo-list'])
       })
     }
