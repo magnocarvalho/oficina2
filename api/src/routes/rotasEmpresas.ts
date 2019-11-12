@@ -17,5 +17,6 @@ router.get("/tipos", TipoCtrl.getTipos);
 //promoçoes
 router.post("/promo", PromoCtrl.createPromo);
 router.get("/promo/:empresa?", PromoCtrl.getPromosIdUser);
+router.get("/allpromos/:empresa?", PromoCtrl.getPromosIdEmpresa);
 
 export = router;
